@@ -18,25 +18,27 @@ Applications of data management, visualization, and analysis will use the *R* st
 
 ## Schedule overview
 
-- [Week 1 (1/8): Introduction to data management and tidy data](syllabus.html#week-1)
-- [Week 2 (1/15): Data aggregation, manipulation, joins](syllabus.html#week-2)
-- Week 3 (1/22): Data processing and quality assurance, custom functions, basics of automation
-- Week 4 (1/29): Advanced data manipulation and management, tracking work in *R* markdown
-- Week 5 (2/5): Principles of data visualization and graphical grammar
-- Week 6 (2/12): Visual and graphical perception
-- Week 7 (2/19): Graphic design, layout, style, use of color
-- Week 8 (2/26): A tour of quantitative visualization
-- Week 9 (3/5): Visualizing continuous data (in ggplot2)
-- Week 10 (3/12): Visualizing count and categorical data (in ggplot2)
+- [1/8 (Week 1): Introduction to data management and tidy data](syllabus.html#week-1)
+- [1/15 (Week 2): Data aggregation, manipulation, joins](syllabus.html#week-2)
+- 1/22 (Week 3): Data processing and quality assurance, custom functions, basics of automation
+- 1/29 (Week 4): Advanced data manipulation and management, tracking work in *R* markdown
+- 2/5 (Week 5): Principles of data visualization and graphical grammar
+- 2/12 (Week 6): Visual and graphical perception
+- 2/19 (Week 7): Graphic design, layout, style, use of color
+- 2/26 (Week 8): A tour of quantitative visualization
+- 3/5 (Week 9): Visualizing continuous data (in ggplot2)
+- 3/12 (Week 10): Visualizing count and categorical data (in ggplot2)
 - 3/19: No class (Spring break)
-- Week 11 (3/26): Maximizing clarity: preparing graphics for presentation and publication
+- 3/26 (Week 11): Maximizing clarity: preparing graphics for presentation and publication
 - 4/2: No class (Well-being day)
-- Week 12 (4/9): Visualizing and understanding fit (and misfit) of statistical models
-- Week 13 (4/16): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction
-- Week 14 (4/23): Final presentations of data projects
+- 4/9 (Week 12): Visualizing and understanding fit (and misfit) of statistical models
+- 4/16 (Week 13): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction
+- 4/23 (Week 14): Final presentations of data projects
 
-To obtain the latest materials for this class, use `git clone` to download the course repository:
+## Obtaining course materials
+
+To obtain the full materials for this class, use `git clone` to download the course repository:
 
 `git clone https://github.com/michaelhallquist/dataviz_spr2026.git`
 
-If you already cloned a local copy of the repo, you can get the latest updates using `git pull`. If all of this git stuff is foreign, I would recommend a quick skim of this documentation: https://happygitwithr.com
+If you already cloned a local copy of the repo, you can get the latest updates using `git pull`. If all of this git stuff is foreign, I would recommend a quick skim of this documentation: https://happygitwithr.com.
