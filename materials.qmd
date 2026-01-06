@@ -1,5 +1,6 @@
 ---
 title: "Course Materials"
+date: today
 ---
 
 This page contains course materials used during the demonstration and practical exercises.

@@ -1,7 +1,7 @@
 ---
 title: "PSYC 859"
 author: "Michael Hallquist"
-date: "Spring 2026"
+date: today
 ---
 
 ![](https://www.r-project.org/Rlogo.png)
