@@ -113,6 +113,34 @@ All projects are to be completed individually. Although you are encouraged to di
   - (Optional) Ch. 17: Dates and times. https://r4ds.hadley.nz/datetimes.html
   - (Optional) Ch. 20: Import: spreadsheets. https://r4ds.hadley.nz/spreadsheets.html
 
+## Week 3 (1/22): Data processing and quality assurance, custom functions, basics of automation {#week-3}
+
+## Week 4 (1/29): Advanced data manipulation and management, tracking work in R markdown {#week-4}
+
+## Week 5 (2/5): Principles of data visualization and graphical grammar {#week-5}
+
+## Week 6 (2/12): Visual and graphical perception {#week-6}
+
+## Week 7 (2/19): Graphic design, layout, style, use of color {#week-7}
+
+## Week 8 (2/26): A tour of quantitative visualization {#week-8}
+
+## Week 9 (3/5): Visualizing continuous data (in ggplot2) {#week-9}
+
+## Week 10 (3/12): Visualizing count and categorical data (in ggplot2) {#week-10}
+
+## 3/19: No class (Spring break)
+
+## Week 11 (3/26): Maximizing clarity: preparing graphics for presentation and publication {#week-11}
+
+## 4/2: No class (Well-being day)
+
+## Week 12 (4/9): Visualizing and understanding fit (and misfit) of statistical models {#week-12}
+
+## Week 13 (4/16): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction {#week-13}
+
+## Week 14 (4/23): Final presentations of data projects {#week-14}
+
 # Class Attendance
 
 You are advised to attend all lectures because some material presented in lecture will not be in the readings. Additionally, the lectures will give you a sense of what to focus on in the readings and how to integrate information across topics.

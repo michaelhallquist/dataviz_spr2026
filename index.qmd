@@ -20,20 +20,20 @@ Applications of data management, visualization, and analysis will use the *R* st
 
 - [1/8 (Week 1): Introduction to data management and tidy data](syllabus.qmd#week-1)
 - [1/15 (Week 2): Data aggregation, manipulation, joins](syllabus.qmd#week-2)
-- 1/22 (Week 3): Data processing and quality assurance, custom functions, basics of automation
-- 1/29 (Week 4): Advanced data manipulation and management, tracking work in *R* markdown
-- 2/5 (Week 5): Principles of data visualization and graphical grammar
-- 2/12 (Week 6): Visual and graphical perception
-- 2/19 (Week 7): Graphic design, layout, style, use of color
-- 2/26 (Week 8): A tour of quantitative visualization
-- 3/5 (Week 9): Visualizing continuous data (in ggplot2)
-- 3/12 (Week 10): Visualizing count and categorical data (in ggplot2)
+- [1/22 (Week 3): Data processing and quality assurance, custom functions, basics of automation](syllabus.qmd#week-3)
+- [1/29 (Week 4): Advanced data manipulation and management, tracking work in *R* markdown](syllabus.qmd#week-4)
+- [2/5 (Week 5): Principles of data visualization and graphical grammar](syllabus.qmd#week-5)
+- [2/12 (Week 6): Visual and graphical perception](syllabus.qmd#week-6)
+- [2/19 (Week 7): Graphic design, layout, style, use of color](syllabus.qmd#week-7)
+- [2/26 (Week 8): A tour of quantitative visualization](syllabus.qmd#week-8)
+- [3/5 (Week 9): Visualizing continuous data (in ggplot2)](syllabus.qmd#week-9)
+- [3/12 (Week 10): Visualizing count and categorical data (in ggplot2)](syllabus.qmd#week-10)
 - 3/19: No class (Spring break)
-- 3/26 (Week 11): Maximizing clarity: preparing graphics for presentation and publication
+- [3/26 (Week 11): Maximizing clarity: preparing graphics for presentation and publication](syllabus.qmd#week-11)
 - 4/2: No class (Well-being day)
-- 4/9 (Week 12): Visualizing and understanding fit (and misfit) of statistical models
-- 4/16 (Week 13): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction
-- 4/23 (Week 14): Final presentations of data projects
+- [4/9 (Week 12): Visualizing and understanding fit (and misfit) of statistical models](syllabus.qmd#week-12)
+- [4/16 (Week 13): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction](syllabus.qmd#week-13)
+- [4/23 (Week 14): Final presentations of data projects](syllabus.qmd#week-14)
 
 # Obtaining course materials
 

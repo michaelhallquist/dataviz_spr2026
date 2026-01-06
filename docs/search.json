@@ -21,6 +21,104 @@
     "text": "Week 2 (1/15): Data aggregation, manipulation, joins\n\nPractical readings\n\nWickham, H., Cetinka-Rundel, M., & Grolemund, G. (2023). R for Data Science (2nd ed.).\n\nCh. 3: Data transformation: https://r4ds.hadley.nz/data-transform.html\nCh. 12: Logical vectors: https://r4ds.hadley.nz/logicals.html\nCh. 13: Numbers: https://r4ds.hadley.nz/numbers.html\nCh. 14: Strings: https://r4ds.hadley.nz/strings.html\nCh. 16: Factors: https://r4ds.hadley.nz/factors.html\nCh. 19: Joins: https://r4ds.hadley.nz/joins.html\n(Optional) Ch. 15: Regular expressions. https://r4ds.hadley.nz/regexps.html\n(Optional) Ch. 17: Dates and times. https://r4ds.hadley.nz/datetimes.html\n(Optional) Ch. 20: Import: spreadsheets. https://r4ds.hadley.nz/spreadsheets.html"
   },
   {
+    "objectID": "syllabus.html#week-3",
+    "href": "syllabus.html#week-3",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 3 (1/22): Data processing and quality assurance, custom functions, basics of automation",
+    "text": "Week 3 (1/22): Data processing and quality assurance, custom functions, basics of automation"
+  },
+  {
+    "objectID": "syllabus.html#week-4",
+    "href": "syllabus.html#week-4",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 4 (1/29): Advanced data manipulation and management, tracking work in R markdown",
+    "text": "Week 4 (1/29): Advanced data manipulation and management, tracking work in R markdown"
+  },
+  {
+    "objectID": "syllabus.html#week-5",
+    "href": "syllabus.html#week-5",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 5 (2/5): Principles of data visualization and graphical grammar",
+    "text": "Week 5 (2/5): Principles of data visualization and graphical grammar"
+  },
+  {
+    "objectID": "syllabus.html#week-6",
+    "href": "syllabus.html#week-6",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 6 (2/12): Visual and graphical perception",
+    "text": "Week 6 (2/12): Visual and graphical perception"
+  },
+  {
+    "objectID": "syllabus.html#week-7",
+    "href": "syllabus.html#week-7",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 7 (2/19): Graphic design, layout, style, use of color",
+    "text": "Week 7 (2/19): Graphic design, layout, style, use of color"
+  },
+  {
+    "objectID": "syllabus.html#week-8",
+    "href": "syllabus.html#week-8",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 8 (2/26): A tour of quantitative visualization",
+    "text": "Week 8 (2/26): A tour of quantitative visualization"
+  },
+  {
+    "objectID": "syllabus.html#week-9",
+    "href": "syllabus.html#week-9",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 9 (3/5): Visualizing continuous data (in ggplot2)",
+    "text": "Week 9 (3/5): Visualizing continuous data (in ggplot2)"
+  },
+  {
+    "objectID": "syllabus.html#week-10",
+    "href": "syllabus.html#week-10",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 10 (3/12): Visualizing count and categorical data (in ggplot2)",
+    "text": "Week 10 (3/12): Visualizing count and categorical data (in ggplot2)"
+  },
+  {
+    "objectID": "syllabus.html#no-class-spring-break",
+    "href": "syllabus.html#no-class-spring-break",
+    "title": "PSYC 859 Syllabus",
+    "section": "3/19: No class (Spring break)",
+    "text": "3/19: No class (Spring break)"
+  },
+  {
+    "objectID": "syllabus.html#week-11",
+    "href": "syllabus.html#week-11",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 11 (3/26): Maximizing clarity: preparing graphics for presentation and publication",
+    "text": "Week 11 (3/26): Maximizing clarity: preparing graphics for presentation and publication"
+  },
+  {
+    "objectID": "syllabus.html#no-class-well-being-day",
+    "href": "syllabus.html#no-class-well-being-day",
+    "title": "PSYC 859 Syllabus",
+    "section": "4/2: No class (Well-being day)",
+    "text": "4/2: No class (Well-being day)"
+  },
+  {
+    "objectID": "syllabus.html#week-12",
+    "href": "syllabus.html#week-12",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 12 (4/9): Visualizing and understanding fit (and misfit) of statistical models",
+    "text": "Week 12 (4/9): Visualizing and understanding fit (and misfit) of statistical models"
+  },
+  {
+    "objectID": "syllabus.html#week-13",
+    "href": "syllabus.html#week-13",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 13 (4/16): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction",
+    "text": "Week 13 (4/16): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction"
+  },
+  {
+    "objectID": "syllabus.html#week-14",
+    "href": "syllabus.html#week-14",
+    "title": "PSYC 859 Syllabus",
+    "section": "Week 14 (4/23): Final presentations of data projects",
+    "text": "Week 14 (4/23): Final presentations of data projects"
+  },
+  {
     "objectID": "syllabus.html#permitted-uses",
     "href": "syllabus.html#permitted-uses",
     "title": "PSYC 859 Syllabus",
