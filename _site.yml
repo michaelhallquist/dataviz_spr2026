@@ -1,0 +1,23 @@
+name: "Data Management and Visualization"
+navbar:
+  title: "PSYC 859"
+  left:
+    - text: "Overview"
+      href: index.html
+    - text: "Syllabus"
+      href: syllabus.html
+    - text: "Materials"
+      href: materials.html
+output_dir: "docs"
+exclude:
+output:
+  html_document:
+    theme: spacelab
+    highlight: textmate
+    code_folding: show
+    toc: yes
+    toc_float: true
+    number_sections: yes
+    df_print: kable
+    mathjax: default
+    css: rmd_style.css

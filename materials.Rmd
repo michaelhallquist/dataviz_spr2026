@@ -1,3 +1,7 @@
+---
+title: "Materials"
+---
+
 # Materials
 
 - Course materials will appear here. Add folders with rendered HTML files and link them below.
