@@ -1,8 +1,8 @@
 # Overview
 
-Welcome to Data Management and Visualization, taught at UNC by Michael Hallquist. This website provides access to lectures, labs, and other course materials for the Spring 2026 session.
+Welcome to PSYC 859 Data Management and Visualization, taught at UNC by Michael Hallquist. This website provides access to lectures, labs, and other course materials for the Spring 2026 session.
 
 To obtain the latest materials for this class, use `git clone` to download the course repository:
-`git clone https://github.com/ORG/dataviz_spr2026.git`
+`git clone https://github.com/michaelhallquist/dataviz_spr2026.git`
 
 If you already cloned a local copy of the repo, you can get the latest updates using `git pull`. If all of this git stuff is foreign, I would recommend a quick skim of this documentation: https://happygitwithr.com
