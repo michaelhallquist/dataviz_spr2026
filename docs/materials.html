@@ -11,7 +11,7 @@
 
 
 
-<title>Materials</title>
+<title>Course Materials</title>
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -352,19 +352,14 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Materials</h1>
+<h1 class="title toc-ignore">Course Materials</h1>
 
 </div>
 
 
-<div id="materials" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Materials</h1>
-<ul>
-<li>Course materials will appear here. Add folders with rendered HTML
-files and link them below.</li>
-</ul>
-<div id="week-1" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Week 1</h2>
+<p>This page contains materials used</p>
+<div id="week-1" class="section level2">
+<h2>Week 1</h2>
 <ul>
 <li><a
 href="materials/w01_tidy_management/tidy_data_conceptual.html">Tidy data
@@ -373,7 +368,6 @@ href="materials/w01_tidy_management/tidy_data_conceptual.html">Tidy data
 href="materials/w01_tidy_management/tidy_data_conceptual.Rmd">Tidy data
 (conceptual) Rmd</a></li>
 </ul>
-</div>
 </div>
 
 
@@ -413,7 +407,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
+  window.initializeCodeFolding("hide" === "show");
 });
 </script>
 
@@ -430,7 +424,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

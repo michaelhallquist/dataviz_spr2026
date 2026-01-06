@@ -40,3 +40,6 @@ rsconnect/
 
 #HW Keys
 HW_keys
+
+# Word docs
+*.docx

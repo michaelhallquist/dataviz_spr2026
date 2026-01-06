@@ -366,8 +366,8 @@ by Michael Hallquist. This website provides access to lectures, labs,
 and other course materials for the Spring 2026 session.</p>
 <p>Use the Syllabus and Materials tabs to navigate the course schedule
 and resources.</p>
-<div id="course-description" class="section level2" number="1">
-<h2><span class="header-section-number">1</span> Course description</h2>
+<div id="course-description" class="section level2">
+<h2>Course description</h2>
 <p>This graduate course is intended to provide an applied introduction
 to data management and data visualization in the social sciences. In
 order to take full advantage of modern statistical methods (e.g.,
@@ -386,8 +386,8 @@ the <em>R</em> statistical programming language. <em>R</em> is quickly
 becoming the <em>lingua franca</em> in data science across disciplines
 and offers unparalleled tools for data analysis and visualization.</p>
 </div>
-<div id="schedule-overview" class="section level2" number="2">
-<h2><span class="header-section-number">2</span> Schedule overview</h2>
+<div id="schedule-overview" class="section level2">
+<h2>Schedule overview</h2>
 <ul>
 <li><a href="syllabus.html#week-1">Week 1 (1/8): Introduction to data
 management and tidy data</a></li>
@@ -462,7 +462,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
+  window.initializeCodeFolding("hide" === "show");
 });
 </script>
 
@@ -479,7 +479,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

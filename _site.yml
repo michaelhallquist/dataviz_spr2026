@@ -9,15 +9,21 @@ navbar:
     - text: "Materials"
       href: materials.html
 output_dir: "docs"
+render:
+  - "index.Rmd"
+  - "syllabus.Rmd"
+  - "materials.Rmd"
+  - "materials/w01_tidy_management/tidy_data_conceptual.Rmd"
 exclude:
 output:
   html_document:
     theme: spacelab
     highlight: textmate
-    code_folding: show
+    code_folding: hide
     toc: yes
+    toc_depth: 2
     toc_float: true
-    number_sections: yes
+    number_sections: no
     df_print: kable
     mathjax: default
     css: rmd_style.css
