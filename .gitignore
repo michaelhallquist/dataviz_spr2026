@@ -43,3 +43,6 @@ HW_keys
 
 # Word docs
 *.docx
+
+/.quarto/
+**/*.quarto_ipynb

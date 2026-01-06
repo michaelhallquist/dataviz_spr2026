@@ -1,9 +1,0 @@
----
-title: "Course Materials"
----
-
-This page contains course materials used during the demonstration and practical exercises.
-
-# Week 1
-
-- Tidy data conceptual walkthrough ([HTML](materials/w01_tidy_management/tidy_data_conceptual.html)) ([Rmd](materials/w01_tidy_management/tidy_data_conceptual.Rmd))

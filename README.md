@@ -4,3 +4,9 @@ Course materials for PSYC 859 Data Management and Visualization (Instructor: Mic
 
 Rendered site:
 https://michaelhallquist.github.io/dataviz_spr2026/
+
+Build locally with Quarto:
+
+```bash
+quarto render
+```

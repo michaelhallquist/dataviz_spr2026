@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "materials/**/*.qmd"
+  resources:
+    - materials/wrangling_files/**
+    - materials/**/*.qmd
+
+website:
+  title: "Data Management and Visualization"
+  navbar:
+    title: "PSYC 859"
+    left:
+      - text: "Overview"
+        href: index.qmd
+      - text: "Syllabus"
+        href: syllabus.qmd
+      - text: "Materials"
+        href: materials.qmd
+
+format:
+  html:
+    from: markdown+autolink_bare_uris
+    theme: spacelab
+    highlight-style: textmate
+    code-fold: true
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    df-print: kable
+    css: rmd_style.css

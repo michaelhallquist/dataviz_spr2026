@@ -1,0 +1,44 @@
+---
+title: "PSYC 859"
+author: "Michael Hallquist"
+date: "Spring 2026"
+---
+
+![](https://www.r-project.org/Rlogo.png)
+
+Welcome to PSYC 859, Data Management and Visualization, taught at UNC by Michael Hallquist. This website provides access to lectures, labs, and other course materials for the Spring 2026 session.
+
+Use the Syllabus and Materials tabs to navigate the course schedule and resources.
+
+# Course description
+
+This graduate course is intended to provide an applied introduction to data management and data visualization in the social sciences. In order to take full advantage of modern statistical methods (e.g., structural equation models), competency in data management, semi-automated processing, and data wrangling is prerequisite. Likewise, prior to employing inferential statistics, exploratory visualization and analysis is essential to facilitate data cleaning and to form an initial understanding of patterns in the data. This course will cover both the principles and practice of data management, visualization, and exploratory analysis for summarizing quantitative data. In addition, students will learn data science skills to manage and visualize "big data," where the size or complexity of the dataset defies traditional techniques.
+
+Applications of data management, visualization, and analysis will use the *R* statistical programming language. *R* is quickly becoming the *lingua franca* in data science across disciplines and offers unparalleled tools for data analysis and visualization.
+
+# Schedule overview
+
+- [1/8 (Week 1): Introduction to data management and tidy data](syllabus.qmd#week-1)
+- [1/15 (Week 2): Data aggregation, manipulation, joins](syllabus.qmd#week-2)
+- 1/22 (Week 3): Data processing and quality assurance, custom functions, basics of automation
+- 1/29 (Week 4): Advanced data manipulation and management, tracking work in *R* markdown
+- 2/5 (Week 5): Principles of data visualization and graphical grammar
+- 2/12 (Week 6): Visual and graphical perception
+- 2/19 (Week 7): Graphic design, layout, style, use of color
+- 2/26 (Week 8): A tour of quantitative visualization
+- 3/5 (Week 9): Visualizing continuous data (in ggplot2)
+- 3/12 (Week 10): Visualizing count and categorical data (in ggplot2)
+- 3/19: No class (Spring break)
+- 3/26 (Week 11): Maximizing clarity: preparing graphics for presentation and publication
+- 4/2: No class (Well-being day)
+- 4/9 (Week 12): Visualizing and understanding fit (and misfit) of statistical models
+- 4/16 (Week 13): Exploratory statistics for understanding data: clustering, multidimensional scaling, dimension reduction
+- 4/23 (Week 14): Final presentations of data projects
+
+# Obtaining course materials
+
+To obtain the full materials for this class, use `git clone` to download the course repository:
+
+`git clone https://github.com/michaelhallquist/dataviz_spr2026.git`
+
+If you already cloned a local copy of the repo, you can get the latest updates using `git pull`. If all of this git stuff is foreign, I would recommend a quick skim of this documentation: https://happygitwithr.com.
