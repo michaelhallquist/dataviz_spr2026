@@ -1,3 +1,8 @@
 # Materials
 
 - Course materials will appear here. Add folders with rendered HTML files and link them below.
+
+## Week 1
+
+- [Tidy data (conceptual) HTML](materials/w01_tidy_management/tidy_data_conceptual.html)
+- [Tidy data (conceptual) Rmd](materials/w01_tidy_management/tidy_data_conceptual.Rmd)
