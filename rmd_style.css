@@ -1,0 +1,26 @@
+body {
+  font-size: 20px;
+  line-height: 1.55;
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 1.5em 1.25em;
+  color: #1f2933;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
+}
+
+h1 { font-size: 2.2em; }
+h2 { font-size: 1.6em; }
+h3 { font-size: 1.25em; }
+
+ul, ol { margin-left: 1.2em; }
+li { margin: 0.35em 0; }
+
+a { color: #1a73a8; }
+
+code.r { font-size: 0.95em; }
+pre { font-size: 0.9em; }

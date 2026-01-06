@@ -1,0 +1,27 @@
+---
+title: "Data Management and Visualization"
+author: "Michael Hallquist"
+date: "Spring 2026"
+output:
+  html_document:
+    df_print: kable
+    mathjax: default
+    number_sections: yes
+    theme: spacelab
+    toc: yes
+    toc_float: true
+    css: rmd_style.css
+---
+
+![](https://www.r-project.org/Rlogo.png)
+
+**Quick links:** [Overview](#overview) | [Syllabus](#syllabus) | [Materials](#materials)
+
+```{r, child='overview.Rmd'}
+```
+
+```{r, child='syllabus.Rmd'}
+```
+
+```{r, child='materials.Rmd'}
+```
