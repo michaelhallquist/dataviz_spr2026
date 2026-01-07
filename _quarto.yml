@@ -4,9 +4,15 @@ project:
   render:
     - "*.qmd"
     - "materials/**/*.qmd"
+    - "assignments/**/*.qmd"
+    - "!materials/downloads/**"
+    - "!assignments/downloads/**"
   resources:
     - materials/wrangling_files/**
-    - materials/**/*.qmd
+    - materials/downloads/**
+    - assignments/**
+  post-render:
+    - scripts/copy-qmd-downloads.R
 
 website:
   title: "Data Management and Visualization"
@@ -19,6 +25,8 @@ website:
         href: syllabus.qmd
       - text: "Materials"
         href: materials.qmd
+      - text: "Assignments"
+        href: assignments.qmd
 
 format:
   html:

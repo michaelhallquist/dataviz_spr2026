@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-01-07">
+<meta name="author" content="PSYC 859 Data Management and Visualization">
+<meta name="dcterms.date" content="2026-01-08">
 
-<title>Course Materials – Data Management and Visualization</title>
+<title>Week 1: Data Tidying – Data Management and Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,26 +22,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-290377d6b54482a8f1bdb331fc965072.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-290377d6b54482a8f1bdb331fc965072.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,7 +106,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="rmd_style.css">
+<link rel="stylesheet" href="../rmd_style.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -80,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">PSYC 859</span>
     </a>
   </div>
@@ -91,19 +127,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./syllabus.html"> 
+    <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./materials.html" aria-current="page"> 
+    <a class="nav-link" href="../materials.html"> 
 <span class="menu-text">Materials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./assignments.html"> 
+    <a class="nav-link" href="../assignments.html"> 
 <span class="menu-text">Assignments</span></a>
   </li>  
 </ul>
@@ -121,8 +157,12 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul class="collapse">
-  <li><a href="#week-1" id="toc-week-1" class="nav-link active" data-scroll-target="#week-1">Week 1</a></li>
+  <ul>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link active" data-scroll-target="#instructions">Instructions</a></li>
+  <li><a href="#datasets-for-vignettes" id="toc-datasets-for-vignettes" class="nav-link" data-scroll-target="#datasets-for-vignettes">Datasets for Vignettes</a></li>
+  <li><a href="#basic-pew-dataset-structure" id="toc-basic-pew-dataset-structure" class="nav-link" data-scroll-target="#basic-pew-dataset-structure">Basic Pew Dataset Structure</a></li>
+  <li><a href="#tidying-pew-data" id="toc-tidying-pew-data" class="nav-link" data-scroll-target="#tidying-pew-data">Tidying Pew Data</a></li>
+  <li><a href="#tidying-tuberculosis-data" id="toc-tidying-tuberculosis-data" class="nav-link" data-scroll-target="#tidying-tuberculosis-data">Tidying Tuberculosis Data</a></li>
   </ul>
 </nav>
     </div>
@@ -131,18 +171,24 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Course Materials</h1>
+<h1 class="title">Week 1: Data Tidying</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>PSYC 859 Data Management and Visualization </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 7, 2026</p>
+      <p class="date">January 8, 2026</p>
     </div>
   </div>
   
@@ -154,12 +200,85 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This page contains course materials used during the demonstration and practical exercises.</p>
-<section id="week-1" class="level1">
-<h1>Week 1</h1>
+<p><em>This assignment is due by 1/21/2026 at 8am.</em></p>
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<p>For each question either write the code you would use or copy and paste it from the RStudio syntax window. Additionally, paste any (reasonable) output generated by the code. If there is a lot of output, paste enough to see that you were able to get the correct answer.</p>
+</section>
+<section id="datasets-for-vignettes" class="level2">
+<h2 class="anchored" data-anchor-id="datasets-for-vignettes">Datasets for Vignettes</h2>
+<p>Load the <code>who2</code> dataset from the <code>tidyr</code> package into your working environment.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"who2"</span>, <span class="at">package =</span> <span class="st">"tidyr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>This dataset records counts of tuberculosis by <code>country</code> and <code>year</code>. The other values correspond to a method of diagnosis, sex, and age group. The method of diagnosis codes are: <code>rel</code> = relapse, <code>sn</code> = negative pulmonary smear, <code>sp</code> = positive pulmonary smear, <code>ep</code> = extrapulmonary. For example, <code>sp_m_014</code> corresponds to positive pulmonary smear (<code>sp</code>), male sex (<code>m</code>), and ages 0-14 (<code>014</code>).</p>
+<p>You will see many <code>NA</code> values in <code>who2</code> because some country-year combinations do not report counts for certain diagnosis/sex/age groups. When you summarize totals, remember to use <code>na.rm = TRUE</code> so missing values do not turn your results into <code>NA</code>.</p>
+<p>Additionally, load the Pew <code>relig_income</code> dataset from the tidyr package:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"relig_income"</span>, <span class="at">package =</span> <span class="st">"tidyr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>This dataset describes the relationship between income and religion.</p>
+</section>
+<section id="basic-pew-dataset-structure" class="level2">
+<h2 class="anchored" data-anchor-id="basic-pew-dataset-structure">Basic Pew Dataset Structure</h2>
+<p><em>Using the Pew dataset</em></p>
+<ol type="1">
+<li>Look at the first and last five observations of the Pew dataset using <code>head()</code> and <code>tail()</code>. Is the dataset considered tidy? Why or why not?</li>
+</ol>
+<ol start="2" type="1">
+<li>Look at the structure (<code>str()</code>) and class (<code>class()</code>) of the data. If this is not tidy, verbally describe how it would look if it were a tidy dataset. If it is tidy, is it in a format that you would store the data in long-term?</li>
+</ol>
+</section>
+<section id="tidying-pew-data" class="level2">
+<h2 class="anchored" data-anchor-id="tidying-pew-data">Tidying Pew Data</h2>
+<ol type="1">
+<li>Use <code>tidyr</code> verbs to tidy the Pew dataset. Your tidy dataset should have columns named <code>religion</code>, <code>income</code>, and <code>count</code>. Show the first five rows.</li>
+</ol>
+</section>
+<section id="tidying-tuberculosis-data" class="level2">
+<h2 class="anchored" data-anchor-id="tidying-tuberculosis-data">Tidying Tuberculosis Data</h2>
+<p><em>Using the <code>who2</code> dataset</em></p>
+<ol type="1">
+<li>Explore the <code>who2</code> dataset using the methods described in the section above.</li>
+</ol>
+<ol start="2" type="1">
+<li>Using functions from the <code>tidyr</code> package, tidy the <code>who2</code> dataset so there is a <code>case_group</code> variable and a <code>cases</code> variable. Use those names throughout the rest of the assignment. Show the first five rows of your new dataframe by using <code>head()</code>. Remember, a tidy dataset consists of:</li>
+</ol>
 <ul>
-<li><a href="materials/w01_tidy_management/tidy_data_conceptual.html">Tidy data conceptual walkthrough</a> (<a href="materials/downloads/w01_tidy_management/tidy_data_conceptual.qmd">QMD</a>)</li>
+<li>Each variable forms a column</li>
+<li>Each observation forms a row</li>
+<li>Each type of observational unit forms a table</li>
 </ul>
+<ol start="3" type="1">
+<li>The values within the <code>case_group</code> variable are still considered not tidy because they represent three observations in one (case type, sex, and age). Use <code>tidyr</code> verbs to separate this variable into <code>type</code>, <code>sex</code>, and <code>age</code> (hint: the values are separated by <code>_</code>).</li>
+</ol>
+<ol start="4" type="1">
+<li>Check that each row is a unique observation by counting duplicates of <code>country</code>, <code>year</code>, <code>type</code>, <code>sex</code>, and <code>age</code>. Report whether any combinations appear more than once.</li>
+</ol>
+<ol start="5" type="1">
+<li>Rename the values within <code>sex</code> and <code>age</code> to be more descriptive of what they represent (male or female, 0-4, 5-14, etc.). You can use a combination of <code>dplyr::mutate()</code> and <code>dplyr::recode()</code> to recode the values. Use <code>?recode</code> if you get stuck.</li>
+</ol>
+<ol start="6" type="1">
+<li>Take your new tidy dataframe with the recoded values and variables and <em>demonstrate <code>tidyr::unite()</code></em> by recombining <code>sex</code> and <code>age</code> into a single variable (e.g., <code>sex_age</code>). This is just to practice <code>unite()</code> before you mess it up again in the next step. Show the first five rows of your new dataframe.</li>
+</ol>
+<ol start="7" type="1">
+<li>Go back to the dataframe you created in question two. Using that tidy dataframe, use <code>tidyr</code> verbs to recreate a ‘messy’ dataframe. It should look exactly the same (or similar) as when you first loaded the <code>who2</code> dataset into your environment. Show the first five rows of your new dataframe. If the code throws a ‘duplicate identifiers error’ you should use <code>dplyr::distinct()</code> in your pipeline.</li>
+</ol>
+<ol start="8" type="1">
+<li>Arrange the dataset to be descending by most cases of tuberculosis to least using <code>dplyr</code> verbs (use your <code>cases</code> variable).</li>
+</ol>
+<ol start="9" type="1">
+<li>Summarize how many cases of tuberculosis there are by <code>sex</code> and <code>age</code> (use your <code>cases</code> variable). Show your output. If you get <code>NA</code> values for everything, remember to remove those empty values somewhere in your pipeline! <em>Hint</em> Look at the default arguments for the functions you use to summarize your data.</li>
+</ol>
+<ol start="10" type="1">
+<li>Finally, summarize the dataset by <code>country</code> and <code>sex</code>, then add a variable that is the relative prevalence by <code>sex</code> in each country.</li>
+</ol>
 
 
 </section>
