@@ -5,12 +5,15 @@ project:
     - "*.qmd"
     - "materials/**/*.qmd"
     - "assignments/**/*.qmd"
+    - "!local/**"
     - "!materials/downloads/**"
     - "!assignments/downloads/**"
+    - "!assignments/**/*[Aa]nswer*"
   resources:
     - materials/wrangling_files/**
     - materials/downloads/**
     - assignments/**
+    - "!assignments/**/*[Aa]nswer*"
   post-render:
     - scripts/copy-qmd-downloads.R
 
@@ -39,3 +42,5 @@ format:
     number-sections: false
     df-print: kable
     css: rmd_style.css
+    grid:
+        body-width: 1500px

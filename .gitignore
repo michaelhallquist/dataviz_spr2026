@@ -44,5 +44,10 @@ HW_keys
 # Word docs
 *.docx
 
+# Assignment answer keys
+assignments/**/*[Aa]nswer*
+
 /.quarto/
 **/*.quarto_ipynb
+
+/local/
