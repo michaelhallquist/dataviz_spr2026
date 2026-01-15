@@ -1,0 +1,226 @@
+---
+title: "1.4 - Strings in R with stringr"
+author: "Michael Hallquist, PSYC 859"
+date: today
+week: 2
+download: "materials/downloads/w02_wrangling/01.4-strings_stringr.qmd"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require(pacman)) { install.packages("pacman"); library(pacman) }
+p_load(dplyr, stringr, tidyr, knitr, kableExtra)
+
+#helper function for printing tables in a consistent format
+kable_table <- function(df, n=Inf, p=Inf) {
+  p <- min(ncol(df), p)
+  df %>% head(n=n) %>% dplyr::select(1:!!p) %>% kable() %>%
+    kable_styling(bootstrap_options = c("striped", "condensed"), full_width = F)
+}
+```
+
+The `stringr` package provides a consistent set of functions for working with strings. All functions start with `str_` and are vectorized, so they work naturally with columns in a data.frame.
+
+We will use a small example dataset to demonstrate the core verbs.
+
+```{r}
+people <- tibble::tibble(
+  id = 1:5,
+  name = c("Ada Lovelace", "Grace Hopper", "Margaret Hamilton",
+           "Katherine Johnson", "Mary Jackson"),
+  email = c("ada@navy.mil", "grace@navy.mil", "margaret@mit.edu",
+            "katherine@nasa.gov", NA),
+  dept = c("CompSci", "CompSci", "Engineering", "Research", "Research")
+)
+
+people %>% kable_table()
+```
+
+# Creating strings
+
+R strings are wrapped in quotes. You can use either single or double quotes. Escapes use a backslash.
+
+```{r}
+"Line 1\nLine 2"
+"He said: \"strings are useful\""
+"A backslash looks like this: \\"
+```
+
+Raw strings are useful when you want to avoid escaping backslashes:
+
+```{r}
+r"(C:\Users\hallquist\Documents\file.txt)"
+```
+
+## Combine strings
+
+```{r}
+people %>%
+  mutate(
+    label = str_c(name, " (", dept, ")", sep = "")
+  ) %>%
+  kable_table()
+```
+
+`str_glue()` is convenient for inline formatting:
+
+```{r}
+people %>%
+  mutate(label = str_glue("{name} [{dept}]")) %>%
+  kable_table()
+```
+
+If you want to collapse a vector into one string, use `str_flatten()`:
+
+```{r}
+str_flatten(people$dept, collapse = ", ")
+```
+
+# String length and substrings
+
+```{r}
+people %>%
+  mutate(
+    n_chars = str_length(name),
+    first_name = str_sub(name, 1, str_locate(name, " ")[, 1] - 1)
+  ) %>%
+  kable_table()
+```
+
+Other common helpers include `str_trim()` and `str_squish()` to handle extra whitespace:
+
+```{r}
+str_trim("   too much space   ")
+str_squish("too    much    space")
+```
+
+# Detecting patterns
+
+`str_detect()` returns TRUE/FALSE for each element:
+
+```{r}
+people %>%
+  mutate(is_nasa = str_detect(email, "nasa")) %>%
+  kable_table()
+```
+
+To find rows with any missing email:
+
+```{r}
+people %>%
+  filter(is.na(email))
+```
+
+You can count matches with `str_count()`:
+
+```{r}
+people %>%
+  mutate(n_vowels = str_count(name, "[aeiouAEIOU]")) %>%
+  kable_table()
+```
+
+# Extracting and splitting
+
+`str_extract()` pulls the first match from each string:
+
+```{r}
+people %>%
+  mutate(domain = str_extract(email, "[^@]+$")) %>%
+  kable_table()
+```
+
+Use `str_split()` to break strings into pieces:
+
+```{r}
+str_split("Ada Lovelace", " ")
+```
+
+If you want multiple columns, `tidyr::separate()` is handy:
+
+```{r}
+people %>%
+  separate(name, into = c("first", "last"), sep = " ") %>%
+  kable_table()
+```
+
+# Replacing
+
+```{r}
+people %>%
+  mutate(
+    email_safe = str_replace(email, "@", " at "),
+    email_domain = str_replace(email, ".*@", "")
+  ) %>%
+  kable_table()
+```
+
+To replace all matches, use `str_replace_all()`:
+
+```{r}
+str_replace_all("A-1, B-2, C-3", "-", ":")
+```
+
+# A compact case study: parsing coded strings
+
+Imagine IDs that pack information into a single string:
+
+```{r}
+ids <- tibble::tibble(
+  code = c("S01_age=21", "S02_age=19", "S03_age=22", "S04_age=20")
+)
+
+ids %>% kable_table()
+```
+
+We can extract the subject ID and age using `str_match()`:
+
+```{r}
+ids %>%
+  mutate(
+    subject = str_match(code, "^(S\\d{2})")[, 2],
+    age = as.numeric(str_match(code, "age=(\\d{2})$")[, 2])
+  ) %>%
+  kable_table()
+```
+
+# Summary
+
+The `stringr` toolkit is built around a small set of verbs:
+
+1. **Create/Combine**: `str_c()`, `str_glue()`, `str_flatten()`
+2. **Inspect**: `str_length()`, `str_detect()`, `str_count()`
+3. **Extract/Split**: `str_extract()`, `str_match()`, `str_split()`
+4. **Modify**: `str_sub()`, `str_replace()`, `str_replace_all()`, `str_trim()`
+
+For more detail and worked examples, see R4DS Ch. 14: <https://r4ds.hadley.nz/strings.html>
+
+# Appendix: regex primer (optional)
+
+Regular expressions (regex) let you describe patterns in text. `stringr` uses standard regex syntax in most `str_` functions.
+
+**Core building blocks:**
+
+- `.` any character
+- `^` start of string, `$` end of string
+- `*` zero or more, `+` one or more, `?` zero or one
+- `[]` character class (e.g., `[A-Z]`, `[0-9]`)
+- `()` grouping and capture
+- `|` OR
+
+**Common examples:**
+
+```{r}
+str_detect("room 312", "\\\\d+")         # any digits
+str_detect("A12", "^[A-Z]\\\\d{2}$")     # one letter, two digits
+str_extract("x=42", "\\\\d+")            # extract digits
+str_replace("abc-123", "^[a-z]+-", "")   # drop leading letters and dash
+```
+
+**Useful helpers:**
+
+- `str_detect(x, pattern)` returns TRUE/FALSE
+- `str_extract(x, pattern)` returns the first match
+- `str_replace(x, pattern, replacement)` replaces the first match
+- `str_replace_all(x, pattern, replacement)` replaces all matches
+
+For a deeper treatment and practice, see R4DS Ch. 15: <https://r4ds.hadley.nz/regexps.html>

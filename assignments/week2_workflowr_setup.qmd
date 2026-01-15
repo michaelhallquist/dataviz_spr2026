@@ -1,0 +1,143 @@
+---
+title: "Week 2: Workflowr Project Setup"
+author: "PSYC 859 Data Management and Visualization"
+date: "1/15/2026"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+editor_options:
+  chunk_output_type: console
+---
+
+*This assignment is due by 1/28/2026 at 8am.*
+
+## Overview
+
+This assignment builds directly on the workflowr vignette:
+<https://workflowr.github.io/workflowr/articles/wflow-01-getting-started.html>.
+Your goal is to create a new workflowr project with a clean structure,
+publish at least one analysis file, and make it available as a GitHub Pages site.
+
+## Learning goals
+
+- Initialize a workflowr project with a reproducible structure
+- Knit analysis files with workflowr and track the build status
+- Publish a workflowr site to GitHub Pages
+
+## Setup requirements
+
+Before starting, make sure you have:
+
+- R and RStudio installed
+- Git installed and configured
+- A GitHub account
+- The `workflowr` package installed
+
+```{r}
+# Install once if needed
+## install.packages("workflowr")
+```
+
+## Tasks
+
+### 1. Start a new workflowr project
+
+Create a new project named `workflowr-<your-onyen>` in a location you can find later.
+
+```{r}
+library(workflowr)
+wflow_start("workflowr-<your-onyen>")
+```
+
+Open the project in RStudio and confirm the default folders exist:
+`analysis/`, `data/`, `code/`, `output/`, and `docs/`.
+
+```{r}
+# Briefly note what you see in the project root.
+```
+
+### 2. Create a new analysis file
+
+Create a new analysis file at `analysis/01-getting-started.Rmd`.
+Include the following:
+
+- A short paragraph describing the project topic you plan to use this semester
+- One simple code chunk that prints a small summary (e.g., `summary(mtcars)`)
+- A chunk at the end that runs `sessionInfo()`
+
+```{r}
+# Paste the YAML header from your analysis file here.
+```
+
+```{r}
+# Paste the code chunk that summarizes a dataset here.
+```
+
+```{r}
+# Paste the sessionInfo() output here.
+```
+
+### 3. Build and check the site locally
+
+Use workflowr to build the site and check its status.
+
+```{r}
+wflow_build("analysis/01-getting-started.Rmd")
+wflow_status()
+```
+
+```{r}
+# Paste the output of wflow_status() here.
+```
+
+### 4. Publish and commit with workflowr
+
+Publish the new analysis page using workflowr so it is tracked by Git.
+
+```{r}
+wflow_publish("analysis/01-getting-started.Rmd", message = "Add initial analysis page")
+```
+
+```{r}
+# Paste the output of wflow_publish() here.
+```
+
+### 5. Push to GitHub and enable GitHub Pages
+
+1. Create a new GitHub repository named `workflowr-<your-onyen>`.
+2. Add it as a remote and push your commits.
+3. In GitHub, enable Pages for the `docs/` folder on the `main` branch.
+
+```{r}
+# Paste the GitHub repo URL here.
+```
+
+```{r}
+# Paste the GitHub Pages URL here.
+```
+
+### 6. Verify the published site
+
+Open your GitHub Pages site and confirm:
+
+- The home page loads
+- Your analysis page appears in the navigation
+- The analysis page renders your text and code output
+
+```{r}
+# Briefly describe anything that did not work as expected (if applicable).
+```
+
+## Submission checklist
+
+- GitHub repository link
+- GitHub Pages link
+- `wflow_status()` output
+- `wflow_publish()` output
+- Short reflection (2-3 sentences) on what was straightforward vs. confusing
+
+```{r}
+# Reflection
+```

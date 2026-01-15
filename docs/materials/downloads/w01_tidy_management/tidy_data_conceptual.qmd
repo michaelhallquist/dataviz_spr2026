@@ -92,7 +92,7 @@ Let's look at a series of datasets (from Wickham 2014) and consider how tidy or 
 Here is our first mess. Notice that the column headers are values, not variable names. This is untidy and hard to look at. We effectively have the data in a cross-tabulated format, but `religion` and `income` are not variables in the dataset.
 
 ```{r, echo=FALSE, message=FALSE}
-mess1 <- readr::read_csv("../wrangling_files/religion_messy.csv")
+mess1 <- readr::read_csv("../files/religion_messy.csv")
 ```
 
 ### Messy version
@@ -125,7 +125,7 @@ Here, we tell `tidyr` that we wish to create a lookup ('key') column called `inc
 In our second mess, we have a weather dataset from the Global Historical Climatology Network for one weather station (MX17004) in Mexico. The data represent minimum and maximum temperatures measured across 31 days for five months. The days within each month are on the columns, the months are encoded as a variable `month`, and the min and max temperatures are separated by row, as identified by the `element` variable.
 
 ```{r, echo=FALSE, message=FALSE}
-mess2 <- readr::read_csv("../wrangling_files/weather_messy.csv")
+mess2 <- readr::read_csv("../files/weather_messy.csv")
 ```
 
 ### Messy version
@@ -232,7 +232,7 @@ In our third mess, we have multiple variables stored in one column. More specifi
 ### Messy version 
 
 ```{r, echo=FALSE, message=FALSE}
-mess3 <- readr::read_csv("../wrangling_files/billboard_messy.csv")
+mess3 <- readr::read_csv("../files/billboard_messy.csv")
 ```
 
 ```{r}
@@ -243,7 +243,7 @@ mess3 %>% dplyr::select(country:f1524) %>% kable_table(n=5)
 ### Tidy version
 
 ```{r, echo=FALSE, message=FALSE}
-readr::read_csv("../wrangling_files/tidy3.csv") %>% kable_table(n=8) 
+readr::read_csv("../files/tidy3.csv") %>% kable_table(n=8) 
 ```
 
 ### Tidying solution

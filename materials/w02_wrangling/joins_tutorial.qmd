@@ -1,0 +1,240 @@
+---
+title: "Joins Tutorial"
+author: "Michael Hallquist, PSYC 859"
+date: today
+week: 2
+download: "materials/downloads/w02_wrangling/joins_tutorial.qmd"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require(pacman)) { install.packages("pacman"); library(pacman) }
+p_load(readr, dplyr, knitr, kableExtra, tibble)
+
+#helper function for printing tables in a consistent format
+kable_table <- function(df, n=Inf) { 
+  df %>% head(n=n) %>% kable() %>% 
+    kable_styling(bootstrap_options = c("striped", "condensed"), full_width = F)
+}
+```
+
+# Introduction to joining datasets using dplyr
+
+This document has been adapted and extended by Michael Hallquist and Benjamin Johnson from Jenny Bryan's `dplyr` joins tutorial (<http://stat545.com/bit001_dplyr-cheatsheet.html>). Animations were developed by Garrick Aden-Buie. The goal is to develop an intuition of the four major types of two-table join operations: inner, left, right, and full.  We'll also get into using joins to identify areas of match or mismatch between two datasets (using semi- and anti-joins).
+
+```{r, echo = FALSE, message = FALSE}
+
+superheroes <-"
+name,     alignment, gender, publisher
+Magneto,  bad,       male,   Marvel
+Storm,    good,      female, Marvel
+Mystique, bad,       female, Marvel
+Batman,   good,      male,   DC
+Joker,    bad,       male,   DC
+Catwoman, bad,       female, DC
+Hellboy,  good,      male,   Dark Horse Comics
+"
+
+# "trim_ws" eliminates extra spaces in dataset
+# skip=1 tells R not to read in the first line of data as data
+superheroes <- read_csv(superheroes, trim_ws = TRUE, skip = 1) 
+
+publishers <- "
+publisher, yr_founded
+DC,        1934
+Marvel,    1939
+Image,     1992
+"
+
+publishers <- read_csv(publishers, trim_ws = TRUE, skip = 1)
+```
+
+## Superheroes table
+```{r, echo=FALSE}
+superheroes %>% kable_table()
+```
+
+## Publishers Table
+```{r, echo=FALSE}
+publishers %>% kable_table()
+```
+
+# Mutating joins: inner, left, right, full
+
+"Mutating" joins combine variables from two datasets on the basis of one or more keys that match between datasets.  In the case of these datasets, notice they share the "publisher" column.
+
+*N.B.*: By default, `dplyr` will search for common columns across datasets as the matching
+keys (natural join). If you want to control the process, specify the key using `by`.
+
+## inner join
+Require match in both datasets (non-matching rows are dropped)
+
+For those of you who are visual learners, conceptually, imagine the following two simple datasets:
+
+![](../files/original-dfs.png)
+
+An **inner join** combines the two datasets and drops the non-matching rows like so: 
+
+![](../files/inner-join.gif)
+
+Let's try it with our superhero data.
+
+```{r, message=FALSE}
+#*NB*: Here, we retain the joined dataset as ijsp
+ijsp <- inner_join(x=superheroes, y=publishers)
+print(ijsp)
+```
+
+Same idea, just explicit declaration of key (i.e., "publisher")
+
+```{r, message=FALSE}
+#note that we've cut the x=, y= as this optional
+inner_join(superheroes, publishers, by="publisher")
+```
+
+Notice both Hellboy (from the *superheroes* dataset) and Image comics (from the *publishers* dataset) were dropped. 
+
+## left join
+
+Keep all rows in left-hand 'x' dataset (i.e., superheroes). Add columns from publishers where
+there is a match. Fill in `NA` for non-matching observations.
+
+![](../files/left-join.gif)
+
+```{r, message=FALSE}
+left_join(superheroes, publishers, by="publisher")
+```
+
+## right join
+
+Keep all rows in right-hand 'y' dataset (i.e., publishers). Add columns from superheroes where
+there is a match. Fill in `NA` for non-matching observations.
+
+![](files/right-join.gif)
+
+```{r, message=FALSE}
+# Note the shift to using dplyr piping
+# This achieves the same purpose, but may be preferred by those who love pipes
+superheroes %>% right_join(publishers, by="publisher")
+```
+
+## full join
+Keep all rows in left-hand 'x' (superheroes) and right-hand 'y' (publishers) datasets. 
+
+Resulting dataset will have all columns of both datasets, but filling in `NA` for any non-matches on either side (denoted as blank spaces below).
+
+![](../files/full-join.gif)
+
+```{r, message=FALSE}
+superheroes %>% full_join(publishers, by="publisher")
+```
+
+# One-to-many join
+
+Note that when there are non-unique matches, the join adds all possible combinations.
+
+This occurs in a one-to-many join, where a single observation in table A relates to multiple observations in
+table B. For this scenario, the single table A observation will be replicated onto multiple rows to match the
+multiple observations in table B.
+
+![](../files/left-join-extra.gif)
+
+Let's say you wanted to examine how mood ratings provided over many days relate to demographic characteristics such as age.
+
+```{r, message=FALSE, echo=FALSE}
+set.seed(123)
+mood <- tibble(
+  person=rep(c("Jeff", "Ping", "Karla"), each=6),
+  day=rep(1:6, 3),
+  mood = sample(1:10, 18, replace=TRUE)
+)
+
+mood %>% kable_table(n=6)
+
+demogs <- tibble(
+  person=c("Jeff", "Ping", "Karla"),
+  bio_sex=c("Male", "Male", "Female"),
+  age=c(15, 18, 19),
+  height_in=c(66, 71, 60)
+)
+
+demogs %>% kable_table()
+
+demogs %>% left_join(mood, by="person")
+```
+
+Notice how the demographic variables are replicated on rows for each day of mood ratings.
+If both tables have duplicates for the key, joins can produce many-to-many combinations and a large increase in rows.
+
+# Filtering joins: semi_join and anti_join
+
+Filtering joins use specific criteria to identify observations (rows) from one table that exist or don't exist in another table.
+
+These joins are typically used for diagnosing mismatch between two overlapping datasets. That is, filtering joins are most useful for data quality assurance checks.
+
+## semi_join
+
+retain observations (rows) in x that match in y
+
+![](../files/semi-join.gif)
+
+### Observations in superheroes that match in publishers
+
+Notice that this is different from the `left_join` shown above as the data from y is *not* kept. That is the fundamental difference between 'mutating joins' (e.g., `left_join`) and 'filtering joins' (e.g., `semi_join`).
+
+```{r, message=FALSE}
+semi_join(superheroes, publishers, by="publisher")
+```
+
+### Observations in publishers that match in superheroes
+
+```{r, message=FALSE}
+semi_join(publishers, superheroes, by="publisher")
+```
+
+This can be useful if you have a dataset of your data of interest and another dataset that indicates which of your participants/observations you want to remove or filter out. 
+
+## anti_join
+
+observations in x that are *not* matched in y
+Note that this is similar to `setdiff` in base R
+
+![](../files/anti-join.gif)
+
+### Observations in superheroes that don't match in publishers
+```{r, message=FALSE}
+anti_join(superheroes, publishers, by="publisher")
+```
+
+### Observations in publishers that don't match in superheroes
+```{r, message=FALSE}
+publishers %>% anti_join(superheroes, by="publisher")
+```
+
+This can be useful if you are trying to identify extra participants/observations that may have snuck into one dataset (x) or been deleted in another (y).
+
+# Joining multiple datasets
+
+Joining can be done repeatedly across multiple datasets.  The following code, for instance, joins datasets two at a time from left to right in the list. The result of a two-table join becomes the 'x' dataset for the next join of a new dataset 'y'.
+
+```{r, message=FALSE}
+set.seed(123)
+df1 <- data.frame(id=1:10, x=rnorm(10), y=runif(10))
+df2 <- data.frame(id=1:11, z=rnorm(11), a=runif(11))
+df3 <- data.frame(id=2:10, b=rnorm(9), c=runif(9))
+
+print(df1)
+print(df2)
+print(df3)
+
+dftemp <- full_join(df1, df2, by="id")
+dffinal <- full_join(dftemp, df3, by="id")
+
+#alternative way to combine that avoids temporary variables
+Reduce(function(x, y) full_join(x, y, by="id"), list(df1, df2, df3))
+```
+
+Alternative using pipeline (less extensible)
+```{r, message=FALSE}
+mergedf <- df1 %>% full_join(df2, by="id") %>% full_join(df3, by="id")
+```

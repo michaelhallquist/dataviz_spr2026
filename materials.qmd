@@ -8,3 +8,9 @@ This page contains course materials used during the demonstration and practical 
 # Week 1
 
 - [Tidy data conceptual walkthrough](materials/w01_tidy_management/tidy_data_conceptual.html) ([QMD](materials/downloads/w01_tidy_management/tidy_data_conceptual.qmd))
+
+# Week 2
+
+- [Data wrangling in dplyr](materials/w02_wrangling/dplyr_walkthrough.html) ([QMD](materials/downloads/w02_wrangling/dplyr_walkthrough.qmd))
+- [Joins tutorial](materials/w02_wrangling/joins_tutorial.html) ([QMD](materials/downloads/w02_wrangling/joins_tutorial.qmd))
+- [Strings in R with stringr](materials/w02_wrangling/strings_stringr.html) ([QMD](materials/downloads/w02_wrangling/strings_stringr.qmd))

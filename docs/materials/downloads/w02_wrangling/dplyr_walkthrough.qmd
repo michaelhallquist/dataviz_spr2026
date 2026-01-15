@@ -1,0 +1,687 @@
+---
+title: "Data wrangling in dplyr"
+author: "Michael Hallquist, PSYC 859"
+date: today
+week: 2
+download: "materials/downloads/w02_wrangling/dplyr_walkthrough.qmd"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(digits=2) 
+if (!require(pacman)) { install.packages("pacman"); library(pacman) }
+if (!require(Hmisc)) install.packages("Hmisc")
+p_load(readr, tidyr, knitr, multilevel, kableExtra, nhanesA, dplyr)
+# multilevel loads MASS, which masks dplyr::select; load dplyr last to get the right precedence
+
+#helper function for printing tables in a consistent format
+kable_table <- function(df, n=Inf, p=Inf) { 
+  p <- min(ncol(df), p)
+  df %>% head(n=n) %>% dplyr::select(1:!!p) %>% kable() %>% 
+    kable_styling(bootstrap_options = c("striped", "condensed"), full_width = F)
+}
+```
+
+The goal of this document is to provide a basic introduction to data wrangling using functions from the so-called 'tidyverse' approach. The tidyverse (https://www.tidyverse.org) is a set of data science packages in `R` that are intended to provide a consistent paradigm for working with data. This approach unifies a previously inchoate landscape of different functions and packages in `R` that could be daunting to new users.
+
+Although I do not claim that the tidyverse approach is best according to all possible criteria, I believe that it is the best paradigm for working with data in R for social scientists, many of whom do not have a formal background in computer programming.
+
+Here, I will draw primarily from the *tidyr* and *dplyr* packages in R.
+
+For an excellent book-length treatment of the tidyverse approach, see [R for Data Science (2nd edition)](https://r4ds.hadley.nz) by Hadley Wickham, Mine Cetinkaya-Rundel, and Garrett Grolemund.
+
+# Before we start: beware namespace collisions!
+
+One of the most irritating problems you may encounter in the tidyverse world (and more generally, in R) is when code that previously worked suddenly throws an inexplicable error. 
+
+For example: 
+
+```
+> survey %>% group_by(R_exp) %>% 
+summarize(m_age=mean(Psych_age_yrs), sd_age=sd(Psych_age_yrs))
+
+Error in summarize(., m_age = mean(Psych_age_yrs), sd_age = sd(Psych_age_yrs)) : 
+argument "by" is missing, with no default
+```
+
+By using fairly intuitive data wrangling verbs such as 'summarize' and 'select', `dplyr` (and sometimes `tidyr`) sometimes uses the same function names as other packages. For example, `Hmisc` has a `summarize` function that does not operate in the same way as `summarize` in `dplyr`. Also, the predecessor to `dplyr` was called `plyr`. Although largely outmoded, it has a few remaining functions that may be useful. But... many of these functions have the same names in `dplyr` but operate differently (the syntax is not the same!), which can be a common source of collisions when using `dplyr`.
+
+This points to the problem of what are called 'namespace collisions.' That is, when R looks for a function (or any object) in the global environment, it searches through a 'path'. You can see the nitty gritty using `searchpaths()`. But the TL;DR is that if you -- or any function you call on -- loads another package, that package may override a `dplyr` function and make your code crash!
+
+## Addressing namespace collisions
+
+1. Watch out for warnings about objects being 'masked' when packages are loaded.
+2. Explicitly specify the package where your desired function lives using the double colon operator. Example: `dplyr::summarize`.
+3. Try to load tidyverse packages using `library(tidyverse)`. This handles collisions within the tidyverse!
+
+In this document, `multilevel` pulls in `MASS`, which masks `dplyr::select`. We load `dplyr` last in the setup chunk above. If you ever see the wrong `select`, use the explicit namespace:
+
+```{r}
+select
+dplyr::select
+```
+
+Example of output that portends a namespace collision:
+
+```{r}
+library(Hmisc)
+library(dplyr)
+```
+
+```{r, echo=FALSE}
+#clean up the mess a bit...
+detach("package:Hmisc", unload=TRUE)
+```
+
+If you're unsure which version of a package is being used by `R`, type the function name without parentheses in the console:
+
+```{r}
+summarize
+```
+
+Notice the part at the bottom: `<environment: namespace:dplyr>`. This means that the dplyr version of summarize is the one being found by `R`.
+
+# Data pipelines
+
+The `tidyverse` paradigm encourages the use of so-called data pipelines when writing the syntax for a multi-step data transformation procedure. The pipe operator `%>%` is provided by the `magrittr` package, which is loaded by `dplyr`. Data pipeline syntax is intended to provide a readable syntax for the order in which data operations are performed. You can think of this as a recipe for data wrangling. For example:
+
+```
+1. Read data from the file: 'mydata.csv'
+2. Rename SDATE to submission_date; rename ed to education
+3. Only keep subject IDs above 10 (the first 9 were in-lab pilot subjects)
+4. Drop the timestamp and survey_settings variables
+5. Compute the log of income as a new variable called log_income
+6. Arrange the data by ID, then submission_date (where each subject submitted many surveys)
+7. Ensure that ID and submission_date are the left-most columns in the data
+```
+
+We would write this out as a dplyr pipeline using the pipe operator `%>%` to chain together data operations.
+
+```
+dataset <- read.csv("mydata.csv") %>%
+  rename(submission_date=SDATE, education=ed) %>%
+  filter(ID < 10) %>%
+  select(-timestamp, -survey_settings) %>%
+  mutate(log_income = log(income)) %>%
+  arrange(ID, submission_date) %>%
+  select(ID, submission_date, everything())
+```
+
+## Use of 'this' reference in tidyverse
+
+Sometimes it is useful to refer to the current dataset or variable explicitly in tidyverse data wrangling syntax. 
+
+dplyr/magrittr tends to hide this from us for convenience, but it's there under the hood.
+
+```iris %>% filter(Sepal.Length > 7)```
+
+is the same as
+
+```iris %>% filter(., Sepal.Length > 7)```
+
+So, `'.'` refers to the current dataset or variable (depending on context) in dplyr operations. And if you don't specify where the `'.'` falls in your syntax, it will always be passed as the first argument to the downstream function.
+
+# Special values to watch out for in data wrangling
+
+-  NA: missing
+    - na.rm=TRUE available in many functions
+    - Also, see na.omit(), na.exclude(), na.fail(), na.pass()
+- NULL: null set
+    - Often used when something is undefined
+- Inf: infinite
+- NaN: Not a number. 
+    - Result of an invalid computation, e.g., log(-1)
+- warnings(): If R mentions a warning in data wrangling, make sure you've handled it or know its origin. **Don't just ignore these!**
+
+# dplyr fundamentals
+
+The `dplyr` package is at the core of data wrangling in the `tidyverse`, providing a set of wrangling verbs that collectively form a coherent language for data transformations.
+
+## Rows, columns, and groups
+
+Most dplyr workflows can be organized around three kinds of operations: selecting rows, selecting columns, and operating within groups.
+
+```{r}
+demo_q <- nhanes('DEMO_D')
+bmx_q <- nhanes('BMX_D')
+```
+
+**NHANES variables used below (from DEMO_D and BMX_D):**
+
+- `SEQN`: respondent ID
+- `RIAGENDR`: gender (coded numeric in raw NHANES)
+- `RIDAGEYR`: age in years
+- `DMDHREDU`: education level
+- `BMXWT`: weight (kg)
+- `BMXARML`: upper arm length (cm)
+- `BMXTHICR`: thigh circumference (cm)
+
+**Rows:** keep or reorder observations
+
+```{r}
+demo_q %>%
+  filter(RIDAGEYR > 25, RIAGENDR == 1) %>%  # filter rows by logical conditions
+  arrange(desc(RIDAGEYR)) %>%              # order rows
+  distinct(DMDHREDU, .keep_all = TRUE)     # keep first row per education level
+```
+
+Row filters can also use `if_any()` and `if_all()` across multiple columns:
+
+```{r}
+bmx_q %>%
+  filter(if_any(c(BMXWT, BMXARML, BMXTHICR), ~ .x > 60)) %>%  # any column above 60
+  slice_sample(n = 10) %>% # get a random sample of 10 rows
+  kable_table()
+
+bmx_q %>%
+  filter(if_all(c(BMXWT, BMXARML, BMXTHICR), ~ .x > 30)) %>%  # all columns above 30
+  slice_sample(n = 10) %>%
+  kable_table()
+```
+
+Note: `filter()` drops rows where the condition is `NA`, so include `is.na()` checks if you want to keep missing values.
+
+```{r}
+bmx_q %>%
+  filter(is.na(BMXWT) | BMXWT > 60) %>%  # keep missing weights or weights > 60
+  kable_table(n = 6)
+```
+
+You can also take slices directly:
+
+```{r}
+demo_q %>%
+  slice_max(RIDAGEYR, n = 3, with_ties = FALSE) %>%  # top 3 rows by age
+  kable_table()
+```
+
+Or take the first few rows in a group with `slice_head()`:
+
+```{r}
+demo_q %>%
+  group_by(RIAGENDR) %>%
+  slice_head(n = 2) %>%
+  kable_table()
+```
+
+**Columns:** choose or reshape variables
+
+```{r}
+demo_q %>%
+  select(SEQN, RIAGENDR, RIDAGEYR) %>%    # keep columns
+  rename(gender = RIAGENDR) %>%           # rename columns
+  relocate(RIDAGEYR, .before = gender) %>%    # move columns
+  kable_table(n = 6)
+```
+
+**Tidyselect patterns:** select columns by name or type
+
+```{r}
+demo_q %>%
+  select(SEQN, starts_with("RID"), ends_with("YR")) %>%
+  kable_table(n = 6)
+
+bmx_q %>%
+  select(where(is.numeric), matches("^BMX")) %>%
+  kable_table(n = 6)
+```
+
+You can also drop columns with a leading `-` inside `select()`:
+
+```{r}
+demo_q %>%
+  select(-starts_with("RID")) %>%
+  kable_table(n = 6)
+```
+
+**Conditional transforms:** create variables with `if_else()` and `case_when()`
+
+```{r}
+demo_q %>%
+  mutate(
+    adult = if_else(RIDAGEYR >= 18, "adult", "minor"),
+    age_group = case_when(
+      RIDAGEYR < 18 ~ "child",
+      RIDAGEYR < 65 ~ "adult",
+      TRUE ~ "older adult"
+    )
+  ) %>%
+  select(SEQN, RIDAGEYR, age_group) %>%
+  kable_table(n = 6)
+```
+
+**Mutate across:** apply the same transformation to multiple columns
+
+```{r}
+bmx_q %>%
+  mutate(
+    across(
+      c(BMXWT, BMXARML, BMXTHICR),
+      ~ .x - mean(.x, na.rm = TRUE),
+      .names = "centered_{.col}"
+    )
+  ) %>%
+  dplyr::select(SEQN, starts_with("centered_")) %>%
+  kable_table(n = 6)
+```
+
+**Groups:** summarize or mutate within groups
+
+`group_by()` can use multiple keys (e.g., `group_by(BTN, COMPANY)`) and `ungroup()` drops grouping when you're done.
+
+```{r}
+demo_q %>%
+  group_by(RIAGENDR) %>%
+  summarize(
+    n = n(),
+    avg_age = mean(RIDAGEYR, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  kable_table()
+```
+
+Grouping persists across verbs until you `ungroup()` (or use `.groups` in `summarize()`):
+
+```{r}
+demo_q %>%
+  group_by(RIAGENDR) %>%
+  mutate(mean_age = mean(RIDAGEYR, na.rm = TRUE)) %>%
+  ungroup() %>%
+  summarize(overall_mean = mean(RIDAGEYR, na.rm = TRUE)) %>%
+  kable_table()
+```
+
+Quick counting helpers:
+
+```{r}
+demo_q %>%
+  count(RIAGENDR)                      # counts per gender
+
+demo_q %>%
+  summarize(n_edu = n_distinct(DMDHREDU))
+```
+
+For single summaries, you can also use `.by` instead of `group_by()`:
+
+```{r}
+demo_q %>%
+  summarize(
+    avg_age = mean(RIDAGEYR, na.rm = TRUE),
+    .by = RIAGENDR # compute summary within gender without keeping groups
+  )
+```
+
+## Overview: a first pass through an NHANES dataset
+
+To learn `dplyr`, let's start with a survey from the National Health and Nutrition Examination Survey (NHANES) dataset. These data are provided in the `nhanesA` package. We'll start by looking at a couple of basic demographic variables.
+
+```{r}
+# demographics: note that this code relies on functions in the nhanesA package, which
+#   is useful for working with NHANES data, but is not a focus of this workshop per se.
+
+demo_d <- nhanes('DEMO_D')
+demo_d_vars  <- nhanesTableVars('DEMOGRAPHICS', 'DEMO_D', namesonly=TRUE)
+
+# translate numeric codes into factors by using the nhanes lookup/codebook functions
+demo_d <- suppressWarnings(nhanesTranslate('DEMO_D', demo_d_vars, data=demo_d))
+
+# dplyr pipeline
+demo_d <- demo_d %>% 
+  filter(!INDHHINC %in% c("Over $20,000", "Under $20,000", "Refused", "Don't know")) %>% 
+  droplevels() %>% # drop unused factor levels from the data.frame
+  mutate(
+    # case_when() is a vectorized if/else ladder for many conditions
+    income_num = case_when( # convert range-based factor labels to midpoint numbers
+    INDHHINC == "$     0 to $ 4,999" ~ 2500,
+    INDHHINC == "$ 5,000 to $ 9,999" ~ 7500,
+    INDHHINC == "$10,000 to $14,999" ~ 12500,
+    INDHHINC == "$15,000 to $19,999" ~ 17500,
+    INDHHINC == "$20,000 to $24,999" ~ 22500,
+    INDHHINC == "$25,000 to $34,999" ~ 30000,
+    INDHHINC == "$35,000 to $44,999" ~ 40000,
+    INDHHINC == "$45,000 to $54,999" ~ 50000,
+    INDHHINC == "$55,000 to $64,999" ~ 60000,
+    INDHHINC == "$65,000 to $74,999" ~ 70000,
+    INDHHINC == "$75,000 and Over" ~ 80000
+    )
+  )
+ 
+#load body (biometric) measures
+bmx_d <- nhanes('BMX_D')
+bmx_d_vars  <- nhanesTableVars('EXAM', 'BMX_D', namesonly=TRUE)
+bmx_d <- suppressWarnings(nhanesTranslate('BMX_D', bmx_d_vars, data=bmx_d))
+
+# merge the education demographics variable with the biometric data, joining on the SEQN column (basically an ID)
+bmx_d <- demo_d %>% 
+  dplyr::select(SEQN, DMDHREDU) %>% 
+  inner_join(bmx_d, by="SEQN")
+```
+
+## group_by + summarize
+
+Let's summarize the mean household income (`income_num`), converted from categories in `INDHHINC`) by highest level of education completed (`DMDHREDU`)
+
+```{r}
+demo_d %>% 
+  group_by(DMDHREDU) %>% # divide dataset into separate compartments by education level
+  dplyr::summarize(
+    n=n(), # number of observations
+    m_income=mean(income_num, na.rm=T), 
+    sd_income=sd(income_num, na.rm=T)
+  ) %>% 
+  kable_table()
+```
+
+Note that `summarize` removes a single level of grouping in the `group_by` process. Here, we only have one grouping variable, `DMDHREDU`, so the output of `summarize` will be 'ungrouped.'
+
+## Grouped summaries of several variables
+
+What if I want to have means and SDs for several continuous variables grouped by highest education? Let's look specifically at the weight (`BMXWT`), upper arm length (`BMXARML`), and thigh circumference (`BMXTHICR`) measurements. The combination of `summarize` and `across` provide functionality to specify several variables using the `.cols` argument of `across` and potentially several summary functions by passing them in a named `list`.
+
+```{r}
+bmx_d %>% 
+  group_by(DMDHREDU) %>% 
+  dplyr::summarize(
+    across(
+      c(BMXWT, BMXARML, BMXTHICR), 
+      list(m=~mean(.x, na.rm=T), sd=~sd(.x, na.rm=T))
+    )
+  ) %>% 
+  kable_table()
+```
+
+Let's slow this down:
+
+### group_by verb
+
+```
+survey %>% group_by(DMDHREDU)
+```
+
+This tells `dplyr` to divide the `bmx_d` (NHANES biometric measurements) data into a set of smaller `data.frame` objects, one per level of `DMDHREDU`. Internally, this looks something like the output below. After this division of the dataset into chunks, `summarize` will work on each chunk individually.
+
+```{r, echo=FALSE}
+lapply(split(bmx_d, bmx_d$DMDHREDU), function(x) { 
+  #don't worry about the code if you're looking at this!
+  row.names(x) <- 1:nrow(x); x[1:min(4, nrow(x)),1:4] }
+)  
+```
+
+### summarize + across
+
+The `summarize` function transforms a dataset that has many rows to a dataset that has a **single** row per grouping unit. If you do not use `group_by`, `summarize` will yield an overall summary statistic in the entire dataset. For example, to get the mean and SD of household income in NHANES, irrespective of education level or other categorical moderators, we could just use a simple `summarize`:
+
+```{r}
+demo_d %>%
+  dplyr::summarize(
+    m_income=mean(income_num, na.rm=T), 
+    sd_income=sd(income_num, na.rm=T)
+  ) %>% 
+  kable_table()
+```
+
+But because we used `group_by(DMDHREDU)` above, we got unique summaries of the variables at each level of education.
+
+The `across` function accepts two primary arguments. First, we specify a set of variables (the `.cols` argument) that we wish to summarize in the same way (i.e., compute the same summary statistics). Second, we specify which statistics we wish to compute (the `.fns` argument). In our case, the syntax was:
+
+```
+dplyr::summarize(
+    across(c(BMXWT, BMXARML, BMXTHICR), 
+           list(m=~mean(.x, na.rm=T), sd=~sd(.x, na.rm=T)))
+)
+```
+
+The `c()` function specifies a vector of unquoted variable names in the dataset we wish to summarize, separated by commas. Note that any `tidyselect` operator for selecting columns will work. This includes `starts_with`, `ends_with`, `matches`, and others. For details, see `?dplyr_tidy_select`.
+
+The `list()` here asks `dplyr` to run each function in the list against each variables in the `.cols` specification. Here, this means that dplyr will compute the mean and SD of each variable in the `.cols` argument at *each level* of education completed (the `group_by` basis). The names of the list elements (left side) --- here, `m` and `sd` --- become the suffixes added for each variable. The value of the element (right side) --- here, `mean` and `sd` --- are the functions that should be used to compute a summary statistic (they should return one number per grouped variable). 
+
+Note that the column names that result from an `across` operation can be modified using the `.names` argument. The default is to suffix the variable name with the names of the functions list, preceded by an underscore (e.g., `income_m`).
+
+**Passing arguments to summary functions**
+
+Notice how we passed `na.rm=TRUE` to the mean function within the list. This tells the mean to ignore missing (`NA`) values when computing the mean (i.e., mean of the non-missing numbers). In general, the dplyr syntax using what they call "lambdas" (starting with `~`) is the clearest way to control the arguments passed to each function. Here is a simple definition of a lambda in *R*:
+
+`~ mean(.x, na.rm=TRUE)`
+
+The `.x` refers to the current variable being used within a dplyr data wrangling operation. This is in contrast to `.`, which generally refers to the current dataset.
+
+If you don't need to pass arguments to the functions in an `across()` operation, you can just state the function name:
+
+```
+dplyr::summarize(
+    across(c(BMXWT, BMXARML, BMXTHICR), 
+           list(m=mean, sd=sd))
+)
+```
+
+## Making a summarize pipeline even more beautiful
+
+We can also make the output more beautiful using tidying techniques we've already seen in the `tidyr` tutorial. Remember that `R` is all about programming for data science. In particular, notice that we have some columns that are means and others that are SDs. 
+
+We can just extend our data pipeline a bit. The `extract` function from `tidyr` here is like `separate`, but with a bit more oomph using regular expressions. This is a more intermediate topic, but there is a useful tutorial here: <http://www.regular-expressions.info/tutorial.html>.
+
+```{r}
+bmx_d %>% 
+  group_by(DMDHREDU) %>% 
+  dplyr::summarize(
+    across(
+      c(BMXWT, BMXARML, BMXTHICR), 
+      list(m=~mean(.x, na.rm=T), sd=~sd(.x, na.rm=T))
+    )
+  ) %>%
+  
+   # combine m and sd statistics (notice how you can add comments inline within a pipeline?)
+  pivot_longer(cols=-DMDHREDU, names_to = "Measure", values_to = "value") %>%
+  
+  # divide income_m into income and m
+  #extract(col=Measure, into=c("bio_measure", "statistic"), regex=("(.*)_(.*)$")) %>% 
+  separate(col=Measure, into=c("bio_measure", "statistic"), sep="_") %>% 
+  pivot_wider(names_from=statistic, values_from = value) %>% 
+  arrange (bio_measure, DMDHREDU) %>%
+  kable_table()
+
+```
+
+### arrange: order observations
+
+Toward the end of the pipeline above, we see:
+
+```
+arrange (bio_measure, DMDHREDU) %>%
+```
+
+The `arrange` verb in dplyr requests that observations be sorted according to one or more variables. Here, we ask for the dataset to be sorted by bio_measure (biometric measure, such as weight) first, then by education level within that measure. The `arrange` verb sorts observations in **ascending** order (low to high) by default, but data can be sorted in descending order using the `desc()` function:
+
+```
+arrange(bio_measure, desc(DMDHREDU)) %>%
+```
+
+This would sort by highest to lowest education level within each measure (`bio_measure`), where the bio_measures are still in ascending (alphabetical) order
+
+# Examining a more complex multilevel dataset using dplyr
+
+Let's examine the univbct data, which contains longitudinal observations of job satisfaction, commitment, and readiness to deploy. From the documentation `?univbct`:
+
+```
+This data set contains the complete data set used in Bliese and Ployhart (2002). The data is longitudinal data converted to univariate (i.e., stacked) form. Data were collected at three time points. A data frame with 22 columns and 1485 observations from 495 individuals.
+```
+
+We have 1485 observations of military personnel nested within companies, which are nested within batallions: <https://en.wikipedia.org/wiki/Battalion>.
+
+```{r}
+data(univbct, package="multilevel")
+str(univbct)
+```
+
+Let's enact the core 'verbs' of dplyr to understand and improve the structure of these data.
+
+## filter: obtaining observations (rows) based on some criteria
+
+*Objective*: Retain only men in company A
+
+```{r}
+COMPANY="A"
+COMPANY <- "A"
+
+company_A_men <- filter(univbct, COMPANY=="A" & GENDER==1)
+#print 10 observations at random to check the accuracy of the filter
+#p=11 just shows the first 11 columns to keep it on one page for formatting
+company_A_men %>% sample_n(10) %>% kable_table(p=11)
+```
+
+*Objective*: Count how many people are in companies A and B
+```{r}
+filter(univbct, COMPANY %in% c("A","B")) %>% nrow()
+```
+
+*Objective*: What about counts by company and battalion?
+```{r}
+univbct %>% 
+  group_by(BTN, COMPANY) %>% 
+  tally() %>%
+  kable_table(n=12)
+  
+# N.B. The same result could be obtained with count(BTN, COMPANY) alone.
+#  This combines the group_by and tally functions
+```
+
+## select: choose variables (columns) based on some criteria
+
+Let's start by keeping only the three core dependent variables over time: jobsat, commit, ready. Keep SUBNUM as well for unique identification.
+
+```{r}
+dvs_only <- univbct %>% 
+  dplyr::select(SUBNUM, JOBSAT1, JOBSAT2, JOBSAT3, 
+                COMMIT1, COMMIT2, COMMIT3, 
+                READY1, READY2, READY3)
+```
+
+If you have many variables of a similar name, you might try `starts_with()`. Note in this case that it brings in "READY", too. Note that you can mix different selection mechanisms within select. Look at the cheatsheet.
+
+```{r}
+dvs_only <- univbct %>% 
+  dplyr::select(SUBNUM, starts_with("JOBSAT"), starts_with("COMMIT"), starts_with("READY"))
+```
+
+Other selection mechanisms:
+
+* `contains`: variable name contains a literal string
+* `starts_with`: variable names start with a string
+* `ends_with`: variable names end with a string
+* `num_range`: variables that have a common prefix (e.g., 'reasoning') and a numeric range (e.g., 1-20)
+* `matches`: variable name matches a regular expression
+* `one_of`: variable is one of the elements in a character vector. Example: select(one_of(c("A", "B")))
+
+See `?select_helpers` for more details.
+
+## select + filter: zooming in on specific observations and variables
+
+Note that `select` and `filter` can be combined to subset both observations and variables of interest. 
+
+For example, look at readiness to deploy in battalion 299 only:
+```{r}
+univbct %>% 
+  filter(BTN==299) %>% 
+  dplyr::select(SUBNUM, READY1, READY2, READY3) %>% 
+  kable_table(n=6)
+```
+
+`select` is also useful for dropping variables that are not of interest using a kind of subtraction syntax.
+
+```{r}
+nojobsat <- univbct %>% 
+  dplyr::select(-starts_with("JOBSAT"))
+names(nojobsat)
+```
+
+## mutate: add one or more variables that are a function of other variables
+
+(Row-wise) mean of commit scores over waves. Note how you can used `select()` within a mutate to run a function on a subset of the data.
+
+```{r}
+univbct <- univbct %>% 
+  mutate(commitmean=rowMeans(dplyr::select(., COMMIT1, COMMIT2, COMMIT3)))
+```
+
+Mutate can manipulate several variables in one call. Here, mean center any variable that starts with COMMIT
+and add the suffix `_cm` for clarity. Also compute the percentile rank for each of these columns, with _pct as suffix. Note the use of the `starts_with` function here within the `across()`. This operates identically to `select`, but in the context of a summary or mutation operation on specific variables. See `?select_helpers` for details.
+
+```{r}
+meancent <- function(x) { x - mean(x, na.rm=TRUE) } #simple worker function to mean center a variable
+
+univbct <- univbct %>% 
+  mutate(across(starts_with("COMMIT", ignore.case = FALSE), list(cm=meancent, pct=percent_rank)))
+
+univbct %>%
+  dplyr::select(starts_with("COMMIT", ignore.case = FALSE)) %>%
+  kable_table(n=8) %>% kable_styling(font_size = 12)
+```
+
+## arrange: reorder observations in specific order
+
+Order data by ascending battalion, company, then subnum
+
+```{r}
+univbct <- univbct %>% 
+  arrange(BTN, COMPANY, SUBNUM)
+```
+
+Descending sort: descending battalion, ascending company, ascending subnum
+
+```{r}
+univbct <- univbct %>% 
+  arrange(desc(BTN), COMPANY, SUBNUM)
+```
+
+## A more realistic example: preparation for multilevel analysis
+
+In MLM, one strategy for disentangling within- versus between-person effects is to include both within-person-centered variables and person means in the model (Curran & Bauer, 2011).
+
+We can achieve this easily for our three DVs here using a single pipeline that combines tidying and mutation. Using `-1` as the `sep` argument to `separate` splits the string at the second-to-last position (i.e., starting at the right).
+
+For reshaping to work smoothly, we need a unique identifier for each row. Also, `univbct` is stored in a dangerously untidy format in which variables with suffix 1-3 indicate a 'wide format', but the data is *also* in long format under variables such as 'JSAT' and 'COMMIT.' In other words, there is a peculiar redundancy in the data that is altogether confusing.
+
+Take a look:
+```{r}
+univbct %>%
+  dplyr::select(SUBNUM, starts_with("JOBSAT"), JSAT) %>% 
+  kable_table(n=12)
+```
+
+We first need to eliminate this insanity. Group by subject number and retain only the first row (i.e., keep the wide version).
+
+```{r}
+univbct <- univbct %>% 
+  group_by(SUBNUM) %>% # split into separate groups for each subject
+  filter(row_number() == 1) %>% # only retain the first row of each subject
+  dplyr::select(-JSAT, -COMMIT, -READY) %>% # drop redundant columns
+  ungroup() # remove grouping from data structure (we are done with group-based wrangling)
+```
+
+First, let's get the data into a conventional format (long) for MLM (e.g., using `lmer`)
+
+```{r}
+
+forMLM <- univbct %>% 
+  dplyr::select(SUBNUM, JOBSAT1, JOBSAT2, JOBSAT3, 
+                COMMIT1, COMMIT2, COMMIT3, 
+                READY1, READY2, READY3) %>% 
+  
+  # pivot everything but SUBNUM
+  pivot_longer(names_to = "key", values_to = "value", cols=-SUBNUM) %>%
+  
+  # -1 splits at the last character of the variable name
+  separate(col="key", into=c("variable", "occasion"), -1) %>%
+  pivot_wider(names_from = variable, values_from = value) %>% 
+  mutate(occasion=as.numeric(occasion))
+```
+
+Now, let's perform the centering described above. You could do this in one pipeline -- I just separated things here for conceptual clarity.
+
+```{r}
+forMLM <- forMLM %>% group_by(SUBNUM) %>% 
+  mutate(across(c(COMMIT, JOBSAT, READY), list(wic=meancent, pm=mean))) %>%
+  ungroup()
+
+forMLM %>% kable_table(n=10) %>% kable_styling(font_size = 14)
+```

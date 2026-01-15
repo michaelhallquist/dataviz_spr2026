@@ -17,7 +17,10 @@ copy_qmds <- function(src_dir) {
 
   rel_paths <- sub(paste0("^", src_dir, "[/\\\\]"), "", qmds)
   output_dest_paths <- file.path(output_dir, src_dir, "downloads", rel_paths)
-  dir.create(unique(dirname(output_dest_paths)), recursive = TRUE, showWarnings = FALSE)
+  dest_dirs <- unique(dirname(output_dest_paths))
+  for (dir_path in dest_dirs) {
+    dir.create(dir_path, recursive = TRUE, showWarnings = FALSE)
+  }
   file.copy(qmds, output_dest_paths, overwrite = TRUE)
 }
 
