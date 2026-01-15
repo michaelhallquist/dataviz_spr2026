@@ -4,6 +4,9 @@ author: "Michael Hallquist, PSYC 859"
 date: today
 week: 2
 download: "materials/downloads/w02_wrangling/joins_tutorial.qmd"
+format:
+  html:
+    code-fold: show
 ---
 
 ```{r setup, include=FALSE}

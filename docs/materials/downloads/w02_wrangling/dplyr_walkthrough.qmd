@@ -4,6 +4,9 @@ author: "Michael Hallquist, PSYC 859"
 date: today
 week: 2
 download: "materials/downloads/w02_wrangling/dplyr_walkthrough.qmd"
+format:
+  html:
+    code-fold: show
 ---
 
 ```{r setup, include=FALSE}
@@ -11,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 options(digits=2) 
 if (!require(pacman)) { install.packages("pacman"); library(pacman) }
 if (!require(Hmisc)) install.packages("Hmisc")
-p_load(readr, tidyr, knitr, multilevel, kableExtra, nhanesA, dplyr)
+p_load(knitr, multilevel, kableExtra, nhanesA, readr, tidyr, dplyr)
 # multilevel loads MASS, which masks dplyr::select; load dplyr last to get the right precedence
 
 #helper function for printing tables in a consistent format
@@ -54,32 +57,54 @@ This points to the problem of what are called 'namespace collisions.' That is, w
 2. Explicitly specify the package where your desired function lives using the double colon operator. Example: `dplyr::summarize`.
 3. Try to load tidyverse packages using `library(tidyverse)`. This handles collisions within the tidyverse!
 
-In this document, `multilevel` pulls in `MASS`, which masks `dplyr::select`. We load `dplyr` last in the setup chunk above. If you ever see the wrong `select`, use the explicit namespace:
+For example, in this document, `multilevel` pulls in `MASS`, which masks `dplyr::select`. If we were to load `dplyr` first, then `multilevel`, we would see the following:
 
-```{r}
-select
-dplyr::select
+
+```
+> library(dplyr)
+> library(multilevel)
+Loading required package: nlme
+
+Attaching package: ‘nlme’
+
+The following object is masked from ‘package:dplyr’:
+
+    collapse
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
 ```
 
-Example of output that portends a namespace collision:
+Read in English, this says, "The multilevel package needs to load nlme (a mixed-effects package). Nlme has a function called 'collapse'
+that will now take precedence over 'collapse' in dplyr if you run `collapse()` in your session. Multilevel also needs the MASS package,
+so I'm loading it. The MASS package has a function called 'select' that now takes precedence over dplyr's select function, so if
+you call `select()` in your session, you will be getting the MASS package function, not the dplyr one."
 
-```{r}
-library(Hmisc)
-library(dplyr)
+To get around these problems, the easiest route is to load dplyr (and other tidyverse packages) last in the chain, giving them precedence
+over other packages. As you see above in the `p_load` call, we load `dplyr` last in the chain so that its select function is preferred over
+MASS. This is important because functions of the same name across packages may have completely different purposes and syntax!
+
+The slightly harder, but more robust, route is always to use explicit namespace qualifiers with the `::` operator. If you use
+`dplyr::select` as the function call, you are explicitly telling R that you want dplyr's select function, not some other package's.
+
+The two most common collisions are with `select` (MASS) and `summarize` (Hmisc). If you're not sure which version of a function has taken precedence
+you can type the function name without parentheses. This will print the function source (which you can ignore). But take a look at the last line, which
+reveals where R 'found' the function in the search across loaded packages (based on their load order/precedence).
+
+```
+> select
+function (obj) 
+UseMethod("select")
+<bytecode: 0x93b18ebd8>
+<environment: namespace:MASS>
 ```
 
-```{r, echo=FALSE}
-#clean up the mess a bit...
-detach("package:Hmisc", unload=TRUE)
-```
-
-If you're unsure which version of a package is being used by `R`, type the function name without parentheses in the console:
-
-```{r}
-summarize
-```
-
-Notice the part at the bottom: `<environment: namespace:dplyr>`. This means that the dplyr version of summarize is the one being found by `R`.
+If you were expecting that last line to read `<environment: namespace:dplyr>` (i.e. dplyr's version), then you have a namespace problem to resolve!
 
 # Data pipelines
 
@@ -137,14 +162,9 @@ So, `'.'` refers to the current dataset or variable (depending on context) in dp
 
 The `dplyr` package is at the core of data wrangling in the `tidyverse`, providing a set of wrangling verbs that collectively form a coherent language for data transformations.
 
-## Rows, columns, and groups
+## Overview: a first pass through an NHANES dataset
 
-Most dplyr workflows can be organized around three kinds of operations: selecting rows, selecting columns, and operating within groups.
-
-```{r}
-demo_q <- nhanes('DEMO_D')
-bmx_q <- nhanes('BMX_D')
-```
+To learn `dplyr`, let's start with a survey from the National Health and Nutrition Examination Survey (NHANES) dataset. These data are provided in the `nhanesA` package. We'll start by looking at a couple of basic demographic variables.
 
 **NHANES variables used below (from DEMO_D and BMX_D):**
 
@@ -155,167 +175,6 @@ bmx_q <- nhanes('BMX_D')
 - `BMXWT`: weight (kg)
 - `BMXARML`: upper arm length (cm)
 - `BMXTHICR`: thigh circumference (cm)
-
-**Rows:** keep or reorder observations
-
-```{r}
-demo_q %>%
-  filter(RIDAGEYR > 25, RIAGENDR == "Male") %>%  # filter rows by logical conditions
-  arrange(desc(RIDAGEYR)) %>%                # order rows
-  distinct(DMDHREDU, .keep_all = TRUE) %>%   # keep first row per education level
-  select(SEQN, RIDAGEYR, RIAGENDR, DMDHREDU) %>%
-  kable_table()
-```
-
-Row filters can also use `if_any()` and `if_all()` across multiple columns:
-
-```{r}
-bmx_q %>%
-  filter(if_any(c(BMXWT, BMXARML, BMXTHICR), ~ .x > 60)) %>%  # any column above 60
-  slice_sample(n = 10) %>% # get a random sample of 10 rows
-  kable_table()
-
-bmx_q %>%
-  filter(if_all(c(BMXWT, BMXARML, BMXTHICR), ~ .x > 30)) %>%  # all columns above 30
-  slice_sample(n = 10) %>%
-  kable_table()
-```
-
-Note: `filter()` drops rows where the condition is `NA`, so include `is.na()` checks if you want to keep missing values.
-
-```{r}
-bmx_q %>%
-  filter(is.na(BMXWT) | BMXWT > 60) %>%  # keep missing weights or weights > 60
-  kable_table(n = 6)
-```
-
-You can also take slices directly:
-
-```{r}
-demo_q %>%
-  slice_max(RIDAGEYR, n = 3, with_ties = FALSE) %>%  # top 3 rows by age
-  kable_table()
-```
-
-Or take the first few rows in a group with `slice_head()`:
-
-```{r}
-demo_q %>%
-  group_by(RIAGENDR) %>%
-  slice_head(n = 2) %>%
-  kable_table()
-```
-
-**Columns:** choose or reshape variables
-
-```{r}
-demo_q %>%
-  select(SEQN, RIAGENDR, RIDAGEYR) %>%    # keep columns
-  rename(gender = RIAGENDR) %>%           # rename columns
-  relocate(RIDAGEYR, .before = gender) %>%    # move columns
-  kable_table(n = 6)
-```
-
-**Tidyselect patterns:** select columns by name or type
-
-```{r}
-demo_q %>%
-  select(SEQN, starts_with("RID"), ends_with("YR")) %>%
-  kable_table(n = 6)
-
-bmx_q %>%
-  select(where(is.numeric), matches("^BMX")) %>%
-  kable_table(n = 6)
-```
-
-You can also drop columns with a leading `-` inside `select()`:
-
-```{r}
-demo_q %>%
-  select(-starts_with("RID")) %>%
-  kable_table(n = 6)
-```
-
-**Conditional transforms:** create variables with `if_else()` and `case_when()`
-
-```{r}
-demo_q %>%
-  mutate(
-    adult = if_else(RIDAGEYR >= 18, "adult", "minor"),
-    age_group = case_when(
-      RIDAGEYR < 18 ~ "child",
-      RIDAGEYR < 65 ~ "adult",
-      TRUE ~ "older adult"
-    )
-  ) %>%
-  select(SEQN, RIDAGEYR, age_group) %>%
-  kable_table(n = 6)
-```
-
-**Mutate across:** apply the same transformation to multiple columns
-
-```{r}
-bmx_q %>%
-  mutate(
-    across(
-      c(BMXWT, BMXARML, BMXTHICR),
-      ~ .x - mean(.x, na.rm = TRUE),
-      .names = "centered_{.col}"
-    )
-  ) %>%
-  dplyr::select(SEQN, starts_with("centered_")) %>%
-  kable_table(n = 6)
-```
-
-**Groups:** summarize or mutate within groups
-
-`group_by()` can use multiple keys (e.g., `group_by(BTN, COMPANY)`) and `ungroup()` drops grouping when you're done.
-
-```{r}
-demo_q %>%
-  group_by(RIAGENDR) %>%
-  summarize(
-    n = n(),
-    avg_age = mean(RIDAGEYR, na.rm = TRUE),
-    .groups = "drop"
-  ) %>%
-  kable_table()
-```
-
-Grouping persists across verbs until you `ungroup()` (or use `.groups` in `summarize()`):
-
-```{r}
-demo_q %>%
-  group_by(RIAGENDR) %>%
-  mutate(mean_age = mean(RIDAGEYR, na.rm = TRUE)) %>%
-  ungroup() %>%
-  summarize(overall_mean = mean(RIDAGEYR, na.rm = TRUE)) %>%
-  kable_table()
-```
-
-Quick counting helpers:
-
-```{r}
-demo_q %>%
-  count(RIAGENDR)                      # counts per gender
-
-demo_q %>%
-  summarize(n_edu = n_distinct(DMDHREDU))
-```
-
-For single summaries, you can also use `.by` instead of `group_by()`:
-
-```{r}
-demo_q %>%
-  summarize(
-    avg_age = mean(RIDAGEYR, na.rm = TRUE),
-    .by = RIAGENDR # compute summary within gender without keeping groups
-  )
-```
-
-## Overview: a first pass through an NHANES dataset
-
-To learn `dplyr`, let's start with a survey from the National Health and Nutrition Examination Survey (NHANES) dataset. These data are provided in the `nhanesA` package. We'll start by looking at a couple of basic demographic variables.
 
 ```{r}
 # demographics: note that this code relies on functions in the nhanesA package, which
@@ -686,4 +545,184 @@ forMLM <- forMLM %>% group_by(SUBNUM) %>%
   ungroup()
 
 forMLM %>% kable_table(n=10) %>% kable_styling(font_size = 14)
+```
+
+# Reference: Rows, columns, and groups in dplyr
+
+Most dplyr workflows can be organized around three kinds of operations: selecting rows, selecting columns, and operating within groups.
+
+```{r}
+demo_q <- nhanes('DEMO_D')
+bmx_q <- nhanes('BMX_D')
+```
+
+**Rows:** keep or reorder observations
+
+```{r}
+demo_q %>%
+  filter(RIDAGEYR > 25, RIAGENDR == "Male") %>%  # filter rows by logical and: over 25 and male 
+  arrange(desc(RIDAGEYR)) %>%                # order rows by descending age
+  distinct(DMDHREDU, .keep_all = TRUE) %>%   # keep first row per education level for inspection
+  select(SEQN, RIDAGEYR, RIAGENDR, DMDHREDU) %>% # subset down to a few variables of interest
+  
+  # Watch out for attempts to refer to variables you have 'selected out' earlier in the pipeline.
+  # Here, DMDHRBRN isn't in the select statement above, so we can't use it in a downstream mutate call
+  # mutate(
+  #   in_us = if_else(DMDHRBRN == "Born in 50 US States or Washington, DC", TRUE, FALSE)
+  # ) %>%
+  kable_table()
+```
+
+Row filters can also use `if_any()` and `if_all()` across multiple columns:
+
+Here, using `if_any`, we find observations where weight (`BMXWT` in kg), arm length (`BMXARML` in cm), or thigh circumference (`BMXTHICR` in cm) is greater than
+60 (setting aside the different units of measurement).
+
+```{r}
+bmx_q %>%
+  filter(if_any(c(BMXWT, BMXARML, BMXTHICR), ~ .x > 60)) %>%  # any column above 60
+  slice_sample(n = 5) %>% # get a random sample of 5 rows
+  kable_table()
+
+```
+
+By comparison, here are rows where *all three* of these are greater than 30, using `if_all`:
+
+```{r}
+bmx_q %>%
+  filter(if_all(c(BMXWT, BMXARML, BMXTHICR), ~ .x > 30)) %>%  # all columns above 30
+  slice_sample(n = 5) %>%
+  kable_table()
+```
+
+Note: `filter()` drops rows where the condition is `NA`, so include `is.na()` checks if you want to keep missing values.
+
+```{r}
+bmx_q %>%
+  filter(is.na(BMXWT) | BMXWT > 60) %>%  # keep missing weights or weights > 60
+  kable_table(n = 6)
+```
+
+You can also take slices directly:
+
+```{r}
+demo_q %>%
+  slice_max(RIDAGEYR, n = 3, with_ties = FALSE) %>%  # top 3 rows by age
+  kable_table()
+```
+
+Or take the first few rows in a group with `slice_head()`:
+
+```{r}
+demo_q %>%
+  group_by(RIAGENDR) %>%
+  slice_head(n = 2) %>%
+  kable_table()
+```
+
+**Columns:** choose or reshape variables
+
+```{r}
+demo_q %>%
+  select(SEQN, RIAGENDR, RIDAGEYR) %>%    # keep columns
+  rename(gender = RIAGENDR) %>%           # rename columns
+  relocate(RIDAGEYR, .before = gender) %>%    # move columns
+  kable_table(n = 6)
+```
+
+**Tidyselect patterns:** select columns by name or type
+
+```{r}
+demo_q %>%
+  select(SEQN, starts_with("RID"), ends_with("YR")) %>%
+  kable_table(n = 6)
+
+bmx_q %>%
+  select(where(is.numeric), matches("^BMX")) %>%
+  kable_table(n = 6)
+```
+
+You can also drop columns with a leading `-` inside `select()`:
+
+```{r}
+demo_q %>%
+  select(-starts_with("RID")) %>%
+  kable_table(n = 6)
+```
+
+**Conditional transforms:** create variables with `if_else()` and `case_when()`
+
+```{r}
+demo_q %>%
+  mutate(
+    adult = if_else(RIDAGEYR >= 18, "adult", "minor"),
+    age_group = case_when(
+      RIDAGEYR < 18 ~ "child",
+      RIDAGEYR < 65 ~ "adult",
+      TRUE ~ "older adult"
+    )
+  ) %>%
+  select(SEQN, RIDAGEYR, age_group) %>%
+  kable_table(n = 6)
+```
+
+**Mutate across:** apply the same transformation to multiple columns
+
+```{r}
+bmx_q %>%
+  mutate(
+    across(
+      c(BMXWT, BMXARML, BMXTHICR),
+      ~ .x - mean(.x, na.rm = TRUE),
+      .names = "centered_{.col}"
+    )
+  ) %>%
+  dplyr::select(SEQN, starts_with("centered_")) %>%
+  kable_table(n = 6)
+```
+
+**Groups:** summarize or mutate within groups
+
+`group_by()` can use multiple keys (e.g., `group_by(BTN, COMPANY)`) and `ungroup()` drops grouping when you're done.
+
+```{r}
+demo_q %>%
+  group_by(RIAGENDR) %>%
+  summarize(
+    n = n(),
+    avg_age = mean(RIDAGEYR, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  kable_table()
+```
+
+Grouping persists across verbs until you `ungroup()` (or use `.groups` in `summarize()`):
+
+```{r}
+demo_q %>%
+  group_by(RIAGENDR) %>%
+  mutate(mean_age = mean(RIDAGEYR, na.rm = TRUE)) %>%
+  ungroup() %>%
+  summarize(overall_mean = mean(RIDAGEYR, na.rm = TRUE)) %>%
+  kable_table()
+```
+
+Quick counting helpers:
+
+```{r}
+demo_q %>%
+  count(RIAGENDR)                      # counts per gender
+
+demo_q %>%
+  summarize(n_edu = n_distinct(DMDHREDU))
+```
+
+For single summaries, you can also use `.by` instead of `group_by()`:
+
+```{r}
+demo_q %>%
+  summarize(
+    avg_age = mean(RIDAGEYR, na.rm = TRUE),
+    .by = RIAGENDR # compute summary within gender without keeping groups
+  )
 ```

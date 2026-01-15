@@ -4,6 +4,9 @@ author: "Michael Hallquist, PSYC 859"
 date: today
 week: 1
 download: "materials/downloads/w01_tidy_management/tidy_data_conceptual.qmd"
+format:
+  html:
+    code-fold: show
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

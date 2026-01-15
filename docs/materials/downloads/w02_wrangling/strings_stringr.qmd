@@ -1,9 +1,12 @@
 ---
-title: "1.4 - Strings in R with stringr"
+title: "Strings in R with stringr"
 author: "Michael Hallquist, PSYC 859"
 date: today
 week: 2
-download: "materials/downloads/w02_wrangling/01.4-strings_stringr.qmd"
+download: "materials/downloads/w02_wrangling/strings_stringr.qmd"
+format:
+  html:
+    code-fold: show
 ---
 
 ```{r setup, include=FALSE}

@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Data structure semantics</h1>
 <p>Most data wrangling can be accomplished using <code>data.frame</code> object (or <code>tbl</code> objects in <code>dplyr</code>). These objects consist of rows and columns, forming a rectangular structure.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">kable_table</span>(<span class="at">n=</span><span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>An <strong>observation</strong> contains all values measured on the same unit across attributes.</p>
 <p><em>Rows in a data.frame typically represent observations.</em></p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">kable_table</span>(<span class="at">n=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -567,7 +567,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="messy-version-1" class="level3">
 <h3 class="anchored" data-anchor-id="messy-version-1">Messy version</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#show a subset of columns that fit on the page</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mess2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(id<span class="sc">:</span>d13) <span class="sc">%&gt;%</span> <span class="fu">kable_table</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -858,7 +858,7 @@ tidy2 &lt;- mess2 %&gt;%
 <p>Here, <code>pivot_wider</code> a key – <code>element</code> – that has values <code>'tmin'</code> or <code>'tmax'</code> and puts the values of these rows onto columns. This is a kind of ‘long-to-wide’ conversion and we would expect here for the number of rows in the dataset drop two-fold with the <code>pivot_wider</code> compared to the preceding step where we’ve gathered the day columns.</p>
 <p>It is often useful to check the number of rows after each step in a data transformation pipeline. Here, I just break up the pipeline into the pivot_longer and pivot_wider steps and check the structure in between.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tidy2<span class="fl">.1</span> <span class="ot">&lt;-</span> mess2 <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
@@ -871,7 +871,7 @@ tidy2 &lt;- mess2 %&gt;%
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 682</code></pre>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tidy2<span class="fl">.2</span> <span class="ot">&lt;-</span> tidy2<span class="fl">.1</span> <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"element"</span>, <span class="at">values_from =</span> <span class="st">"temperature"</span>)</span>
@@ -882,7 +882,7 @@ tidy2 &lt;- mess2 %&gt;%
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 341</code></pre>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># there are only 33 useful/present observations</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(tidy2<span class="fl">.2</span> <span class="sc">%&gt;%</span> na.omit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -897,7 +897,7 @@ tidy2 &lt;- mess2 %&gt;%
 <h2 class="anchored" data-anchor-id="missingness-implicit-vs-explicit">Missingness: implicit vs explicit</h2>
 <p>Tidy data often needs missing values made explicit (or dropped) so analyses behave as intended.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tidy_missing <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>day, <span class="sc">~</span>score,</span>
@@ -937,7 +937,7 @@ tidy2 &lt;- mess2 %&gt;%
 </table>
 </div>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make implicit missing combinations explicit</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tidy_missing <span class="sc">%&gt;%</span></span>
@@ -988,7 +988,7 @@ tidy2 &lt;- mess2 %&gt;%
 </table>
 </div>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill down within a group (e.g., carry forward metadata). Grouping ensures we</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># only fill within each id; ungroup to avoid carrying this into later steps.</span></span>
@@ -1051,7 +1051,7 @@ tidy2 &lt;- mess2 %&gt;%
 <section id="messy-version-2" class="level3">
 <h3 class="anchored" data-anchor-id="messy-version-2">Messy version</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#use select to select a few columns that can fit on the page</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mess3 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(country<span class="sc">:</span>f1524) <span class="sc">%&gt;%</span> <span class="fu">kable_table</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1231,7 +1231,7 @@ tidy2 &lt;- mess2 %&gt;%
 <p>We essentially need to parse apart the ‘m’ from the ‘014’ components of each value, which is a job for <code>separate</code>. Note that we also need to <code>pivot_longer</code> the wacky sex + age columns first to make this easier. Here I use <code>cols=c(-country, -year)</code> to say, ‘all columns except these.’</p>
 <p>The <code>sep</code> argument of <code>separate</code> tells <em>R</em> how to split the values into multiple variables. Here, by using the number <code>1</code>, we ask for the first character to become <code>sex</code> and the rest to become <code>age_range</code>.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tidy3 <span class="ot">&lt;-</span> mess3 <span class="sc">%&gt;%</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to=</span><span class="st">"sex_age"</span>, <span class="at">values_to=</span><span class="st">"freq"</span>, <span class="at">cols=</span><span class="fu">c</span>(<span class="sc">-</span>country, <span class="sc">-</span>year)) <span class="sc">%&gt;%</span></span>
@@ -1314,7 +1314,7 @@ tidy2 &lt;- mess2 %&gt;%
 </div>
 <p>This is pretty close. The <code>age_range</code> variable is still a little clunky because it isn’t easy to read. We could modify this further using <code>mutate</code> and <code>recode</code> from <code>dplyr</code>, but that’s not the immediate emphasis here.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tidy3 <span class="ot">&lt;-</span> tidy3 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">age_range=</span><span class="fu">recode</span>(age_range,</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"014"</span><span class="ot">=</span><span class="st">"0-14"</span>,</span>
@@ -1333,7 +1333,7 @@ tidy2 &lt;- mess2 %&gt;%
 <h3 class="anchored" data-anchor-id="modern-separate_-alternatives">Modern <code>separate_*</code> alternatives</h3>
 <p>For simple string splitting, <code>tidyr</code> now provides <code>separate_wider_delim()</code> (split on a delimiter) and <code>separate_wider_regex()</code> (split using a regex). These are often clearer than <code>separate()</code> because they create named columns directly.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>toy_people <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">person =</span> <span class="fu">c</span>(<span class="st">"Ada-Lovelace"</span>, <span class="st">"Grace-Hopper"</span>, <span class="st">"Katherine-Johnson"</span>)</span>
@@ -1367,7 +1367,7 @@ tidy2 &lt;- mess2 %&gt;%
 </table>
 </div>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>toy_people <span class="sc">%&gt;%</span> <span class="fu">separate_wider_regex</span>(person, <span class="at">patterns =</span> <span class="fu">c</span>(<span class="at">first =</span> <span class="st">"^[^-]+"</span>, <span class="st">"-"</span>,</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                                         <span class="at">last =</span> <span class="st">"[^-]+$"</span></span>
@@ -1405,7 +1405,7 @@ tidy2 &lt;- mess2 %&gt;%
 <h3 class="anchored" data-anchor-id="tidying-solution-using-pivot_longer-alone">Tidying solution using pivot_longer alone</h3>
 <p>I am ambivalent about whether it is useful to combine separable objectives into a single data wrangling verb. Nevertheless, I want to note that the <code>pivot_longer</code> function provides added functionality for both combining columns into a key-value pair format <em>and</em> splitting the key into multiple variables if the key variable is an amalgamation of discrete variables. This can allow us to skip the <code>separate</code> step:</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tidy3 <span class="ot">&lt;-</span> mess3 <span class="sc">%&gt;%</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
@@ -1552,7 +1552,7 @@ tidy2 &lt;- mess2 %&gt;%
 <h3 class="anchored" data-anchor-id="tidying-solution-3">Tidying solution</h3>
 <p>If we wanted to have a <code>full_name</code>, we could use <code>unite</code> to combine <code>first_name</code> and <code>last_name</code> and then get rid of those individual columns.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df4_united <span class="ot">&lt;-</span> df4 <span class="sc">%&gt;%</span> <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">"full_name"</span>, first_name, last_name, <span class="at">sep=</span><span class="st">" "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1596,7 +1596,7 @@ tidy2 &lt;- mess2 %&gt;%
 <h2 class="anchored" data-anchor-id="data.table-meltdcast">data.table melt/dcast</h2>
 <p>The <code>data.table</code> package provides <code>melt()</code> and <code>dcast()</code> for fast reshaping. The formula interface is compact for multi-way summary tables, and <code>dcast()</code> can aggregate on the fly while casting.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">data.table</span>(</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
@@ -1692,7 +1692,7 @@ tidy2 &lt;- mess2 %&gt;%
 </table>
 </div>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mean_y <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">dcast</span>(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  long_dt,</span>
@@ -1728,7 +1728,7 @@ tidy2 &lt;- mess2 %&gt;%
 </table>
 </div>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mean_multi <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">dcast</span>(</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  long_dt,</span>

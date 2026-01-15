@@ -323,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="../files/inner-join.gif" class="img-fluid"></p>
 <p>Let’s try it with our superhero data.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#*NB*: Here, we retain the joined dataset as ijsp</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ijsp <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(<span class="at">x=</span>superheroes, <span class="at">y=</span>publishers)</span>
@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Same idea, just explicit declaration of key (i.e., “publisher”)</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#note that we've cut the x=, y= as this optional</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(superheroes, publishers, <span class="at">by=</span><span class="st">"publisher"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -415,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Keep all rows in left-hand ‘x’ dataset (i.e., superheroes). Add columns from publishers where there is a match. Fill in <code>NA</code> for non-matching observations.</p>
 <p><img src="../files/left-join.gif" class="img-fluid"></p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(superheroes, publishers, <span class="at">by=</span><span class="st">"publisher"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -492,7 +492,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Keep all rows in right-hand ‘y’ dataset (i.e., publishers). Add columns from superheroes where there is a match. Fill in <code>NA</code> for non-matching observations.</p>
 <p><img src="files/right-join.gif" class="img-fluid"></p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note the shift to using dplyr piping</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This achieves the same purpose, but may be preferred by those who love pipes</span></span>
@@ -572,7 +572,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Resulting dataset will have all columns of both datasets, but filling in <code>NA</code> for any non-matches on either side (denoted as blank spaces below).</p>
 <p><img src="../files/full-join.gif" class="img-fluid"></p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>superheroes <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(publishers, <span class="at">by=</span><span class="st">"publisher"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -911,7 +911,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="observations-in-superheroes-that-match-in-publishers">Observations in superheroes that match in publishers</h3>
 <p>Notice that this is different from the <code>left_join</code> shown above as the data from y is <em>not</em> kept. That is the fundamental difference between ‘mutating joins’ (e.g., <code>left_join</code>) and ‘filtering joins’ (e.g., <code>semi_join</code>).</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semi_join</span>(superheroes, publishers, <span class="at">by=</span><span class="st">"publisher"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -972,7 +972,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="observations-in-publishers-that-match-in-superheroes" class="level3">
 <h3 class="anchored" data-anchor-id="observations-in-publishers-that-match-in-superheroes">Observations in publishers that match in superheroes</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semi_join</span>(publishers, superheroes, <span class="at">by=</span><span class="st">"publisher"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1009,7 +1009,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="observations-in-superheroes-that-dont-match-in-publishers" class="level3">
 <h3 class="anchored" data-anchor-id="observations-in-superheroes-that-dont-match-in-publishers">Observations in superheroes that don’t match in publishers</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anti_join</span>(superheroes, publishers, <span class="at">by=</span><span class="st">"publisher"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1040,7 +1040,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="observations-in-publishers-that-dont-match-in-superheroes" class="level3">
 <h3 class="anchored" data-anchor-id="observations-in-publishers-that-dont-match-in-superheroes">Observations in publishers that don’t match in superheroes</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>publishers <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(superheroes, <span class="at">by=</span><span class="st">"publisher"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1071,7 +1071,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Joining multiple datasets</h1>
 <p>Joining can be done repeatedly across multiple datasets. The following code, for instance, joins datasets two at a time from left to right in the list. The result of a two-table join becomes the ‘x’ dataset for the next join of a new dataset ‘y’.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">x=</span><span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="at">y=</span><span class="fu">runif</span>(<span class="dv">10</span>))</span>
@@ -1093,7 +1093,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 9   9 -0.68685285 0.2891597
 10 10 -0.44566197 0.1471136</code></pre>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1111,7 +1111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 10 10 -0.6250393 0.09484066
 11 11 -1.6866933 0.38396964</code></pre>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1127,7 +1127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 8  9  0.2865486 0.8864691
 9 10 -1.2205120 0.1750527</code></pre>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dftemp <span class="ot">&lt;-</span> <span class="fu">full_join</span>(df1, df2, <span class="at">by=</span><span class="st">"id"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dffinal <span class="ot">&lt;-</span> <span class="fu">full_join</span>(dftemp, df3, <span class="at">by=</span><span class="st">"id"</span>)</span>
@@ -1265,7 +1265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Alternative using pipeline (less extensible)</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mergedf <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(df2, <span class="at">by=</span><span class="st">"id"</span>) <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(df3, <span class="at">by=</span><span class="st">"id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
