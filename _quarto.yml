@@ -5,6 +5,7 @@ project:
     - "*.qmd"
     - "materials/**/*.qmd"
     - "assignments/**/*.qmd"
+    - "assignments/**/*.md"
     - "!local/**"
     - "!materials/downloads/**"
     - "!assignments/downloads/**"

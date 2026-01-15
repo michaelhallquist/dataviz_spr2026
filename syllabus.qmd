@@ -115,6 +115,19 @@ All projects are to be completed individually. Although you are encouraged to di
 
 ## Week 3 (1/22): Data processing and quality assurance, custom functions, basics of automation {#week-3}
 
+### Conceptual readings
+
+- Van den Broeck, J., Argeseanu Cunningham, S., Eeckels, R., & Herbst, K. (2005). [Data Cleaning: Detecting, diagnosing, and editing data abnormalities.](https://ares.lib.unc.edu/ares/ares.dll?SessionID=N012834098U&Action=10&Type=10&Value=109356197) *PLoS Medicine, 2*(10), e267.
+- (Optional) Broman, K. W., & Woo, K. H. (2018). [Data Organization in Spreadsheets.](https://ares.lib.unc.edu/ares/ares.dll?SessionID=N012834098U&Action=10&Type=10&Value=109356198) *The American Statistician, 72*, 2-10.
+
+### Practical readings
+
+- Wickham, H., Cetinka-Rundel, M., & Grolemund, G. (2023). *R for Data Science* (2nd ed.).
+  - Ch. 25: Functions. https://r4ds.hadley.nz/functions.html
+  - Ch. 26: Iteration. https://r4ds.hadley.nz/iteration.html
+- R validate package. Review https://cran.r-project.org/web/packages/validate/vignettes/cookbook.html
+- Introduction to pointblank package: https://bookdown.org/pdr_higgins/rmrwr/data-exploration-and-validation-with-the-pointblank-package.html
+
 ## Week 4 (1/29): Advanced data manipulation and management, tracking work in R markdown {#week-4}
 
 ## Week 5 (2/5): Principles of data visualization and graphical grammar {#week-5}
