@@ -160,9 +160,11 @@ bmx_q <- nhanes('BMX_D')
 
 ```{r}
 demo_q %>%
-  filter(RIDAGEYR > 25, RIAGENDR == 1) %>%  # filter rows by logical conditions
-  arrange(desc(RIDAGEYR)) %>%              # order rows
-  distinct(DMDHREDU, .keep_all = TRUE)     # keep first row per education level
+  filter(RIDAGEYR > 25, RIAGENDR == "Male") %>%  # filter rows by logical conditions
+  arrange(desc(RIDAGEYR)) %>%                # order rows
+  distinct(DMDHREDU, .keep_all = TRUE) %>%   # keep first row per education level
+  select(SEQN, RIDAGEYR, RIAGENDR, DMDHREDU) %>%
+  kable_table()
 ```
 
 Row filters can also use `if_any()` and `if_all()` across multiple columns:
