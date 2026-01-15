@@ -74,7 +74,7 @@
     "href": "materials/w02_wrangling/dplyr_walkthrough.html#filter-obtaining-observations-rows-based-on-some-criteria",
     "title": "Data wrangling in dplyr",
     "section": "filter: obtaining observations (rows) based on some criteria",
-    "text": "filter: obtaining observations (rows) based on some criteria\nObjective: Retain only men in company A\n\n\nCode\nCOMPANY=\"A\"\nCOMPANY &lt;- \"A\"\n\ncompany_A_men &lt;- filter(univbct, COMPANY==\"A\" & GENDER==1)\n#print 10 observations at random to check the accuracy of the filter\n#p=11 just shows the first 11 columns to keep it on one page for formatting\ncompany_A_men %&gt;% sample_n(10) %&gt;% kable_table(p=11)\n\n\n\n\n\n\nBTN\nCOMPANY\nMARITAL\nGENDER\nHOWLONG\nRANK\nEDUCATE\nAGE\nJOBSAT1\nCOMMIT1\nREADY1\n\n\n\n\n1066\n404\nA\n2\n1\n4\n15\n2\n32\n4.0\n3.7\n3.2\n\n\n879\n3066\nA\n1\n1\n0\nNA\n2\n19\n5.0\n5.0\n4.0\n\n\n1235\n3066\nA\n2\n1\n2\n16\n2\n34\n3.0\n3.7\n3.0\n\n\n1057\n3066\nA\n1\n1\n1\n12\n2\n19\n2.3\n2.3\n3.2\n\n\n718\n124\nA\n2\n1\n2\n16\n4\n30\n3.3\n3.7\n2.0\n\n\n457\n3066\nA\n2\n1\nNA\n15\n2\n30\n3.7\n4.0\n3.0\n\n\n537\n4\nA\n2\n1\n3\n15\n2\n33\n4.0\n4.7\n2.5\n\n\n750\n3066\nA\n1\n1\n3\n13\n3\n23\n3.0\n2.3\n1.5\n\n\n895\n3066\nA\n1\n1\n1\n21\n5\n23\n4.0\n4.0\n4.0\n\n\n414\n3066\nA\n1\n1\n2\n13\n2\n19\n1.3\n2.7\nNA\n\n\n\n\n\nObjective: Count how many people are in companies A and B\n\n\nCode\nfilter(univbct, COMPANY %in% c(\"A\",\"B\")) %&gt;% nrow()\n\n\n[1] 750\n\n\nObjective: What about counts by company and battalion?\n\n\nCode\nunivbct %&gt;% \n  group_by(BTN, COMPANY) %&gt;% \n  tally() %&gt;%\n  kable_table(n=12)\n\n\n\n\n\nBTN\nCOMPANY\nn\n\n\n\n\n4\nA\n66\n\n\n4\nB\n15\n\n\n4\nC\n12\n\n\n4\nD\n30\n\n\n4\nHHC\n18\n\n\n104\nA\n12\n\n\n104\nHHC\n3\n\n\n124\nA\n42\n\n\n144\nA\n30\n\n\n299\nA\n39\n\n\n299\nB\n30\n\n\n299\nC\n27\n\n\n\n\n\nCode\n# N.B. The same result could be obtained with count(BTN, COMPANY) alone.\n#  This combines the group_by and tally functions"
+    "text": "filter: obtaining observations (rows) based on some criteria\nObjective: Retain only men in company A\n\n\nCode\nCOMPANY=\"A\"\nCOMPANY &lt;- \"A\"\n\ncompany_A_men &lt;- filter(univbct, COMPANY==\"A\" & GENDER==1)\n#print 10 observations at random to check the accuracy of the filter\n#p=11 just shows the first 11 columns to keep it on one page for formatting\ncompany_A_men %&gt;% sample_n(10) %&gt;% kable_table(p=11)\n\n\n\n\n\n\nBTN\nCOMPANY\nMARITAL\nGENDER\nHOWLONG\nRANK\nEDUCATE\nAGE\nJOBSAT1\nCOMMIT1\nREADY1\n\n\n\n\n553\n124\nA\n2\n1\n3\n13\n2\n20\n3.3\n3.3\n3.5\n\n\n1065\n4\nA\n2\n1\n5\n15\n2\n26\n4.0\n4.3\n3.2\n\n\n346\n1022\nA\n1\n1\n1\n12\n2\n22\n4.0\n4.0\n4.0\n\n\n899\n4042\nA\n4\n1\n2\n17\n4\n36\n4.0\n4.7\n3.5\n\n\n759\n1022\nA\n4\n1\n2\n17\n2\n34\n4.0\n4.7\n2.5\n\n\n414\n3066\nA\n1\n1\n2\n13\n2\n19\n1.3\n2.7\nNA\n\n\n1155\n404\nA\n2\n1\n2\n15\n2\n30\n3.3\n3.7\n2.8\n\n\n554\n124\nA\n2\n1\n3\n13\n2\n20\n3.3\n3.3\n3.5\n\n\n1205\n3066\nA\n2\n1\n2\n23\n5\n30\n3.0\n3.7\n3.2\n\n\n542\n1022\nA\n1\n1\n2\n13\n2\n19\n4.0\n4.0\n4.0\n\n\n\n\n\nObjective: Count how many people are in companies A and B\n\n\nCode\nfilter(univbct, COMPANY %in% c(\"A\",\"B\")) %&gt;% nrow()\n\n\n[1] 750\n\n\nObjective: What about counts by company and battalion?\n\n\nCode\nunivbct %&gt;% \n  group_by(BTN, COMPANY) %&gt;% \n  tally() %&gt;%\n  kable_table(n=12)\n\n\n\n\n\nBTN\nCOMPANY\nn\n\n\n\n\n4\nA\n66\n\n\n4\nB\n15\n\n\n4\nC\n12\n\n\n4\nD\n30\n\n\n4\nHHC\n18\n\n\n104\nA\n12\n\n\n104\nHHC\n3\n\n\n124\nA\n42\n\n\n144\nA\n30\n\n\n299\nA\n39\n\n\n299\nB\n30\n\n\n299\nC\n27\n\n\n\n\n\nCode\n# N.B. The same result could be obtained with count(BTN, COMPANY) alone.\n#  This combines the group_by and tally functions"
   },
   {
     "objectID": "materials/w02_wrangling/dplyr_walkthrough.html#select-choose-variables-columns-based-on-some-criteria",
@@ -119,6 +119,48 @@
     "text": "This page contains course materials used during the demonstration and practical exercises.\n\nWeek 1\n\nTidy data conceptual walkthrough (QMD)\n\n\n\nWeek 2\n\nData wrangling in dplyr (QMD)\nJoins tutorial (QMD)\nStrings in R with stringr (QMD)"
   },
   {
+    "objectID": "assignments/week2_workflowr_setup.html",
+    "href": "assignments/week2_workflowr_setup.html",
+    "title": "Week 2: Workflowr Project Setup",
+    "section": "",
+    "text": "This assignment is due by 1/28/2026 at 8am."
+  },
+  {
+    "objectID": "assignments/week2_workflowr_setup.html#overview",
+    "href": "assignments/week2_workflowr_setup.html#overview",
+    "title": "Week 2: Workflowr Project Setup",
+    "section": "Overview",
+    "text": "Overview\nThis assignment builds directly on the workflowr vignette: https://workflowr.github.io/workflowr/articles/wflow-01-getting-started.html. Your goal is to create a new workflowr project with a clean structure, publish at least one analysis file, and make it available as a GitHub Pages site.\nI don’t expect that you necessarily use workflowr in the class or more generally, but I think it is useful to see how the package takes a structured approach to:\n\nSetting up a predictable project structure\nUses Git to support version control and reproducibility\nAllows you to publish your reports easily at GitHub Pages accessible to others."
+  },
+  {
+    "objectID": "assignments/week2_workflowr_setup.html#learning-goals",
+    "href": "assignments/week2_workflowr_setup.html#learning-goals",
+    "title": "Week 2: Workflowr Project Setup",
+    "section": "Learning goals",
+    "text": "Learning goals\n\nInitialize a workflowr project with a reproducible structure\nKnit analysis files with workflowr and track the build status\nPublish a workflowr site to GitHub Pages"
+  },
+  {
+    "objectID": "assignments/week2_workflowr_setup.html#setup-requirements",
+    "href": "assignments/week2_workflowr_setup.html#setup-requirements",
+    "title": "Week 2: Workflowr Project Setup",
+    "section": "Setup requirements",
+    "text": "Setup requirements\nBefore starting, make sure you have:\n\nR and RStudio installed\nGit installed and configured (For help, see: https://happygitwithr.com)\nA GitHub account\nThe workflowr package installed\n\n\n\nCode\n# Install once if needed\ninstall.packages(\"workflowr\")"
+  },
+  {
+    "objectID": "assignments/week2_workflowr_setup.html#tasks",
+    "href": "assignments/week2_workflowr_setup.html#tasks",
+    "title": "Week 2: Workflowr Project Setup",
+    "section": "Tasks",
+    "text": "Tasks\n\n1. Start a new workflowr project\nCreate a new project named something like workflowr-&lt;your-name&gt; in a location you can find later. The wflow_start command will setup a new workflowr project in the speecified directory (by default, it does not overwrite existing projects).\n\n\nCode\nlibrary(workflowr) # load library\n# wflow_start(\"~/Downloads/workflowr-michael\")\n\n\nOpen the project in RStudio (File &gt; Open Project) and review the default folders: analysis/, data/, code/, output/, and docs/.\n\n\n2. Create a new analysis file\nCreate a new analysis Rmarkdown file at analysis/01-getting-started.Rmd. You can use wflow_open if you wish, or just File &gt; New File &gt; R Markdown.\nIn the Rmd file, include the following:\n\nA short paragraph describing the project topic you plan to use this semester\nAdd a small public domain data file to the data/ folder (e.g., a CSV from data.gov or another public domain source).\nOne code chunk that reads your data file from data/ and prints a small summary (e.g., str() or summary())\n\n\n\n3. Build and check the site locally\nUse workflowr to build the site and check its status.\n\n\nCode\nwflow_build(\"analysis/01-getting-started.Rmd\") # build only one script\nwflow_build() # build the whole site\nwflow_status() # check the build status\n\n\n\n\n4. Publish and commit with workflowr\nPublish the new analysis page using workflowr so it is tracked by Git.\n\n\nCode\nwflow_publish(\"analysis/01-getting-started.Rmd\", message = \"Add initial analysis page\") # committing your work to the repository\n\n\n\n\n5. Push to GitHub and enable GitHub Pages\nAfter publishing (basically concretizing a change), connect the project to GitHub with your username:\nSetup your Github repository using the wflow_use_github function. I chose the Oauth route when prompted, but either is fine.\n\n\nCode\nwflow_use_github(\"myname\")\n\n\nNow push the code from your computer to Github\n\n\nCode\nwflow_git_push()\n\n\nIn GitHub, enable Pages for the docs/ folder on the main branch.\nGuidance here: https://docs.github.com/en/pages/quickstart\nAfter configured, this should look like the following: \nAfter a few minutes of setting this, the top part of the GitHub Pages for the repo (https://github.com/&lt;username&gt;/&lt;reponame&gt;/settings/pages) should look something like this:\n\n\n\n6. Verify the published site\nOpen your GitHub Pages site and confirm:\n\nThe home page loads\nYour analysis page appears in the navigation\nThe analysis page renders your text and code output\n\n\n\nDeliverables\n\nProvide the URL of your project site.\nShort reflection (2-3 sentences) on what was straightforward vs. confusing, what you think may be helpful about this approach and/or what aspects you may adopt in your own workflows"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Week 1: Data Tidying (due 1/21 at 8am) — Download QMD\nWeek 2: Workflowr Project Setup (due 1/28 at 8am) — Download QMD\nData quality assurance and processing project proposal (due 1/29/2026)"
+  },
+  {
     "objectID": "assignments/week1_tidyData.html",
     "href": "assignments/week1_tidyData.html",
     "title": "Week 1: Data Tidying",
@@ -159,13 +201,6 @@
     "title": "Week 1: Data Tidying",
     "section": "Tidying Tuberculosis Data",
     "text": "Tidying Tuberculosis Data\nUsing the who2 dataset\n\nExplore the who2 dataset using the methods described in the section above.\n\n\nUsing functions from the tidyr package, tidy the who2 dataset so there is a case_group variable and a cases variable. Use those names throughout the rest of the assignment. Show the first five rows of your new dataframe by using head(). Remember, a tidy dataset consists of:\n\n\nEach variable forms a column\nEach observation forms a row\nEach type of observational unit forms a table\n\n\nThe values within the case_group variable are still considered not tidy because they represent three observations in one (case type, sex, and age). Use tidyr verbs to separate this variable into type, sex, and age (hint: the values are separated by _).\n\n\nCheck that each row is a unique observation by counting duplicates of country, year, type, sex, and age. Report whether any combinations appear more than once.\n\n\nRename the values within sex and age to be more descriptive of what they represent (male or female, 0-4, 5-14, etc.). You can use a combination of dplyr::mutate() and dplyr::recode() to recode the values. Use ?recode if you get stuck.\n\n\nTake your new tidy dataframe with the recoded values and variables and demonstrate tidyr::unite() by recombining sex and age into a single variable (e.g., sex_age). This is just to practice unite() before you mess it up again in the next step. Show the first five rows of your new dataframe.\n\n\nGo back to the dataframe you created in question two. Using that tidy dataframe, use tidyr verbs to recreate a ‘messy’ dataframe. It should look exactly the same (or similar) as when you first loaded the who2 dataset into your environment. Show the first five rows of your new dataframe. If the code throws a ‘duplicate identifiers error’ you should use dplyr::distinct() in your pipeline.\n\n\nArrange the dataset to be descending by most cases of tuberculosis to least using dplyr verbs (use your cases variable).\n\n\nSummarize how many cases of tuberculosis there are by sex and age (use your cases variable). Show your output. If you get NA values for everything, remember to remove those empty values somewhere in your pipeline! Hint Look at the default arguments for the functions you use to summarize your data.\n\n\nFinally, summarize the dataset by country and sex, then add a variable that is the relative prevalence by sex in each country."
-  },
-  {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Week 1: Data Tidying (due 1/21 at 8am) — Download QMD\nWeek 2: Workflowr Project Setup (due 1/28 at 8am) — Download QMD\nData quality assurance and processing project proposal (due 1/29/2026)"
   },
   {
     "objectID": "index.html",
