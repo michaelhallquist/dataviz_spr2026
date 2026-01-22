@@ -15,6 +15,7 @@ project:
     - materials/downloads/**
     - assignments/**
     - "!assignments/**/*[Aa]nswer*"
+    - "!assignments/**/*[Aa]nswer*/**"
   post-render:
     - scripts/copy-qmd-downloads.R
 

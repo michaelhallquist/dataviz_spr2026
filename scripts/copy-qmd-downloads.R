@@ -10,6 +10,7 @@ copy_qmds <- function(src_dir) {
 
   qmds <- list.files(src_dir, pattern = "\\.qmd$", recursive = TRUE, full.names = TRUE)
   qmds <- qmds[!grepl(paste0("^", src_dir, "[/\\\\]downloads[/\\\\]"), qmds)]
+  qmds <- qmds[!grepl("[Aa]nswer", qmds)]
 
   if (length(qmds) == 0) {
     return(invisible(NULL))
