@@ -1,0 +1,194 @@
+---
+title: "Compact Data Validation with validate (Psychology Survey Example)"
+format: html
+execute:
+  echo: true
+  message: false
+  warning: false
+---
+
+## Goal
+
+We validate a psychology survey dataset using `validate` and demonstrate detection, selection/isolation, and correction for:
+
+- rationally invalid values (out-of-range)
+- statistically invalid values (odd response patterns)
+- duplicated observations
+- unexplained missing data
+
+## Setup
+
+```{r}
+# Install if needed
+pkgs <- c("validate", "psych", "dplyr")
+missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing) > 0) install.packages(missing)
+
+library(validate)
+library(psych)
+library(dplyr)
+
+rows_violating <- function(cn) {
+  v <- values(cn)
+  which(apply(v, 1, function(x) any(x == FALSE, na.rm = TRUE)))
+}
+```
+
+## Data
+
+`psych::bfi` contains Big Five Inventory items (1-6) plus age, gender, education.
+
+```{r}
+items <- c(paste0("A", 1:5), paste0("C", 1:5), paste0("E", 1:5),
+           paste0("N", 1:5), paste0("O", 1:5))
+
+bfi_raw <- psych::bfi
+bfi_dirty <- bfi_raw
+
+# Inject a few issues so the checks are demonstrable
+bfi_dirty[1, "A1"] <- 9
+bfi_dirty[2, "C3"] <- 0
+bfi_dirty[3, "age"] <- -5
+bfi_dirty[4, "gender"] <- 3
+bfi_dirty[5, items] <- 1
+bfi_dirty[6, items[1:10]] <- NA
+bfi_dirty <- rbind(bfi_dirty, bfi_dirty[1, ])
+```
+
+## 1) Rationally invalid values
+
+Detection with range rules.
+
+```{r}
+# Row-level indicator: all items are within 1..6 or missing
+bfi_dirty$items_in_range <- apply(bfi_dirty[items], 1, function(x) {
+  all(x %in% 1:6 | is.na(x))
+})
+
+rules_range <- validator(
+  items_in_range == TRUE,
+  age >= 16,
+  age <= 100,
+  gender %in% c(1, 2) | is.na(gender),
+  education %in% 1:5 | is.na(education)
+)
+
+range_cn <- confront(bfi_dirty, rules_range)
+summary(range_cn)
+
+bad_range <- rows_violating(range_cn)
+head(bfi_dirty[bad_range, c("age", "gender", "education", "A1", "C3")])
+```
+
+Correction: set invalid values to `NA`.
+
+```{r}
+clip_to_na <- function(x, lo, hi) {
+  x[x < lo | x > hi] <- NA
+  x
+}
+
+bfi_fixed <- bfi_dirty %>%
+  mutate(
+    across(all_of(items), ~ clip_to_na(.x, 1, 6)),
+    age = clip_to_na(age, 16, 100),
+    gender = if_else(gender %in% c(1, 2), gender, NA_real_),
+    education = if_else(education %in% 1:5, education, NA_real_)
+  )
+```
+
+## 2) Statistically invalid values (odd response patterns)
+
+Look for rows with no variation in items, suggesting flat response pattern
+
+```{r}
+bfi_fixed$row_sd <- apply(bfi_fixed[items], 1, sd, na.rm = TRUE)
+bfi_fixed$n_missing <- rowSums(is.na(bfi_fixed[items]))
+
+rules_stat <- validator(
+  row_sd > 0,
+  n_missing <= 5
+)
+
+stat_cn <- confront(bfi_fixed, rules_stat)
+summary(stat_cn)
+
+bad_stat <- rows_violating(stat_cn)
+head(bfi_fixed[bad_stat, c("row_sd", "n_missing")])
+```
+
+Correction: remove cases with implausible patterns.
+
+```{r}
+bfi_fixed <- bfi_fixed %>%
+  filter(row_sd > 0, n_missing <= 5)
+```
+
+## 3) Duplicated observations
+
+Detection using exact duplicate rows on items + demographics.
+
+```{r}
+dup_key <- c(items, "age", "gender", "education")
+bfi_fixed$dup_row <- duplicated(bfi_fixed[dup_key])
+
+rules_dup <- validator(!dup_row)
+
+dup_cn <- confront(bfi_fixed, rules_dup)
+summary(dup_cn)
+
+bfi_fixed <- bfi_fixed %>%
+  filter(!dup_row)
+```
+
+## 4) Unexplained missing data
+
+Detection of missing demographics.
+
+```{r}
+missing_rules <- validator(
+  !is.na(age),
+  !is.na(gender)
+)
+
+missing_cn <- confront(bfi_fixed, missing_rules)
+summary(missing_cn)
+
+bad_missing <- rows_violating(missing_cn)
+head(bfi_fixed[bad_missing, c("age", "gender")])
+```
+
+Correction: remove cases with missing key demographics and impute remaining item missings.
+
+```{r}
+bfi_fixed <- bfi_fixed %>%
+  filter(!is.na(age), !is.na(gender)) %>%
+  mutate(across(all_of(items), ~ replace(.x, is.na(.x), median(.x, na.rm = TRUE))))
+```
+
+## Final consistency check
+
+```{r}
+# Recompute indicators after corrections
+bfi_fixed$items_in_range <- apply(bfi_fixed[items], 1, function(x) {
+  all(x %in% 1:6 | is.na(x))
+})
+bfi_fixed$row_sd <- apply(bfi_fixed[items], 1, sd, na.rm = TRUE)
+bfi_fixed$n_missing <- rowSums(is.na(bfi_fixed[items]))
+bfi_fixed$dup_row <- duplicated(bfi_fixed[dup_key])
+
+final_rules <- validator(
+  items_in_range == TRUE,
+  age >= 16, age <= 100,
+  gender %in% c(1, 2),
+  education %in% 1:5 | is.na(education),
+  row_sd > 0,
+  n_missing <= 5,
+  !dup_row
+)
+
+final_cn <- confront(bfi_fixed, final_rules)
+summary(final_cn)
+```
+
+This compact workflow uses detection (rules + `confront`), isolation (`violating`), and correction (recoding to `NA`, removal of implausible cases, and simple imputation) to achieve consistent data.

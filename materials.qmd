@@ -14,3 +14,8 @@ This page contains course materials used during the demonstration and practical 
 - [Data wrangling in dplyr](materials/w02_wrangling/dplyr_walkthrough.html) ([QMD](materials/downloads/w02_wrangling/dplyr_walkthrough.qmd))
 - [Joins tutorial](materials/w02_wrangling/joins_tutorial.html) ([QMD](materials/downloads/w02_wrangling/joins_tutorial.qmd))
 - [Strings in R with stringr](materials/w02_wrangling/strings_stringr.html) ([QMD](materials/downloads/w02_wrangling/strings_stringr.qmd))
+
+# Week 3
+
+- [Compact data validation with validate (Psychology Survey Example)](materials/w03_automation/validate_bfi.html) ([QMD](materials/downloads/w03_automation/validate_bfi.qmd))
+- [ECG physio processing script](materials/w03_automation/read_physio.R)
