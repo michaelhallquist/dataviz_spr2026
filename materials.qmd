@@ -19,3 +19,7 @@ This page contains course materials used during the demonstration and practical 
 
 - [Compact data validation with validate (Psychology Survey Example)](materials/w03_automation/validate_bfi.html) ([QMD](materials/downloads/w03_automation/validate_bfi.qmd))
 - [ECG physio processing script](materials/w03_automation/read_physio.R) ([Data](materials/w03_automation/files/ecg_physio.zip))
+
+# Week 4
+
+- [Functional programming and reproducibility](materials/w04_advanced/reproducibility_good_programming.html) ([QMD](materials/downloads/w04_advanced/reproducibility_good_programming.qmd))

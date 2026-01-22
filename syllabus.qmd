@@ -130,6 +130,17 @@ All projects are to be completed individually. Although you are encouraged to di
 
 ## Week 4 (1/29): Advanced data manipulation and management, tracking work in R markdown {#week-4}
 
+### Conceptual readings
+
+- Wilson, G., Aruliah, D. A., Brown, C. T., Chue Hong, N. P., Davis, M., Guy, R. T., Haddock, S. H. D., Huff, K. D., Mitchell, I. M., Plumbley, M. D., Waugh, B., White, E. P., & Wilson, P. (2014). [Best Practices for Scientific Computing](https://ares.lib.unc.edu/ares/ares.dll?SessionID=J121123599M&Action=10&Type=10&Value=109356815). *PLoS Biology, 12*(1), e1001745. https://doi.org/10.1371/journal.pbio.1001745
+- Karl Broman steps to reproducible research: <http://kbroman.org/steps2rr/>
+
+### Practical readings
+
+- Gandrud (2015). [Chs. 2 and 4 in *Reproducible Research with R and RStudio.*](https://ares.lib.unc.edu/ares/ares.dll?SessionID=W122925617H&Action=10&Type=10&Value=109356818)
+- Getting started with Quarto: <https://quarto.org/docs/get-started/hello/rstudio.html>
+- Introduction to *targets* package in *R*: <https://books.ropensci.org/targets/walkthrough.html>
+
 ## Week 5 (2/5): Principles of data visualization and graphical grammar {#week-5}
 
 ## Week 6 (2/12): Visual and graphical perception {#week-6}
