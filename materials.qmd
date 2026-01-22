@@ -18,4 +18,4 @@ This page contains course materials used during the demonstration and practical 
 # Week 3
 
 - [Compact data validation with validate (Psychology Survey Example)](materials/w03_automation/validate_bfi.html) ([QMD](materials/downloads/w03_automation/validate_bfi.qmd))
-- [ECG physio processing script](materials/w03_automation/read_physio.R)
+- [ECG physio processing script](materials/w03_automation/read_physio.R) ([Data](materials/w03_automation/files/ecg_physio.zip))
