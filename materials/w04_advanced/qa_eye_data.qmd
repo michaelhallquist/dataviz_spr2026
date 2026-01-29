@@ -1,0 +1,363 @@
+---
+title: "QA for Antisaccade Data Using List-Columns"
+format:
+  html:
+    code-fold: false
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Overview
+
+This notebook provides a tidyverse/purrr-friendly approach to per-run QA and processing in a large multilevel dataset. Here, we have eyetracking data from an antisaccade task and a list object eyeData that contains metadata, trial-level accuracy and reaction time information, and QA decision about trials to drop (e.g., due to blinks). The core idea is to keep each subject-run as a *list-column* row, then use `purrr` to map over those nested data frames. This yields code that is more explicit about *what* is happening at each level (trial, run, subject), and it avoids repeated joins or manual loops.
+
+## Setup
+
+```{r setup}
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(ggplot2)
+library(readr)
+
+# Resolve paths relative to this Qmd so site builds are portable.
+qmd_dir <- dirname(knitr::current_input())
+if (!nzchar(qmd_dir)) qmd_dir <- getwd()
+project_dir <- file.path(qmd_dir, "antisaccade")
+files_dir <- file.path(qmd_dir, "..", "files")
+
+load(file.path(files_dir, "eyeDataList_14Jul2014.Rdata")) # created by Import_Bars_Scan_Behavior.R
+subjInfo <- read_csv(file.path(files_dir, "subj_info_run_level.csv.gz"), show_col_types = FALSE)
+aggSubjInfo <- read_csv(file.path(files_dir, "subj_info.csv.gz"), show_col_types = FALSE)
+
+expected_trials_per_run <- 42
+rt_bounds_qa <- c(150, 1000)
+rt_bounds_keep <- c(100, 1200)
+```
+
+## Helper functions
+
+These helpers are used inside `purrr` workflows. The checkmate checks are intentionally strict so errors surface early and locally rather than downstream in long pipelines.
+
+```{r helpers}
+add_id_cols <- function(df, luna_id, run_id) {
+  checkmate::assert_data_frame(df, min.rows = 0)
+  checkmate::assert_integerish(luna_id, len = 1, any.missing = FALSE)
+  checkmate::assert_integerish(run_id, len = 1, any.missing = FALSE)
+  if (nrow(df) == 0) {
+    df$LunaID <- integer(0)
+    df$run <- integer(0)
+    return(df)
+  }
+  df %>% mutate(LunaID = as.integer(luna_id), run = as.integer(run_id))
+}
+
+count_valence <- function(df, valence, lat_code = 2) {
+  checkmate::assert_data_frame(df, min.rows = 0)
+  checkmate::assert_names(names(df), must.include = c("valence", "Define.Lat"))
+  checkmate::assert_character(valence, len = 1, any.missing = FALSE)
+  checkmate::assert_integerish(lat_code, len = 1, any.missing = FALSE)
+  if (nrow(df) == 0) return(0L)
+  sum(df$valence == valence & df$Define.Lat == lat_code, na.rm = TRUE)
+}
+
+find_duplicate_trials <- function(df) {
+  if (!checkmate::test_data_frame(df)) {
+    if (checkmate::test_list(df)) {
+      df <- tryCatch(
+        as.data.frame(df),
+        error = function(e) {
+          warning("find_duplicate_trials: unable to coerce list to data frame; returning empty tibble.")
+          warning(as.character(e))
+          return(NULL)
+        }
+      )
+    } else {
+      checkmate::assert_data_frame(df)
+    }
+  }
+
+  if (is.null(df) || nrow(df) == 0) return(tibble())
+  checkmate::assert_names(names(df), must.include = "Trial")
+  df %>% count(Trial, name = "n") %>% filter(n > 1)
+}
+```
+
+## List-column walkthrough (core idea)
+
+The data object `eyeData` is a list of run-level records. Each element contains data frames such as `raw.data`, `correct`, and `error`. Instead of unnesting immediately, we build a tibble where each row represents one run. Each run has list-columns that point to its nested data frames. This gives you a compact *run-level index* that you can map over.
+
+Key `purrr` tools used here:
+
+- `map()` creates a list-column by applying a function to each element.
+- `map_int()` is the same pattern but enforces an integer return value (useful for counts).
+- `pmap_dfr()` iterates over multiple parallel inputs and row-binds the resulting data frames.
+
+```{r build-eye-tbl}
+eye_tbl <- tibble(
+  LunaID = map_int(eyeData, ~ as.integer(.x$LunaID)),
+  run = map_int(eyeData, ~ as.integer(.x$run)),
+  raw = map(eyeData, "raw.data"),
+  correct = map(eyeData, "correct"),
+  error = map(eyeData, "error"),
+  drop_trials = map(eyeData, "drop.trials")
+)
+
+dplyr::glimpse(eye_tbl)
+```
+
+### Data dictionary (nested columns)
+
+The table above has one row per run, and several list-columns containing nested data frames. These are the most relevant columns used in this workflow:
+
+- `LunaID`: subject identifier (integer).
+- `run`: run number within subject (integer).
+- `raw`: data frame of raw trial-level columns (e.g., timing and trial metadata) for the run.
+- `correct`: data frame of correct trials for the run; includes columns such as `Trial`, `Latency`, `valence`, and `Define.Lat`.
+- `error`: data frame of error trials for the run; includes `Trial`, `valence`, and `Define.Lat`.
+- `drop_trials`: vector of trial IDs dropped for the run (length used for QA totals).
+
+### Why list-columns help here
+
+- **Separation of levels**: you keep a clean table of runs without flattening every trial.
+- **Targeted QA**: you can run different checks at the run level, trial level, or subject level by mapping the right function over the right list-column.
+- **Performance**: many computations stay run-local until you decide to bind them.
+
+### Mapping over list-columns
+
+Run-level integrity checks are a good example. We map across each run to compute counts using `map_int()`, then compute expected totals in a single `transmute()` call.
+
+```{r qa-checks}
+# Multilevel QA: file-level integrity (consistent columns)
+raw_name_sets <- eye_tbl %>% transmute(names = map(raw, names))
+unique(raw_name_sets$names)
+
+# Multilevel QA: trial-level integrity (no duplicate trials)
+dup_trials <- pmap_dfr(
+  eye_tbl %>% select(correct, LunaID, run),
+  function(correct, LunaID, run) {
+    out <- find_duplicate_trials(correct)
+    if (nrow(out) == 0) return(tibble())
+    out %>% mutate(LunaID = LunaID, run = run, .before = 1)
+  }
+)
+
+if (nrow(dup_trials) > 0) {
+  print(dup_trials)
+}
+
+# Multilevel QA: run-level integrity (expected trial counts)
+trial_counts <- eye_tbl %>%
+  transmute(
+    LunaID,
+    run,
+    n_correct = map_int(correct, nrow),
+    n_error = map_int(error, nrow),
+    n_drop = map_int(drop_trials, length),
+    n_total = n_correct + n_error + n_drop
+  )
+
+trial_issues <- trial_counts %>% filter(n_total != expected_trials_per_run)
+if (nrow(trial_issues) > 0) {
+  print(trial_issues)
+}
+```
+
+### Nest and unnest in tidyverse
+
+List-columns often start from *nested* data, but they can also be created from flat data using `nest()`. Two common patterns:
+
+- **`nest()`** groups a flat data frame into list-columns, usually to run per-group models or summaries.
+- **`unnest()`** expands a list-column back into a flat, row-wise table for plotting or modeling.
+
+This workflow starts with already-nested data (`eyeData`), but it uses the same principles. Here are examples of both operations in the tidyverse style:
+
+```{r nest-unnest-examples}
+# Example: nest a flat table into run-level list-columns
+# (This is illustrative; the script uses the pre-nested eyeData object.)
+# run_tbl <- flat_trials %>%
+#   group_by(LunaID, run) %>%
+#   nest(trials = c(Trial, Latency, valence, Define.Lat))
+
+# Example: unnest a list-column back to trial-level rows
+# trials_long <- run_tbl %>%
+#   unnest(trials)
+```
+
+The advantage of the list-column approach is that it keeps run-specific trial data together until you need to flatten it. In this script, `pmap_dfr()` plays the role of a structured unnest when we want to attach IDs and row-bind per-run frames.
+
+## Accuracy computations
+
+We can compute accuracy at the run level by mapping over list-columns and then summarizing at the subject level. This keeps the number of join operations low and makes the role of each level explicit.
+
+```{r accuracy}
+# subject 10590 is missing all latencies, drop before accuracy QA
+eye_tbl <- eye_tbl %>% filter(LunaID != 10590)
+
+accuracy <- eye_tbl %>%
+  transmute(
+    LunaID,
+    run,
+    tot_correct = map_int(correct, nrow),
+    tot_error = map_int(error, ~ sum(.x$Define.Lat == 2, na.rm = TRUE)),
+    tot_drop = map_int(drop_trials, length),
+    rew_correct = map_int(correct, ~ sum(.x$valence == "Rew", na.rm = TRUE)),
+    neu_correct = map_int(correct, ~ sum(.x$valence == "Neu", na.rm = TRUE)),
+    loss_correct = map_int(correct, ~ sum(.x$valence == "Loss", na.rm = TRUE)),
+    rew_error = map_int(error, ~ count_valence(.x, "Rew", lat_code = 2)),
+    neu_error = map_int(error, ~ count_valence(.x, "Neu", lat_code = 2)),
+    loss_error = map_int(error, ~ count_valence(.x, "Loss", lat_code = 2))
+  ) %>%
+  mutate(
+    tot_acc = tot_correct / (tot_correct + tot_error),
+    rew_acc = rew_correct / (rew_correct + rew_error),
+    neu_acc = neu_correct / (neu_correct + neu_error),
+    loss_acc = loss_correct / (loss_correct + loss_error)
+  )
+
+accuracy.sumSessions <- accuracy %>%
+  group_by(LunaID) %>%
+  summarize(
+    across(
+      c(
+        tot_correct, tot_error, tot_drop,
+        rew_correct, rew_error, neu_correct, neu_error, loss_correct, loss_error
+      ),
+      \(x) sum(x, na.rm = TRUE)
+    ),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    tot_acc = tot_correct / (tot_correct + tot_error),
+    rew_acc = rew_correct / (rew_correct + rew_error),
+    neu_acc = neu_correct / (neu_correct + neu_error),
+    loss_acc = loss_correct / (loss_correct + loss_error)
+  )
+
+# low total accuracy subjects
+accuracy.sumSessions %>%
+  arrange(tot_acc) %>%
+  select(LunaID, tot_acc, rew_acc, neu_acc, loss_acc) %>%
+  head()
+
+# subject 10648 had very low accuracy
+eye_tbl <- eye_tbl %>% filter(LunaID != 10648)
+
+# save interim progress
+#
+# What changes when you run this?
+# - Writes barsAccuracy_29Jan2026.RData to disk (overwrites if it exists).
+save(file = file.path(project_dir, "barsAccuracy_29Jan2026.RData"), accuracy, accuracy.sumSessions)
+```
+
+## Latency analysis
+
+To analyze latencies, we collapse the list-columns into a single trial-level table using `pmap_dfr()` and our `add_id_cols()` helper. This is one of the best ways to unnest nested frames while carrying identifiers along the way.
+
+```{r latency}
+# analyze correct trial latencies
+correctDF <- pmap_dfr(
+  eye_tbl %>% select(correct, LunaID, run),
+  function(correct, LunaID, run) add_id_cols(correct, LunaID, run)
+)
+
+# questionable RTs for review
+low_rts <- correctDF %>%
+  filter(Latency < rt_bounds_qa[1]) %>%
+  select(LunaID, run, Trial, Latency)
+
+cat("Low RTs (showing first 25 of", nrow(low_rts), "rows):\n\n")
+low_rts %>%
+  slice_head(n = 25) %>%
+  knitr::kable()
+
+high_rts <- correctDF %>%
+  filter(Latency > rt_bounds_qa[2]) %>%
+  select(LunaID, run, Trial, Latency)
+
+cat("High RTs (showing first 25 of", nrow(high_rts), "rows):\n\n")
+high_rts %>%
+  slice_head(n = 25) %>%
+  knitr::kable()
+
+questionableRTs <- correctDF %>%
+  filter(Latency < rt_bounds_qa[1] | Latency > rt_bounds_qa[2]) %>%
+  select(LunaID, run, Trial, Latency)
+# What changes when you run this?
+# - Writes questionableRTs.csv to disk (overwrites if it exists).
+write_csv(questionableRTs, file = file.path(project_dir, "questionableRTs.csv"))
+```
+
+### Plotting RT distributions
+
+This section produces a multi-page PDF of boxplots, one page per subset of subjects/runs. We first create a combined `LunaID_run` label and then split those labels into 10 roughly equal-sized bins using `ntile()`. That bin (`plotsplit`) is used to filter the data for each page. The `pdf()` device stays open while we loop over bins, and each `plot(g)` call writes a new page to the same PDF. We also compute the global latency range once (`lohi`) so every page uses consistent y-axis limits, which makes page-to-page comparisons easier.
+
+```{r rt-plots}
+# rt distributions by subject
+# split plots across 10 pages because we have so many units
+correctToPlot <- correctDF %>%
+  select(LunaID, run, Trial, valence, Latency) %>%
+  unite("LunaID_run", LunaID, run) %>%
+  mutate(
+    LunaID_run = factor(LunaID_run),
+    LunaID_run_num = as.numeric(LunaID_run),
+    plotsplit = ntile(LunaID_run_num, 10)
+  ) %>%
+  arrange(LunaID_run)
+
+lohi <- range(correctToPlot$Latency) # keep RT ranges consistent across pages
+
+# What changes when you run this?
+# - Writes Antisaccade RTs.pdf to disk (overwrites if it exists).
+pdf(file.path(project_dir, "Antisaccade RTs.pdf"), width = 20, height = 50)
+for (l in sort(unique(correctToPlot$plotsplit))) {
+  g <- ggplot(correctToPlot %>% filter(plotsplit == l), aes(x = LunaID_run, y = Latency, color = valence)) +
+    geom_boxplot() +
+    coord_flip() +
+    theme_bw(base_size = 20) +
+    ylim(lohi)
+  plot(g)
+}
+dev.off()
+```
+
+## Aggregate latency summaries
+
+```{r latency-summary}
+# for now, restrict latencies to the keep range
+goodRTs <- correctDF %>% filter(Latency >= rt_bounds_keep[1] & Latency <= rt_bounds_keep[2])
+
+combo <- left_join(
+  goodRTs,
+  aggSubjInfo %>% select(LunaID, scanage, group),
+  by = "LunaID"
+)
+
+# compute average latencies and SDs for each valence
+latencyByValence <- goodRTs %>%
+  select(LunaID, valence, Latency) %>%
+  group_by(LunaID, valence) %>%
+  summarize(
+    MRT = mean(Latency, na.rm = TRUE),
+    MSD = sd(Latency, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  pivot_longer(c(MRT, MSD), names_to = "stat", values_to = "value") %>%
+  unite(valstat, valence, stat) %>%
+  pivot_wider(names_from = valstat, values_from = value) %>%
+  mutate(
+    Overall_MRT = rowMeans(select(., Loss_MRT, Neu_MRT, Rew_MRT), na.rm = TRUE),
+    Overall_MSD = rowMeans(select(., Loss_MSD, Neu_MSD, Rew_MSD), na.rm = TRUE)
+  )
+
+head(latencyByValence)
+```
+
+## Summary: list-columns + purrr in this workflow
+
+- `map()` builds list-columns of nested data frames (per-run data).
+- `map_int()` safely computes scalar summaries from each nested table.
+- `pmap_dfr()` is the workhorse for row-binding nested data while carrying IDs.
+- The approach keeps trial-level data nested until a specific analysis requires flattening.

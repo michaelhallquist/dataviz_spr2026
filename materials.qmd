@@ -23,3 +23,4 @@ This page contains course materials used during the demonstration and practical 
 # Week 4
 
 - [Functional programming and reproducibility](materials/w04_advanced/reproducibility_good_programming.html) ([QMD](materials/downloads/w04_advanced/reproducibility_good_programming.qmd))
+- [QA for Antisaccade Data Using List-Columns](materials/w04_advanced/qa_eye_data.html) ([QMD](materials/downloads/w04_advanced/qa_eye_data.qmd); [Data](materials/files/eyeDataList_14Jul2014.Rdata), [Run-level subject info](materials/files/subj_info_run_level.csv.gz), [Subject info](materials/files/subj_info.csv.gz))

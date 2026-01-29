@@ -57,7 +57,7 @@ default, it does not overwrite existing projects).
 
 ```{r, eval = FALSE}
 library(workflowr) # load library
-wflow_start("~/Downloads/workflowr-michael_28jan2026")
+wflow_start("~/Downloads/workflowr-michael_28jan2026") # change to wherever your project will be
 ```
 
 Open the project in RStudio (File > Open Project) and review the default folders:
