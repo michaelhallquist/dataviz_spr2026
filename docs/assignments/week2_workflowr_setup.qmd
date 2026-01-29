@@ -11,7 +11,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-*This assignment is due by 1/28/2026 at 8am.*
+*This assignment is due by 2/4/2026 at 8am.*
 
 ## Overview
 
@@ -57,7 +57,7 @@ default, it does not overwrite existing projects).
 
 ```{r, eval = FALSE}
 library(workflowr) # load library
-# wflow_start("~/Downloads/workflowr-michael")
+wflow_start("~/Downloads/workflowr-michael_28jan2026")
 ```
 
 Open the project in RStudio (File > Open Project) and review the default folders:
@@ -74,11 +74,18 @@ In the Rmd file, include the following:
 - Add a small public domain data file to the `data/` folder (e.g., a CSV from data.gov or another public domain source).
 - One code chunk that reads your data file from `data/` and prints a small summary (e.g., `str()` or `summary()`)
 
+Next, add this new analysis page to your site index so it appears on the rendered site. Open `analysis/index.Rmd` and add a link under the **Analysis** section. Use a relative link to the rendered HTML file:
+
+```
+- [Getting started](01-getting-started.html)
+```
+
 ### 3. Build and check the site locally
 
 Use workflowr to build the site and check its status.
 
 ```{r, eval = FALSE}
+# wflow_open("analysis/01-getting-started.Rmd")
 wflow_build("analysis/01-getting-started.Rmd") # build only one script
 wflow_build() # build the whole site
 wflow_status() # check the build status
@@ -86,10 +93,17 @@ wflow_status() # check the build status
 
 ### 4. Publish and commit with workflowr
 
-Publish the new analysis page using workflowr so it is tracked by Git.
+Before publishing your own analysis file, publish the default site pages once so they are tracked by Git and appear on your site (these files are created by `wflow_start()`):
 
 ```{r, eval = FALSE}
-wflow_publish("analysis/01-getting-started.Rmd", message = "Add initial analysis page") # committing your work to the repository
+wflow_publish(c("analysis/index.Rmd", "analysis/about.Rmd", "analysis/license.Rmd"),
+              message = "Publish initial site pages")
+```
+
+Now publish the new analysis page using workflowr so it is tracked by Git.
+
+```{r, eval = FALSE}
+wflow_publish("analysis/01-getting-started.Rmd", message = "update") # committing your work to the repository
 ```
 
 ### 5. Push to GitHub and enable GitHub Pages
@@ -100,16 +114,36 @@ Setup your Github repository using the `wflow_use_github` function.
 I chose the Oauth route when prompted, but either is fine.
 
 ```{r, eval = FALSE}
-wflow_use_github("myname")
+wflow_use_github("michaelhallquist")
 ```
 
-Now push the code from your computer to Github
+#### Create a Personal Access Token (PAT) for GitHub (required for pushing over HTTPS)
+
+GitHub no longer accepts your GitHub account password for pushing over HTTPS. Instead, you will create a **Personal Access Token (PAT)** and use it **in place of a password** when `wflow_git_push()` asks.
+
+1. Log into GitHub in your browser.
+2. Go to **Settings** → **Developer settings** → **Personal access tokens**.
+3. Choose **Tokens (classic)** (recommended). If you prefer **Fine-grained tokens**, choose that instead and follow the fine-grained settings below.
+4. **Classic token settings:** check **repo** and **workflow**, and set an **Expiration** (e.g., 90 days).
+5. **Fine-grained token settings:** give it a name (e.g., `workflowr-week2`) and set an **Expiration** (e.g., 30–90 days). Under **Repository access**, choose **Only select repositories** and select the workflowr repo. Under **Repository permissions**, add **Actions**, **Contents**, and **Pages**; for each one, set **Access** to **Read and write** in the right-hand dropdown.
+6. Click **Generate token** and **copy it** somewhere safe. You will not be able to see it again.
+
+Treat the PAT like a password: don’t share it and don’t paste it into files that you will commit to GitHub.
+
+#### Push the code from your computer to GitHub
 
 ```{r, eval = FALSE}
-wflow_git_push()
+wflow_git_push(set_upstream = TRUE)
 ```
 
-In GitHub, enable Pages for the `docs/` folder on the `main` branch.
+When prompted:
+
+- **Username**: your GitHub username
+- **Password**: paste your **PAT** (not your GitHub account password)
+
+If `wflow_git_push()` fails or gives strange errors, see the Troubleshooting section below for a command-line fallback (you will still use your PAT when asked for a password).
+
+In GitHub, enable Pages for the `docs/` folder on the branch you pushed (often `main`, but sometimes `master`).
 
 Guidance here: https://docs.github.com/en/pages/quickstart
 
@@ -134,3 +168,198 @@ Open your GitHub Pages site and confirm:
 1. Provide the URL of your project site.
 2. Short reflection (2-3 sentences) on what was straightforward vs. confusing, what you think
    may be helpful about this approach and/or what aspects you may adopt in your own workflows
+
+## Troubleshooting
+
+### Authentication setup (default: PAT over HTTPS)
+
+GitHub no longer accepts account passwords for Git pushes over HTTPS. You must use either:
+
+1. **A Personal Access Token (PAT) over HTTPS** (default for this assignment)
+2. **An SSH key** (alternative; great if you plan to use GitHub often)
+
+Both options are secure. Unless you already use SSH for GitHub, use the PAT option below.
+
+#### Option A (default): Personal Access Token (PAT) over HTTPS
+
+**Step 1: Create a PAT in GitHub**
+
+1. Log into GitHub in your browser.
+2. Go to **Settings** → **Developer settings** → **Personal access tokens**.
+3. Choose **Tokens (classic)** (recommended). If you prefer **Fine-grained tokens**, choose that instead.
+4. **Classic token settings:** check **repo** and **workflow**, and set an **Expiration** (e.g., 90 days).
+5. **Fine-grained token settings:** give it a name and set an **Expiration** (e.g., 30–90 days). **Repository access**: choose **Only select repositories** and pick your workflowr repo. **Repository permissions**: add **Actions**, **Contents**, and **Pages**; for each one, set **Access** to **Read and write** in the right-hand dropdown.
+6. Click **Generate token** and **copy it**. You will not see it again.
+
+**Step 2: Push from R with workflowr (preferred)**
+
+Run this from your R session:
+
+```{r, eval=FALSE}
+wflow_git_push(set_upstream = TRUE)
+```
+
+When prompted:
+- **Username**: your GitHub username
+- **Password**: paste your PAT
+
+If `wflow_git_push()` isn’t working (or gives confusing errors), try the command line instead:
+
+```{bash, eval=FALSE}
+git push -u origin main
+```
+
+If your default branch is `master`, replace `main` with `master`. If asked whether to save the credential, say **Yes** (recommended).
+
+#### Option B (alternative): SSH key
+
+**Step 1: Generate an SSH key**
+
+```{bash, eval=FALSE}
+ssh-keygen -t ed25519 -C "youremail@unc.edu"
+```
+
+Press Enter to accept the default file location. Add a passphrase if you want extra security.
+
+**Step 2: Add your key to the SSH agent**
+
+```{bash, eval=FALSE}
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+**Step 3: Add the public key to GitHub**
+
+```{bash, eval=FALSE}
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the output. Then in GitHub:
+**Settings** → **SSH and GPG keys** → **New SSH key** → paste the key → **Add**.
+
+**Step 4: Switch your repo remote to SSH**
+
+```{bash, eval=FALSE}
+git remote set-url origin git@github.com:<username>/<reponame>.git
+```
+
+**Step 5: Test and push**
+
+```{bash, eval=FALSE}
+ssh -T git@github.com
+```
+
+Then push from R (preferred):
+
+```{r, eval=FALSE}
+wflow_git_push(set_upstream = TRUE)
+```
+
+If that fails, push from the command line:
+
+```{bash, eval=FALSE}
+git push -u origin main
+```
+
+If your default branch is `master`, replace `main` with `master`.
+
+#### Using PAT or SSH without the command line (workflowr only)
+
+If you want to work entirely in R with `workflowr` (no terminal commands), you can still authenticate:
+
+**PAT (HTTPS):** Run `wflow_git_push()` from R. When it asks for a password, paste your PAT.
+
+If you want to avoid re-typing it each time, you can store the PAT in your `.Renviron` file as `GITHUB_PAT`, restart R, then push like this:
+
+```{r, eval=FALSE}
+wflow_git_push(username = "<github-username>",
+               password = Sys.getenv("GITHUB_PAT"))
+```
+
+**SSH:** Switch the remote to SSH using workflowr, then push:
+
+```{r, eval=FALSE}
+wflow_git_remote(remote = "origin", user = "<username>", repo = "<reponame>",
+                 protocol = "ssh", action = "set_url")
+wflow_git_push()
+```
+
+If SSH fails with a message about SSH support, use HTTPS + PAT or the command line (`git push`) instead.
+
+### `wflow_git_push()` fails with a `git2r::push()` error
+
+Some students see errors like:
+
+```
+Error in 'git2r_push': unexpected http status code: 400
+```
+
+This is usually an authentication problem (HTTPS + no password support). Two fixes:
+
+1. Use GitHub’s Personal Access Token (PAT) when prompted for a password.
+2. Or, bypass `git2r` entirely and push with the Git CLI (still using a PAT if you are on HTTPS):
+
+```{bash, eval=FALSE}
+git push -u origin master
+```
+
+If your default branch is `main`, replace `master` with `main`. If you don’t have Git installed, install it first (https://happygitwithr.com). If you want advice on the `git2r` error, search the `git2r` GitHub issues for “unexpected http status code 400”.
+
+### `git2r::push()` fails with HTTP 403 (but `git push` works)
+
+If you are using a PAT and see:
+
+```
+Error in 'git2r_push': unexpected http status code: 403
+```
+
+It usually means the token you provided doesn’t have permission to push *or* `git2r` is not using the same stored credential that your Git command line is using.
+
+Try these in order:
+
+1. Double-check your PAT settings (it must have access to the repo and **Contents: Read and write**; if you used a fine-grained token, also include **Actions** and **Pages**).
+2. Create a new PAT and try again (copy/paste carefully; no spaces).
+3. Use the Git CLI for the first push and set the upstream branch once:
+
+```{bash, eval=FALSE}
+git push -u origin HEAD
+```
+
+After that, `git push` should work without needing `-u` again for that repo/branch.
+
+### My analysis file isn’t showing up on GitHub Pages
+
+If the file exists in `analysis/` but doesn’t appear on your GitHub Pages site, run this checklist:
+
+1. **Build it**: Run `wflow_build()` (or `wflow_publish()` which builds + commits).
+2. **Publish it**: If you only built it, run `wflow_publish("analysis/your-file.Rmd")`.
+3. **Check status**: Run `wflow_status()` and confirm the new HTML is tracked.
+4. **Push it**: Push the latest commit to GitHub.
+5. **Pages source**: In GitHub → Settings → Pages, confirm `main` + `/docs`.
+6. **Wait + refresh**: Give it a few minutes, then hard refresh your browser.
+
+### Recommended workflow to avoid push problems
+
+This workflow keeps you in R for the main steps (default: HTTPS + PAT):
+
+1. Create your project with `wflow_start()`.
+2. Publish changes with `wflow_publish()`.
+3. Push with workflowr:
+
+```{r, eval=FALSE}
+wflow_git_push(set_upstream = TRUE)
+```
+
+If `wflow_git_push()` isn’t working, use the Git CLI instead (still using your PAT or SSH):
+
+```{bash, eval=FALSE}
+git status
+git push -u origin master
+```
+
+If you prefer SSH, set up an SSH key on GitHub first, then ensure your remote is SSH:
+
+```{bash, eval=FALSE}
+git remote -v
+git remote set-url origin git@github.com:<username>/<reponame>.git
+```

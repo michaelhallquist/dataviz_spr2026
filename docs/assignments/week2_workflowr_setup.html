@@ -171,6 +171,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#verify-the-published-site" id="toc-verify-the-published-site" class="nav-link" data-scroll-target="#verify-the-published-site">6. Verify the published site</a></li>
   <li><a href="#deliverables" id="toc-deliverables" class="nav-link" data-scroll-target="#deliverables">Deliverables</a></li>
   </ul></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#authentication-setup-default-pat-over-https" id="toc-authentication-setup-default-pat-over-https" class="nav-link" data-scroll-target="#authentication-setup-default-pat-over-https">Authentication setup (default: PAT over HTTPS)</a></li>
+  <li><a href="#wflow_git_push-fails-with-a-git2rpush-error" id="toc-wflow_git_push-fails-with-a-git2rpush-error" class="nav-link" data-scroll-target="#wflow_git_push-fails-with-a-git2rpush-error"><code>wflow_git_push()</code> fails with a <code>git2r::push()</code> error</a></li>
+  <li><a href="#git2rpush-fails-with-http-403-but-git-push-works" id="toc-git2rpush-fails-with-http-403-but-git-push-works" class="nav-link" data-scroll-target="#git2rpush-fails-with-http-403-but-git-push-works"><code>git2r::push()</code> fails with HTTP 403 (but <code>git push</code> works)</a></li>
+  <li><a href="#my-analysis-file-isnt-showing-up-on-github-pages" id="toc-my-analysis-file-isnt-showing-up-on-github-pages" class="nav-link" data-scroll-target="#my-analysis-file-isnt-showing-up-on-github-pages">My analysis file isn’t showing up on GitHub Pages</a></li>
+  <li><a href="#recommended-workflow-to-avoid-push-problems" id="toc-recommended-workflow-to-avoid-push-problems" class="nav-link" data-scroll-target="#recommended-workflow-to-avoid-push-problems">Recommended workflow to avoid push problems</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -208,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><em>This assignment is due by 1/28/2026 at 8am.</em></p>
+<p><em>This assignment is due by 2/4/2026 at 8am.</em></p>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>This assignment builds directly on the workflowr vignette: <a href="https://workflowr.github.io/workflowr/articles/wflow-01-getting-started.html" class="uri">https://workflowr.github.io/workflowr/articles/wflow-01-getting-started.html</a>. Your goal is to create a new workflowr project with a clean structure, publish at least one analysis file, and make it available as a GitHub Pages site.</p>
@@ -253,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(workflowr) <span class="co"># load library</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># wflow_start("~/Downloads/workflowr-michael")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_start</span>(<span class="st">"~/Downloads/workflowr-michael_28jan2026"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Open the project in RStudio (File &gt; Open Project) and review the default folders: <code>analysis/</code>, <code>data/</code>, <code>code/</code>, <code>output/</code>, and <code>docs/</code>.</p>
@@ -267,6 +275,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Add a small public domain data file to the <code>data/</code> folder (e.g., a CSV from data.gov or another public domain source).</li>
 <li>One code chunk that reads your data file from <code>data/</code> and prints a small summary (e.g., <code>str()</code> or <code>summary()</code>)</li>
 </ul>
+<p>Next, add this new analysis page to your site index so it appears on the rendered site. Open <code>analysis/index.Rmd</code> and add a link under the <strong>Analysis</strong> section. Use a relative link to the rendered HTML file:</p>
+<pre><code>- [Getting started](01-getting-started.html)</code></pre>
 </section>
 <section id="build-and-check-the-site-locally" class="level3">
 <h3 class="anchored" data-anchor-id="build-and-check-the-site-locally">3. Build and check the site locally</h3>
@@ -274,19 +284,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_build</span>(<span class="st">"analysis/01-getting-started.Rmd"</span>) <span class="co"># build only one script</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_build</span>() <span class="co"># build the whole site</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_status</span>() <span class="co"># check the build status</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wflow_open("analysis/01-getting-started.Rmd")</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_build</span>(<span class="st">"analysis/01-getting-started.Rmd"</span>) <span class="co"># build only one script</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_build</span>() <span class="co"># build the whole site</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_status</span>() <span class="co"># check the build status</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
 <section id="publish-and-commit-with-workflowr" class="level3">
 <h3 class="anchored" data-anchor-id="publish-and-commit-with-workflowr">4. Publish and commit with workflowr</h3>
-<p>Publish the new analysis page using workflowr so it is tracked by Git.</p>
+<p>Before publishing your own analysis file, publish the default site pages once so they are tracked by Git and appear on your site (these files are created by <code>wflow_start()</code>):</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_publish</span>(<span class="st">"analysis/01-getting-started.Rmd"</span>, <span class="at">message =</span> <span class="st">"Add initial analysis page"</span>) <span class="co"># committing your work to the repository</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_publish</span>(<span class="fu">c</span>(<span class="st">"analysis/index.Rmd"</span>, <span class="st">"analysis/about.Rmd"</span>, <span class="st">"analysis/license.Rmd"</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">message =</span> <span class="st">"Publish initial site pages"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Now publish the new analysis page using workflowr so it is tracked by Git.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_publish</span>(<span class="st">"analysis/01-getting-started.Rmd"</span>, <span class="at">message =</span> <span class="st">"update"</span>) <span class="co"># committing your work to the repository</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -297,21 +316,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_use_github</span>(<span class="st">"myname"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_use_github</span>(<span class="st">"michaelhallquist"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Now push the code from your computer to Github</p>
+<section id="create-a-personal-access-token-pat-for-github-required-for-pushing-over-https" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-personal-access-token-pat-for-github-required-for-pushing-over-https">Create a Personal Access Token (PAT) for GitHub (required for pushing over HTTPS)</h4>
+<p>GitHub no longer accepts your GitHub account password for pushing over HTTPS. Instead, you will create a <strong>Personal Access Token (PAT)</strong> and use it <strong>in place of a password</strong> when <code>wflow_git_push()</code> asks.</p>
+<ol type="1">
+<li>Log into GitHub in your browser.</li>
+<li>Go to <strong>Settings</strong> → <strong>Developer settings</strong> → <strong>Personal access tokens</strong>.</li>
+<li>Choose <strong>Tokens (classic)</strong> (recommended). If you prefer <strong>Fine-grained tokens</strong>, choose that instead and follow the fine-grained settings below.</li>
+<li><strong>Classic token settings:</strong> check <strong>repo</strong> and <strong>workflow</strong>, and set an <strong>Expiration</strong> (e.g., 90 days).</li>
+<li><strong>Fine-grained token settings:</strong> give it a name (e.g., <code>workflowr-week2</code>) and set an <strong>Expiration</strong> (e.g., 30–90 days). Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> and select the workflowr repo. Under <strong>Repository permissions</strong>, add <strong>Actions</strong>, <strong>Contents</strong>, and <strong>Pages</strong>; for each one, set <strong>Access</strong> to <strong>Read and write</strong> in the right-hand dropdown.</li>
+<li>Click <strong>Generate token</strong> and <strong>copy it</strong> somewhere safe. You will not be able to see it again.</li>
+</ol>
+<p>Treat the PAT like a password: don’t share it and don’t paste it into files that you will commit to GitHub.</p>
+</section>
+<section id="push-the-code-from-your-computer-to-github" class="level4">
+<h4 class="anchored" data-anchor-id="push-the-code-from-your-computer-to-github">Push the code from your computer to GitHub</h4>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_push</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_push</span>(<span class="at">set_upstream =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>In GitHub, enable Pages for the <code>docs/</code> folder on the <code>main</code> branch.</p>
+<p>When prompted:</p>
+<ul>
+<li><strong>Username</strong>: your GitHub username</li>
+<li><strong>Password</strong>: paste your <strong>PAT</strong> (not your GitHub account password)</li>
+</ul>
+<p>If <code>wflow_git_push()</code> fails or gives strange errors, see the Troubleshooting section below for a command-line fallback (you will still use your PAT when asked for a password).</p>
+<p>In GitHub, enable Pages for the <code>docs/</code> folder on the branch you pushed (often <code>main</code>, but sometimes <code>master</code>).</p>
 <p>Guidance here: <a href="https://docs.github.com/en/pages/quickstart" class="uri">https://docs.github.com/en/pages/quickstart</a></p>
 <p>After configured, this should look like the following: <img src="files/ghpages_settings.png" class="img-fluid"></p>
 <p>After a few minutes of setting this, the top part of the GitHub Pages for the repo (<code>https://github.com/&lt;username&gt;/&lt;reponame&gt;/settings/pages</code>) should look something like this:</p>
 <p><img src="files/ghpages_url.png" class="img-fluid"></p>
+</section>
 </section>
 <section id="verify-the-published-site" class="level3">
 <h3 class="anchored" data-anchor-id="verify-the-published-site">6. Verify the published site</h3>
@@ -328,6 +368,205 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Provide the URL of your project site.</li>
 <li>Short reflection (2-3 sentences) on what was straightforward vs.&nbsp;confusing, what you think may be helpful about this approach and/or what aspects you may adopt in your own workflows</li>
 </ol>
+</section>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<section id="authentication-setup-default-pat-over-https" class="level3">
+<h3 class="anchored" data-anchor-id="authentication-setup-default-pat-over-https">Authentication setup (default: PAT over HTTPS)</h3>
+<p>GitHub no longer accepts account passwords for Git pushes over HTTPS. You must use either:</p>
+<ol type="1">
+<li><strong>A Personal Access Token (PAT) over HTTPS</strong> (default for this assignment)</li>
+<li><strong>An SSH key</strong> (alternative; great if you plan to use GitHub often)</li>
+</ol>
+<p>Both options are secure. Unless you already use SSH for GitHub, use the PAT option below.</p>
+<section id="option-a-default-personal-access-token-pat-over-https" class="level4">
+<h4 class="anchored" data-anchor-id="option-a-default-personal-access-token-pat-over-https">Option A (default): Personal Access Token (PAT) over HTTPS</h4>
+<p><strong>Step 1: Create a PAT in GitHub</strong></p>
+<ol type="1">
+<li>Log into GitHub in your browser.</li>
+<li>Go to <strong>Settings</strong> → <strong>Developer settings</strong> → <strong>Personal access tokens</strong>.</li>
+<li>Choose <strong>Tokens (classic)</strong> (recommended). If you prefer <strong>Fine-grained tokens</strong>, choose that instead.</li>
+<li><strong>Classic token settings:</strong> check <strong>repo</strong> and <strong>workflow</strong>, and set an <strong>Expiration</strong> (e.g., 90 days).</li>
+<li><strong>Fine-grained token settings:</strong> give it a name and set an <strong>Expiration</strong> (e.g., 30–90 days). <strong>Repository access</strong>: choose <strong>Only select repositories</strong> and pick your workflowr repo. <strong>Repository permissions</strong>: add <strong>Actions</strong>, <strong>Contents</strong>, and <strong>Pages</strong>; for each one, set <strong>Access</strong> to <strong>Read and write</strong> in the right-hand dropdown.</li>
+<li>Click <strong>Generate token</strong> and <strong>copy it</strong>. You will not see it again.</li>
+</ol>
+<p><strong>Step 2: Push from R with workflowr (preferred)</strong></p>
+<p>Run this from your R session:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_push</span>(<span class="at">set_upstream =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>When prompted: - <strong>Username</strong>: your GitHub username - <strong>Password</strong>: paste your PAT</p>
+<p>If <code>wflow_git_push()</code> isn’t working (or gives confusing errors), try the command line instead:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>If your default branch is <code>master</code>, replace <code>main</code> with <code>master</code>. If asked whether to save the credential, say <strong>Yes</strong> (recommended).</p>
+</section>
+<section id="option-b-alternative-ssh-key" class="level4">
+<h4 class="anchored" data-anchor-id="option-b-alternative-ssh-key">Option B (alternative): SSH key</h4>
+<p><strong>Step 1: Generate an SSH key</strong></p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"youremail@unc.edu"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Press Enter to accept the default file location. Add a passphrase if you want extra security.</p>
+<p><strong>Step 2: Add your key to the SSH agent</strong></p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="fu">ssh-agent</span> <span class="at">-s</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span> ~/.ssh/id_ed25519</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>Step 3: Add the public key to GitHub</strong></p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Copy the output. Then in GitHub: <strong>Settings</strong> → <strong>SSH and GPG keys</strong> → <strong>New SSH key</strong> → paste the key → <strong>Add</strong>.</p>
+<p><strong>Step 4: Switch your repo remote to SSH</strong></p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin git@github.com:<span class="op">&lt;</span>username<span class="op">&gt;</span>/<span class="op">&lt;</span>reponame<span class="op">&gt;</span>.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>Step 5: Test and push</strong></p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Then push from R (preferred):</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_push</span>(<span class="at">set_upstream =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>If that fails, push from the command line:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>If your default branch is <code>master</code>, replace <code>main</code> with <code>master</code>.</p>
+</section>
+<section id="using-pat-or-ssh-without-the-command-line-workflowr-only" class="level4">
+<h4 class="anchored" data-anchor-id="using-pat-or-ssh-without-the-command-line-workflowr-only">Using PAT or SSH without the command line (workflowr only)</h4>
+<p>If you want to work entirely in R with <code>workflowr</code> (no terminal commands), you can still authenticate:</p>
+<p><strong>PAT (HTTPS):</strong> Run <code>wflow_git_push()</code> from R. When it asks for a password, paste your PAT.</p>
+<p>If you want to avoid re-typing it each time, you can store the PAT in your <code>.Renviron</code> file as <code>GITHUB_PAT</code>, restart R, then push like this:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_push</span>(<span class="at">username =</span> <span class="st">"&lt;github-username&gt;"</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"GITHUB_PAT"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>SSH:</strong> Switch the remote to SSH using workflowr, then push:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_remote</span>(<span class="at">remote =</span> <span class="st">"origin"</span>, <span class="at">user =</span> <span class="st">"&lt;username&gt;"</span>, <span class="at">repo =</span> <span class="st">"&lt;reponame&gt;"</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">protocol =</span> <span class="st">"ssh"</span>, <span class="at">action =</span> <span class="st">"set_url"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_push</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>If SSH fails with a message about SSH support, use HTTPS + PAT or the command line (<code>git push</code>) instead.</p>
+</section>
+</section>
+<section id="wflow_git_push-fails-with-a-git2rpush-error" class="level3">
+<h3 class="anchored" data-anchor-id="wflow_git_push-fails-with-a-git2rpush-error"><code>wflow_git_push()</code> fails with a <code>git2r::push()</code> error</h3>
+<p>Some students see errors like:</p>
+<pre><code>Error in 'git2r_push': unexpected http status code: 400</code></pre>
+<p>This is usually an authentication problem (HTTPS + no password support). Two fixes:</p>
+<ol type="1">
+<li>Use GitHub’s Personal Access Token (PAT) when prompted for a password.</li>
+<li>Or, bypass <code>git2r</code> entirely and push with the Git CLI (still using a PAT if you are on HTTPS):</li>
+</ol>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin master</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>If your default branch is <code>main</code>, replace <code>master</code> with <code>main</code>. If you don’t have Git installed, install it first (<a href="https://happygitwithr.com" class="uri">https://happygitwithr.com</a>). If you want advice on the <code>git2r</code> error, search the <code>git2r</code> GitHub issues for “unexpected http status code 400”.</p>
+</section>
+<section id="git2rpush-fails-with-http-403-but-git-push-works" class="level3">
+<h3 class="anchored" data-anchor-id="git2rpush-fails-with-http-403-but-git-push-works"><code>git2r::push()</code> fails with HTTP 403 (but <code>git push</code> works)</h3>
+<p>If you are using a PAT and see:</p>
+<pre><code>Error in 'git2r_push': unexpected http status code: 403</code></pre>
+<p>It usually means the token you provided doesn’t have permission to push <em>or</em> <code>git2r</code> is not using the same stored credential that your Git command line is using.</p>
+<p>Try these in order:</p>
+<ol type="1">
+<li>Double-check your PAT settings (it must have access to the repo and <strong>Contents: Read and write</strong>; if you used a fine-grained token, also include <strong>Actions</strong> and <strong>Pages</strong>).</li>
+<li>Create a new PAT and try again (copy/paste carefully; no spaces).</li>
+<li>Use the Git CLI for the first push and set the upstream branch once:</li>
+</ol>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin HEAD</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>After that, <code>git push</code> should work without needing <code>-u</code> again for that repo/branch.</p>
+</section>
+<section id="my-analysis-file-isnt-showing-up-on-github-pages" class="level3">
+<h3 class="anchored" data-anchor-id="my-analysis-file-isnt-showing-up-on-github-pages">My analysis file isn’t showing up on GitHub Pages</h3>
+<p>If the file exists in <code>analysis/</code> but doesn’t appear on your GitHub Pages site, run this checklist:</p>
+<ol type="1">
+<li><strong>Build it</strong>: Run <code>wflow_build()</code> (or <code>wflow_publish()</code> which builds + commits).</li>
+<li><strong>Publish it</strong>: If you only built it, run <code>wflow_publish("analysis/your-file.Rmd")</code>.</li>
+<li><strong>Check status</strong>: Run <code>wflow_status()</code> and confirm the new HTML is tracked.</li>
+<li><strong>Push it</strong>: Push the latest commit to GitHub.</li>
+<li><strong>Pages source</strong>: In GitHub → Settings → Pages, confirm <code>main</code> + <code>/docs</code>.</li>
+<li><strong>Wait + refresh</strong>: Give it a few minutes, then hard refresh your browser.</li>
+</ol>
+</section>
+<section id="recommended-workflow-to-avoid-push-problems" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-workflow-to-avoid-push-problems">Recommended workflow to avoid push problems</h3>
+<p>This workflow keeps you in R for the main steps (default: HTTPS + PAT):</p>
+<ol type="1">
+<li>Create your project with <code>wflow_start()</code>.</li>
+<li>Publish changes with <code>wflow_publish()</code>.</li>
+<li>Push with workflowr:</li>
+</ol>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wflow_git_push</span>(<span class="at">set_upstream =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>If <code>wflow_git_push()</code> isn’t working, use the Git CLI instead (still using your PAT or SSH):</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin master</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>If you prefer SSH, set up an SSH key on GitHub first, then ensure your remote is SSH:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote set-url origin git@github.com:<span class="op">&lt;</span>username<span class="op">&gt;</span>/<span class="op">&lt;</span>reponame<span class="op">&gt;</span>.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 
 
 </section>
