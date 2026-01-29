@@ -123,7 +123,7 @@ The table above has one row per run, and several list-columns containing nested 
 
 - **Separation of levels**: you keep a clean table of runs without flattening every trial.
 - **Targeted QA**: you can run different checks at the run level, trial level, or subject level by mapping the right function over the right list-column.
-- **Performance**: many computations stay run-local until you decide to bind them.
+- **Performance**: you only compute what each step needs; results aren't combined into one big data frame until you bind them, which reduces extra work and memory use.
 
 ### Mapping over list-columns
 

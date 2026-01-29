@@ -312,7 +312,7 @@ $ drop_trials &lt;list&gt; &lt;13, 16, 17, 20, 24, 26, 29, 39&gt;, &lt;2, 9, 12,
 <ul>
 <li><strong>Separation of levels</strong>: you keep a clean table of runs without flattening every trial.</li>
 <li><strong>Targeted QA</strong>: you can run different checks at the run level, trial level, or subject level by mapping the right function over the right list-column.</li>
-<li><strong>Performance</strong>: many computations stay run-local until you decide to bind them.</li>
+<li><strong>Performance</strong>: you only compute what each step needs; results aren’t combined into one big data frame until you bind them, which reduces extra work and memory use.</li>
 </ul>
 </section>
 <section id="mapping-over-list-columns" class="level3">

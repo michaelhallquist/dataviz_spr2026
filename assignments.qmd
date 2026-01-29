@@ -5,4 +5,5 @@ date: today
 
 - [Week 1: Data Tidying](assignments/week1_tidyData.html) (due 1/21 at 8am) — [Download QMD](assignments/downloads/week1_tidyData.qmd)
 - [Week 2: Workflowr Project Setup](assignments/week2_workflowr_setup.html) (due 2/4 at 8am) — [Download QMD](assignments/downloads/week2_workflowr_setup.qmd)
+- [Week 3: Data Wrangling](assignments/week3_dataWrangling.html) — [Download QMD](assignments/downloads/week3_dataWrangling.qmd) — [Download data](assignments/files/national-month.csv.gz)
 - [Data quality assurance and processing project proposal](assignments/data_quality_assurance_processing_project_proposal_2026.html) (due 1/29/2026)
