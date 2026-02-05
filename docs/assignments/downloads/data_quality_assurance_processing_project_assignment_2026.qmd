@@ -1,0 +1,52 @@
+---
+title: "Data Quality Assurance and Processing Project"
+subtitle: "Project Assignment"
+date: today
+---
+
+PSYC 859 Spring 2026
+
+## Due dates
+
+- Proposal (separate submission): 1/29/2026
+- Project submission: 2/12/2026
+
+## Project guidelines
+
+Building on your submitted project proposal, implement your data import, quality assurance, tidying, and processing plan. Your submission should be understandable and runnable by someone else (here, me), and it should produce documented evidence about data quality and the cleaning decisions you made.
+
+If your implementation differs from your proposal in any meaningful way (e.g., different variables, different merge strategy, extra cleaning steps, dropped datasets), include a short addendum explaining what changed and why.
+
+If you include any data with your submission, it should be deidentified and otherwise appropriate to share in the course context.
+
+## Project materials to be submitted
+
+Submit a single `.zip` containing your project folder (preferred). A Git repository snapshot or link is also fine if it contains the full structure and required outputs.
+
+Minimum contents:
+
+1. **Code**: All scripts and/or Quarto/R Markdown documents used to execute the QA + processing pipeline.
+2. **Filesystem snapshot**: A `tree.txt` (preferred) or screenshot showing the project folder structure. This could literally be a screenshot of your computer screen if all subfolders and files can easily be displayed, or a text file containing the contents of the filesystem for the project. On both Mac and Windows, a command called "tree" can be installed that provides a full description of the structure.
+3. **QA outputs**: The key tables/logs/reports used to identify problems and document data quality (e.g., missingness summaries, out-of-range listings, duplicate-ID checks, merge fidelity checks).
+4. **Documentation**: A `README` (or equivalent) describing (a) what the data are, (b) how to run the pipeline, and (c) major cleaning/processing decisions.
+
+Notes:
+
+- You may organize your pipeline as modular scripts, but include a clear "entry point" (e.g., `run_pipeline.R` or a single Quarto document) and instructions for running it.
+- Keep raw/original data unmodified; store derived products separately (e.g., `data/raw` vs `data/processed`), consistent with your proposal.
+
+## Key concepts to be demonstrated
+
+Successful projects should demonstrate:
+
+1. Intelligent folder and file setup (file management)
+2. Data import into R, preserving unadulterated data
+3. Data tidying (if necessary)
+4. Data wrangling (filter, select, arrange, transform, split/apply/combine, etc.)
+   - Clear, intelligent data storage format to support QA and analysis (one large data.frame, perhaps with list-columns, or a nested list structure?)
+5. Dataset merging/alignment (if applicable), including fidelity checks (e.g., unmatched IDs, unexpected duplicates, count checks). Consider using the tidylog package to help with your checks.
+6. Data QA, including checks for invalid values, missingness, artifacts (if relevant), and statistical outliers
+   - If relevant, one or more text-based documents (e.g., .csv spreadsheet) documenting data problems to be addressed.
+7. Clear documentation of manual or programmatic edits to data to produce consistent data (ready for visualization and analysis)
+8. Implementation of custom functions for QA and/or use of existing R packages to support validation and reporting
+

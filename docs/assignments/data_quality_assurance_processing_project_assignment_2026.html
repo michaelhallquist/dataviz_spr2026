@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-02-05">
 
-<title>Data Quality Assurance and Processing Project Proposal – Data Management and Visualization</title>
+<title>Data Quality Assurance and Processing Project – Data Management and Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,15 +117,25 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#due-dates" id="toc-due-dates" class="nav-link active" data-scroll-target="#due-dates">Due dates</a></li>
+  <li><a href="#project-guidelines" id="toc-project-guidelines" class="nav-link" data-scroll-target="#project-guidelines">Project guidelines</a></li>
+  <li><a href="#project-materials-to-be-submitted" id="toc-project-materials-to-be-submitted" class="nav-link" data-scroll-target="#project-materials-to-be-submitted">Project materials to be submitted</a></li>
+  <li><a href="#key-concepts-to-be-demonstrated" id="toc-key-concepts-to-be-demonstrated" class="nav-link" data-scroll-target="#key-concepts-to-be-demonstrated">Key concepts to be demonstrated</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data Quality Assurance and Processing Project Proposal</h1>
+<h1 class="title">Data Quality Assurance and Processing Project</h1>
+<p class="subtitle lead">Project Assignment</p>
 </div>
 
 
@@ -149,61 +159,53 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>PSYC 859 Spring 2026</p>
-<section id="due-dates" class="level3">
-<h3 class="anchored" data-anchor-id="due-dates">Due dates</h3>
+<section id="due-dates" class="level2">
+<h2 class="anchored" data-anchor-id="due-dates">Due dates</h2>
 <ul>
-<li>Proposal: 1/29/2026</li>
+<li>Proposal (separate submission): 1/29/2026</li>
 <li>Project submission: 2/12/2026</li>
 </ul>
 </section>
-<section id="proposal-guidelines" class="level3">
-<h3 class="anchored" data-anchor-id="proposal-guidelines">Proposal guidelines</h3>
-<p>Please submit a brief proposal (6-8 pages) describing the data import, processing, and quality assurance steps to prepare datasets under a conceptual umbrella (e.g., a research project) for data visualization and analysis. Ideally, please use a dataset that will help you in current and/or future projects. Use multiple files from the same project that can be merged or aligned (shared IDs, time points, or measures) to support a coherent visualization/analysis goal.</p>
-<p>For the proposal document, feel free to be concise, make use of lists, etc. For example, under section 6 (processing scripts proposal), this may look more like a numbered outline than prose. Note that when you submit the project, data (if provided) should be deidentified.</p>
+<section id="project-guidelines" class="level2">
+<h2 class="anchored" data-anchor-id="project-guidelines">Project guidelines</h2>
+<p>Building on your submitted project proposal, implement your data import, quality assurance, tidying, and processing plan. Your submission should be understandable and runnable by someone else (here, me), and it should produce documented evidence about data quality and the cleaning decisions you made.</p>
+<p>If your implementation differs from your proposal in any meaningful way (e.g., different variables, different merge strategy, extra cleaning steps, dropped datasets), include a short addendum explaining what changed and why.</p>
+<p>If you include any data with your submission, it should be deidentified and otherwise appropriate to share in the course context.</p>
 </section>
-<section id="key-ingredients-of-the-proposal" class="level3">
-<h3 class="anchored" data-anchor-id="key-ingredients-of-the-proposal">Key ingredients of the proposal</h3>
+<section id="project-materials-to-be-submitted" class="level2">
+<h2 class="anchored" data-anchor-id="project-materials-to-be-submitted">Project materials to be submitted</h2>
+<p>Submit a single <code>.zip</code> containing your project folder (preferred). A Git repository snapshot or link is also fine if it contains the full structure and required outputs.</p>
+<p>Minimum contents:</p>
 <ol type="1">
-<li>Background and rationale for project (1-2 paragraphs)</li>
-<li>Description of data structure:
+<li><strong>Code</strong>: All scripts and/or Quarto/R Markdown documents used to execute the QA + processing pipeline.</li>
+<li><strong>Filesystem snapshot</strong>: A <code>tree.txt</code> (preferred) or screenshot showing the project folder structure. This could literally be a screenshot of your computer screen if all subfolders and files can easily be displayed, or a text file containing the contents of the filesystem for the project. On both Mac and Windows, a command called “tree” can be installed that provides a full description of the structure.</li>
+<li><strong>QA outputs</strong>: The key tables/logs/reports used to identify problems and document data quality (e.g., missingness summaries, out-of-range listings, duplicate-ID checks, merge fidelity checks).</li>
+<li><strong>Documentation</strong>: A <code>README</code> (or equivalent) describing (a) what the data are, (b) how to run the pipeline, and (c) major cleaning/processing decisions.</li>
+</ol>
+<p>Notes:</p>
 <ul>
-<li>Types of data/data source. Please provide enough detail about the measures and collection procedures that a scientific reader understands the basics. For example: ECG data collected at 1000Hz using BIOPAC equipment over the course of a 5-minute Treer social stress test.</li>
-<li>Names and brief descriptions of key variables</li>
-<li>Original data storage format: file type, number of files, storage on file system (i.e., subdirectory structure)</li>
-</ul></li>
-<li>Proposed file system structure for project
+<li>You may organize your pipeline as modular scripts, but include a clear “entry point” (e.g., <code>run_pipeline.R</code> or a single Quarto document) and instructions for running it.</li>
+<li>Keep raw/original data unmodified; store derived products separately (e.g., <code>data/raw</code> vs <code>data/processed</code>), consistent with your proposal.</li>
+</ul>
+</section>
+<section id="key-concepts-to-be-demonstrated" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts-to-be-demonstrated">Key concepts to be demonstrated</h2>
+<p>Successful projects should demonstrate:</p>
+<ol type="1">
+<li>Intelligent folder and file setup (file management)</li>
+<li>Data import into R, preserving unadulterated data</li>
+<li>Data tidying (if necessary)</li>
+<li>Data wrangling (filter, select, arrange, transform, split/apply/combine, etc.)
 <ul>
-<li>Plan for maintaining unadulterated original data source</li>
-<li>Plan for organizing code, output, figures, and data on file system</li>
-<li>For processed data, how will they be stored? Why is this optimal?</li>
-<li>Rationale for how this plan will support understanding and accessibility for collaborators (or other researchers in the future)</li>
-<li>How will you document decisions about the data processing and analysis for the project? How will you document the basic file system structure of the project?</li>
+<li>Clear, intelligent data storage format to support QA and analysis (one large data.frame, perhaps with list-columns, or a nested list structure?)</li>
 </ul></li>
-<li>Description of any data preprocessing steps that need to be performed outside of R (e.g., large existing codebase for denoising EEG data etc.)</li>
-<li>Data quality assurance plan
+<li>Dataset merging/alignment (if applicable), including fidelity checks (e.g., unmatched IDs, unexpected duplicates, count checks). Consider using the tidylog package to help with your checks.</li>
+<li>Data QA, including checks for invalid values, missingness, artifacts (if relevant), and statistical outliers
 <ul>
-<li>What are the potential sources of artifacts or errors in the data?</li>
-<li>What checks can be conducted to mitigate these problems using algorithmic methods (i.e., automated code that walks through a dataset diagnosing and reporting problems)?</li>
-<li>How will missing data be identified and resolved? Resolution of missing values includes
-<ul>
-<li>When possible, finding the missing data and entering it.</li>
-<li>Documenting the missingness and, when possible, having a mechanism for quieting your QA script so that it does not perpetually yell at you.</li>
+<li>If relevant, one or more text-based documents (e.g., .csv spreadsheet) documenting data problems to be addressed.</li>
 </ul></li>
-<li>Are there QA steps that can only be conducted by a trained human (e.g., ECG artifact correction)? If so, briefly document why these cannot be automated or codified.</li>
-<li>Relatedly, can simple algorithms be included to enhance error detection for human follow-up? For example, in ECG data, consecutive changes of &gt; 300ms in the inter-beat interval may be indicative of an artifact to be checked by a human. Or in fMRI, a shift in the global mean of the signal 3SD+ above/below the temporal mean may be indicative of an artifact.</li>
-</ul></li>
-<li>Data QA and processing scripts proposal: Building on the QA plan above, write out a simple algorithm (cookbook-style, roughly like a simple outline) for the order of steps in your data processing pipeline. Note that the number and organization of scripts will depend on your project. In general, try to write reasonably modular (functionally specialized) scripts. Core steps include:
-<ul>
-<li>Setting the working directory (or how you will use an Rstudio project)</li>
-<li>Defining any variables that will be used throughout the script (e.g., absolute paths to output data)</li>
-<li>Import of original data</li>
-<li>Basic tidying of data, if necessary</li>
-<li>Basic QA checks on each dataset. What are the expected outputs that will document data quality?</li>
-<li>Dataset merging, including fidelity checks on merge</li>
-<li>Data manipulation/wrangling of merged data for analysis and visualization</li>
-</ul></li>
-<li>Briefly document functions that you anticipate writing to automate repetitive steps in the QA process (e.g., a function that checks for invalid data by looking for values outside of a given range).</li>
-<li>Briefly document functions that exist in publicly available R packages (e.g., <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, <code>editrules</code>, <code>validate</code>) that you anticipate using to accomplish your project.</li>
+<li>Clear documentation of manual or programmatic edits to data to produce consistent data (ready for visualization and analysis)</li>
+<li>Implementation of custom functions for QA and/or use of existing R packages to support validation and reporting</li>
 </ol>
 
 
