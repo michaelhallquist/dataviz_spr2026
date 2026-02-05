@@ -155,7 +155,26 @@ All projects are to be completed individually. Although you are encouraged to di
 
 ## Week 6 (2/12): Visual and graphical perception {#week-6}
 
+### Conceptual readings
+
+- Cleveland, W. S., & McGill, R. (1984). [Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods.](https://ares.lib.unc.edu/ares/ares.dll/plink?14E3508C) *Journal of the American Statistical Association*, *79*, 531-554.
+- Kosslyn, S. M. (2006). [*Graph design for the eye and mind*](https://ares.lib.unc.edu/ares/ares.dll/plink?14E3508D), Ch. 1.
+- Munzner, T. (2014). [*Visualization Analysis and Design*](https://ares.lib.unc.edu/ares/ares.dll/plink?14E3508E), Ch. 6.
+
 ## Week 7 (2/19): Graphic design, layout, style, use of color {#week-7}
+
+### Conceptual readings
+
+- Cleveland, *The elements of graphing data*, Ch. 2.
+- Tufte, *Beautiful evidence*, Ch. 5.
+- Tufte, *The visual display of quantitative information*, Chs. 4 and 5.
+- (Optional) Munzner, T. (2014). *Visualization Analysis and Design*, Ch. 10.
+
+### Practical readings
+
+- Boone & Evans. UX Color Theory: a short practical intro about use of color.
+- Review: <http://colorbrewer2.org/>
+- Color palette app: <https://coolors.co/app>
 
 ## Week 8 (2/26): A tour of quantitative visualization {#week-8}
 
