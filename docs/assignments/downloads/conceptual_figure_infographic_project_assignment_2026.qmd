@@ -1,0 +1,68 @@
+---
+title: "Conceptual Figure / Infographic Project"
+subtitle: "Project Assignment"
+date: today
+---
+
+PSYC 859 Spring 2026
+
+## Due dates
+
+- Draft figure for in-class/peer critique: 2/26/2026 (Week 8)
+- Final figure + design memo submission: 3/5/2026 (Week 9)
+
+## Project goal
+
+Create a conceptual figure that communicates a key idea, theory, or hypothesis related to your research interests. This type of figure is common in review articles, introductory figures in empirical papers, and grant applications. Your figure should be self-standing: the combination of title, caption, annotations, and visual elements should communicate the intended message without requiring verbal explanation.
+
+## Required audience + message statement
+
+At the top of your design memo, include one sentence that states:
+
+- your primary audience (e.g., disciplinary experts, interdisciplinary researchers, broader public), and
+- the single main takeaway you want that audience to remember.
+
+## Project materials to submit
+
+1. **Final figure** (high-resolution):
+   - Raster: PNG, JPG, or TIFF at 300 DPI minimum
+   - Vector: PDF or SVG
+2. **Design memo** (0.5-1 page, single-spaced):
+   - One-sentence audience + takeaway statement
+   - Brief explanation of design decisions (layout, annotation, color, emphasis)
+   - Data/source note for any quantitative or external content (and citation of data/image sources)
+   - How uncertainty/limitations are represented, if quantitative claims are shown
+   - 2-3 course principles used to justify design choices (e.g., Tufte, Bertin, Munzner, Kosslyn)
+
+Please ensure your figure looks correct at submitted size (e.g., printed or viewed at 100% zoom).
+
+## Evaluation criteria
+
+Successful projects should demonstrate the following:
+
+- **Clear purpose and audience fit**: The figure has an obvious overall objective and is appropriate for the intended audience.
+- **Integrated narrative and annotation**: Captions and annotations direct attention to the main conceptual and/or quantitative claims.
+- **Design coherence**: Effective use of contrast, repetition, alignment, and proximity to support interpretation.
+- **Bertin alignment**: Figure supports elementary, intermediate, and overall levels of reading.
+- **Conceptual structure**: Diagrams/visual relationships clearly represent mechanisms, links among constructs, or theoretical organization.
+- **Quantitative integrity (when applicable)**: Quantitative elements are accurate, interpretable, and matched to the message.
+- **Documentation and transparency**: Sources are cited and design choices are justified in the memo.
+
+## Perceptual and accessibility standards
+
+At minimum, final figures should meet the following standards:
+
+- Text and symbols are legible at final size.
+- Colors are interpretable and not dependent on color alone for key distinctions.
+- Visual encodings are chosen for accurate interpretation (prefer position/length for key quantitative comparisons).
+- Comparisons are easy to make (related elements placed near each other).
+- Decorative complexity does not overwhelm the main message.
+- Potentially misleading encodings (e.g., 3D effects, pie/area emphasis for precise comparisons, non-aligned stacked comparisons) should be avoided unless explicitly justified in the memo.
+
+## Draft checkpoint (Week 8)
+
+Bring or submit a draft figure for brief peer/in-class critique. The goal is to test whether:
+
+- your audience and intended takeaway are immediately clear,
+- annotation and organization support rapid understanding, and
+- revisions needed for final submission are identified early.

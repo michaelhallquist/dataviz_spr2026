@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-02-13">
 
-<title>Data Quality Assurance and Processing Project – Data Management and Visualization</title>
+<title>Conceptual Figure / Infographic Project – Data Management and Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -123,9 +123,12 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#due-dates" id="toc-due-dates" class="nav-link active" data-scroll-target="#due-dates">Due dates</a></li>
-  <li><a href="#project-guidelines" id="toc-project-guidelines" class="nav-link" data-scroll-target="#project-guidelines">Project guidelines</a></li>
-  <li><a href="#project-materials-to-be-submitted" id="toc-project-materials-to-be-submitted" class="nav-link" data-scroll-target="#project-materials-to-be-submitted">Project materials to be submitted</a></li>
-  <li><a href="#key-concepts-to-be-demonstrated" id="toc-key-concepts-to-be-demonstrated" class="nav-link" data-scroll-target="#key-concepts-to-be-demonstrated">Key concepts to be demonstrated</a></li>
+  <li><a href="#project-goal" id="toc-project-goal" class="nav-link" data-scroll-target="#project-goal">Project goal</a></li>
+  <li><a href="#required-audience-message-statement" id="toc-required-audience-message-statement" class="nav-link" data-scroll-target="#required-audience-message-statement">Required audience + message statement</a></li>
+  <li><a href="#project-materials-to-submit" id="toc-project-materials-to-submit" class="nav-link" data-scroll-target="#project-materials-to-submit">Project materials to submit</a></li>
+  <li><a href="#evaluation-criteria" id="toc-evaluation-criteria" class="nav-link" data-scroll-target="#evaluation-criteria">Evaluation criteria</a></li>
+  <li><a href="#perceptual-and-accessibility-standards" id="toc-perceptual-and-accessibility-standards" class="nav-link" data-scroll-target="#perceptual-and-accessibility-standards">Perceptual and accessibility standards</a></li>
+  <li><a href="#draft-checkpoint-week-8" id="toc-draft-checkpoint-week-8" class="nav-link" data-scroll-target="#draft-checkpoint-week-8">Draft checkpoint (Week 8)</a></li>
   </ul>
 </nav>
     </div>
@@ -134,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data Quality Assurance and Processing Project</h1>
+<h1 class="title">Conceptual Figure / Infographic Project</h1>
 <p class="subtitle lead">Project Assignment</p>
 </div>
 
@@ -162,51 +165,74 @@ ul.task-list li input[type="checkbox"] {
 <section id="due-dates" class="level2">
 <h2 class="anchored" data-anchor-id="due-dates">Due dates</h2>
 <ul>
-<li>Proposal (separate submission): 1/29/2026</li>
-<li>Project submission: 2/12/2026</li>
+<li>Draft figure for in-class/peer critique: 2/26/2026 (Week 8)</li>
+<li>Final figure + design memo submission: 3/5/2026 (Week 9)</li>
 </ul>
 </section>
-<section id="project-guidelines" class="level2">
-<h2 class="anchored" data-anchor-id="project-guidelines">Project guidelines</h2>
-<p>Building on your submitted project proposal, implement your data import, quality assurance, tidying, and processing plan. Your submission should be understandable and runnable by someone else (here, me), and it should produce documented evidence about data quality and the cleaning decisions you made.</p>
-<p>If your implementation differs from your proposal in any meaningful way (e.g., different variables, different merge strategy, extra cleaning steps, dropped datasets), include a short addendum explaining what changed and why.</p>
-<p>If you include any data with your submission, it should be deidentified and otherwise appropriate to share in the course context.</p>
+<section id="project-goal" class="level2">
+<h2 class="anchored" data-anchor-id="project-goal">Project goal</h2>
+<p>Create a conceptual figure that communicates a key idea, theory, or hypothesis related to your research interests. This type of figure is common in review articles, introductory figures in empirical papers, and grant applications. Your figure should be self-standing: the combination of title, caption, annotations, and visual elements should communicate the intended message without requiring verbal explanation.</p>
 </section>
-<section id="project-materials-to-be-submitted" class="level2">
-<h2 class="anchored" data-anchor-id="project-materials-to-be-submitted">Project materials to be submitted</h2>
-<p>Submit a single <code>.zip</code> containing your project folder (preferred). A Git repository snapshot or link is also fine if it contains the full structure and required outputs.</p>
-<p>Minimum contents:</p>
-<ol type="1">
-<li><strong>Code</strong>: All scripts and/or Quarto/R Markdown documents used to execute the QA + processing pipeline.</li>
-<li><strong>Filesystem snapshot</strong>: A <code>tree.txt</code> (preferred) or screenshot showing the project folder structure. This could literally be a screenshot of your computer screen if all subfolders and files can easily be displayed, or a text file containing the contents of the filesystem for the project. On both Mac and Windows, a command called “tree” can be installed that provides a full description of the structure.</li>
-<li><strong>QA outputs</strong>: The key tables/logs/reports used to identify problems and document data quality (e.g., missingness summaries, out-of-range listings, duplicate-ID checks, merge fidelity checks).</li>
-<li><strong>Documentation</strong>: A <code>README</code> (or equivalent) describing (a) what the data are, (b) how to run the pipeline, and (c) major cleaning/processing decisions.</li>
-</ol>
-<p>Notes:</p>
+<section id="required-audience-message-statement" class="level2">
+<h2 class="anchored" data-anchor-id="required-audience-message-statement">Required audience + message statement</h2>
+<p>At the top of your design memo, include one sentence that states:</p>
 <ul>
-<li>You may organize your pipeline as modular scripts, but include a clear “entry point” (e.g., <code>run_pipeline.R</code> or a single Quarto document) and instructions for running it.</li>
-<li>Keep raw/original data unmodified; store derived products separately (e.g., <code>data/raw</code> vs <code>data/processed</code>), consistent with your proposal.</li>
+<li>your primary audience (e.g., disciplinary experts, interdisciplinary researchers, broader public), and</li>
+<li>the single main takeaway you want that audience to remember.</li>
 </ul>
 </section>
-<section id="key-concepts-to-be-demonstrated" class="level2">
-<h2 class="anchored" data-anchor-id="key-concepts-to-be-demonstrated">Key concepts to be demonstrated</h2>
-<p>Successful projects should demonstrate:</p>
+<section id="project-materials-to-submit" class="level2">
+<h2 class="anchored" data-anchor-id="project-materials-to-submit">Project materials to submit</h2>
 <ol type="1">
-<li>Intelligent folder and file setup (file management)</li>
-<li>Data import into R, preserving unadulterated data</li>
-<li>Data tidying (if necessary)</li>
-<li>Data wrangling (filter, select, arrange, transform, split/apply/combine, etc.)
+<li><strong>Final figure</strong> (high-resolution):
 <ul>
-<li>Clear, intelligent data storage format to support QA and analysis (one large data.frame, perhaps with list-columns, or a nested list structure?)</li>
+<li>Raster: PNG, JPG, or TIFF at 300 DPI minimum</li>
+<li>Vector: PDF or SVG</li>
 </ul></li>
-<li>Dataset merging/alignment (if applicable), including fidelity checks (e.g., unmatched IDs, unexpected duplicates, count checks). Consider using the tidylog package to help with your checks.</li>
-<li>Data QA, including checks for invalid values, missingness, artifacts (if relevant), and statistical outliers
+<li><strong>Design memo</strong> (0.5-1 page, single-spaced):
 <ul>
-<li>If relevant, one or more text-based documents (e.g., .csv spreadsheet) documenting data problems to be addressed.</li>
+<li>One-sentence audience + takeaway statement</li>
+<li>Brief explanation of design decisions (layout, annotation, color, emphasis)</li>
+<li>Data/source note for any quantitative or external content (and citation of data/image sources)</li>
+<li>How uncertainty/limitations are represented, if quantitative claims are shown</li>
+<li>2-3 course principles used to justify design choices (e.g., Tufte, Bertin, Munzner, Kosslyn)</li>
 </ul></li>
-<li>Clear documentation of manual or programmatic edits to data to produce consistent data (ready for visualization and analysis)</li>
-<li>Implementation of custom functions for QA and/or use of existing R packages to support validation and reporting</li>
 </ol>
+<p>Please ensure your figure looks correct at submitted size (e.g., printed or viewed at 100% zoom).</p>
+</section>
+<section id="evaluation-criteria" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation-criteria">Evaluation criteria</h2>
+<p>Successful projects should demonstrate the following:</p>
+<ul>
+<li><strong>Clear purpose and audience fit</strong>: The figure has an obvious overall objective and is appropriate for the intended audience.</li>
+<li><strong>Integrated narrative and annotation</strong>: Captions and annotations direct attention to the main conceptual and/or quantitative claims.</li>
+<li><strong>Design coherence</strong>: Effective use of contrast, repetition, alignment, and proximity to support interpretation.</li>
+<li><strong>Bertin alignment</strong>: Figure supports elementary, intermediate, and overall levels of reading.</li>
+<li><strong>Conceptual structure</strong>: Diagrams/visual relationships clearly represent mechanisms, links among constructs, or theoretical organization.</li>
+<li><strong>Quantitative integrity (when applicable)</strong>: Quantitative elements are accurate, interpretable, and matched to the message.</li>
+<li><strong>Documentation and transparency</strong>: Sources are cited and design choices are justified in the memo.</li>
+</ul>
+</section>
+<section id="perceptual-and-accessibility-standards" class="level2">
+<h2 class="anchored" data-anchor-id="perceptual-and-accessibility-standards">Perceptual and accessibility standards</h2>
+<p>At minimum, final figures should meet the following standards:</p>
+<ul>
+<li>Text and symbols are legible at final size.</li>
+<li>Colors are interpretable and not dependent on color alone for key distinctions.</li>
+<li>Visual encodings are chosen for accurate interpretation (prefer position/length for key quantitative comparisons).</li>
+<li>Comparisons are easy to make (related elements placed near each other).</li>
+<li>Decorative complexity does not overwhelm the main message.</li>
+<li>Potentially misleading encodings (e.g., 3D effects, pie/area emphasis for precise comparisons, non-aligned stacked comparisons) should be avoided unless explicitly justified in the memo.</li>
+</ul>
+</section>
+<section id="draft-checkpoint-week-8" class="level2">
+<h2 class="anchored" data-anchor-id="draft-checkpoint-week-8">Draft checkpoint (Week 8)</h2>
+<p>Bring or submit a draft figure for brief peer/in-class critique. The goal is to test whether:</p>
+<ul>
+<li>your audience and intended takeaway are immediately clear,</li>
+<li>annotation and organization support rapid understanding, and</li>
+<li>revisions needed for final submission are identified early.</li>
+</ul>
 
 
 </section>

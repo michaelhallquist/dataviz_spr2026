@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael Hallquist">
-<meta name="dcterms.date" content="2026-02-05">
+<meta name="dcterms.date" content="2026-02-13">
 
 <title>How good programming practices support scientific reproducibility – Data Management and Visualization</title>
 <style>
@@ -226,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 5, 2026</p>
+      <p class="date">February 13, 2026</p>
     </div>
   </div>
   
@@ -1018,9 +1018,9 @@ pre code, pre, code {
  $ HasClock       : int  1 1 1 1 1 1 1 1 1 1 ...
  $ FMRI_Exclude   : int  0 0 0 0 0 0 0 0 0 0 ...
  $ Wrong_fmap_dims: int  1 1 1 1 1 1 1 0 0 0 ...
- $ mr_dir         : chr  "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/SPECC/MR_Proc/001ra_07dec2013" "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/10997_20140308" "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/10895_20131204" "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/SPECC/MR_Proc/005ai_06nov2013" ...
- $ mr_file        : chr  "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/SPECC/MR_Proc/001ra_07dec2013/mni_arom"| __truncated__ "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/10997_20140308/mni_aro"| __truncated__ "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/10895_20131204/mni_aro"| __truncated__ "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/SPECC/MR_Proc/005ai_06nov2013/mni_arom"| __truncated__ ...
- $ fd_file        : chr  "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/SPECC/MR_Proc/001ra_07dec2013/mni_arom"| __truncated__ "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/10997_20140308/mni_aro"| __truncated__ "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/10895_20131204/mni_aro"| __truncated__ "/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/SPECC/MR_Proc/005ai_06nov2013/mni_arom"| __truncated__ ...
+ $ mr_dir         : chr  "./.render-tmp/reproducibility_good_programming/mot_example/SPECC/MR_Proc/001ra_07dec2013" "./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/10997_20140308" "./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/10895_20131204" "./.render-tmp/reproducibility_good_programming/mot_example/SPECC/MR_Proc/005ai_06nov2013" ...
+ $ mr_file        : chr  "./.render-tmp/reproducibility_good_programming/mot_example/SPECC/MR_Proc/001ra_07dec2013/mni_aroma_minimal_fsl/"| __truncated__ "./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/10997_20140308/mni_aroma_minimal_fsl"| __truncated__ "./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/10895_20131204/mni_aroma_minimal_fsl"| __truncated__ "./.render-tmp/reproducibility_good_programming/mot_example/SPECC/MR_Proc/005ai_06nov2013/mni_aroma_minimal_fsl/"| __truncated__ ...
+ $ fd_file        : chr  "./.render-tmp/reproducibility_good_programming/mot_example/SPECC/MR_Proc/001ra_07dec2013/mni_aroma_minimal_fsl/"| __truncated__ "./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/10997_20140308/mni_aroma_minimal_fsl"| __truncated__ "./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/10895_20131204/mni_aroma_minimal_fsl"| __truncated__ "./.render-tmp/reproducibility_good_programming/mot_example/SPECC/MR_Proc/005ai_06nov2013/mni_aroma_minimal_fsl/"| __truncated__ ...
  $ mr_exists      : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
  $ file_id        : chr  "001RA" "10997" "10895" "005AI" ...</code></pre>
 </div>
@@ -1257,7 +1257,7 @@ pre code, pre, code {
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in file(file, "rt"): cannot open file
-'/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/11366_20150425/mni_aroma_minimal_fsl/rest1/motion_info/fd.txt':
+'./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/11366_20150425/mni_aroma_minimal_fsl/rest1/motion_info/fd.txt':
 No such file or directory</code></pre>
 </div>
 <div class="cell-output cell-output-error">
@@ -1293,7 +1293,7 @@ Caused by error in `file()`:
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in .f(.x[[i]], ...): Could not read FD file:
-/var/folders/s3/fxpldcp575nfjjw2t4vp8z_40000gn/T//RtmpJGicPt/mot_example/MMClock/MR_Proc/11366_20150425/mni_aroma_minimal_fsl/rest1/motion_info/fd.txt.
+./.render-tmp/reproducibility_good_programming/mot_example/MMClock/MR_Proc/11366_20150425/mni_aroma_minimal_fsl/rest1/motion_info/fd.txt.
 Returning NAs.</code></pre>
 </div>
 <details class="code-fold">

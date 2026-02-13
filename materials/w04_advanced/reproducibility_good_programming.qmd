@@ -37,8 +37,13 @@ options(digits=3)
 
 ```{r, echo=FALSE}
 #prep mot files
-working_dir <- tempdir() #where all of the motion files will be stored for reading
-untar("../files/mot_example.tar.gz", exdir=working_dir, compressed="gz")
+#use a stable, project-local scratch dir so renders are deterministic
+working_dir <- file.path(".", ".render-tmp", "reproducibility_good_programming")
+dir.create(working_dir, showWarnings = FALSE, recursive = TRUE)
+
+#reset extracted example files on each render
+unlink(file.path(working_dir, "mot_example"), recursive = TRUE, force = TRUE)
+untar("../files/mot_example.tar.gz", exdir = working_dir, compressed = "gz")
 ```
 
 Variable definitions that control algorithmic decisions below. These are placed here to draw our attention to them -- if we wish to change our decisions throughout the pipeline, these can be adjusted, rather than having to hunt them down below.
@@ -753,5 +758,5 @@ Refactoring can be time consuming, but it is *least* so when the code is relativ
 
 ```{r, include=FALSE}
 #cleanup motion files from your hard drive
-unlink(file.path(working_dir, "mot_example"), recursive = TRUE)
+unlink(working_dir, recursive = TRUE, force = TRUE)
 ```
