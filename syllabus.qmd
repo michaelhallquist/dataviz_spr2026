@@ -165,18 +165,42 @@ All projects are to be completed individually. Although you are encouraged to di
 
 ### Conceptual readings
 
-- Cleveland, *The elements of graphing data*, Ch. 2.
-- Tufte, *Beautiful evidence*, Ch. 5.
+- Tufte, *Beautiful evidence*, Ch. 5: [The Fundamental Principles of Analytical Design](https://ares.lib.unc.edu/ares/ares.dll/plink?14E350D0)
 - Tufte, *The visual display of quantitative information*, Chs. 4 and 5.
-- (Optional) Munzner, T. (2014). *Visualization Analysis and Design*, Ch. 10.
+- Franconeri, S. L., Padilla, L. M., Shah, P., Zacks, J. M., & Hullman, J. (2021). [The Science of Visual Data Communication: What Works.](https://ares.lib.unc.edu/ares/ares.dll/plink?14E350D2) *Psychological Science in the Public Interest*, *22*(3), 110–161.
 
 ### Practical readings
 
-- Boone & Evans. UX Color Theory: a short practical intro about use of color.
+- Boone & Evans. [UX Color Theory: a short practical intro about use of color.](https://cdn2.hubspot.net/hub/111084/file-708877165-pdf/docs/ebooks/eBook-UX-Color-Theory_Applying-Color-Knowledge-to-Data-Visualization.pdf)
 - Review: <http://colorbrewer2.org/>
 - Color palette app: <https://coolors.co/app>
 
+### Optional readings
+
+- Munzner, T. (2014). *Visualization Analysis and Design*, Ch. 10: Map Color and Other Channels.
+- Cleveland, W. (1985). *The elements of graphing data*, Ch. 2: Principles of graph construction.
+- Wilke, C. O. *Fundamentals of Data Visualization*.
+  - Chapter 17 — The principle of proportional ink: https://clauswilke.com/dataviz/proportional-ink.html
+  - Chapter 18 — Overlapping points: https://clauswilke.com/dataviz/overlapping-points.html
+  - Chapter 19 — Common pitfalls of color use: https://clauswilke.com/dataviz/color-pitfalls.html
+  - Chapter 20 — Redundant coding: https://clauswilke.com/dataviz/redundant-coding.html
+
 ## Week 8 (2/26): A tour of quantitative visualization {#week-8}
+
+### Conceptual readings
+
+- Tufte, *The visual display of quantitative information*, Chs. 6-8.
+- Heer, J., Bostock, M., & Ogievetsky, V. (2010). [A Tour through the Visualization Zoo.](https://idl.uw.edu/papers/visualization-zoo) *Communications of the ACM*, *53*(6), 59-67.
+
+### Practical readings
+
+- Wickham, *ggplot2* (3rd edition; online draft).
+  - (Remapped from 2nd edition Chs. 2 and 3)
+  - Ch. 2: First steps. https://ggplot2-book.org/getting-started.html
+  - Layers (overview). https://ggplot2-book.org/toolbox.html
+  - Ch. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html
+  - Ch. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html
+  - Ch. 5: Statistical summaries. https://ggplot2-book.org/statistical-summaries.html
 
 ## Week 9 (3/5): Visualizing continuous data (in ggplot2) {#week-9}
 
