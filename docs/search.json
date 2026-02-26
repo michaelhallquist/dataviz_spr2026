@@ -399,13 +399,6 @@
     "text": "Key concepts to be demonstrated\nSuccessful projects should demonstrate:\n\nIntelligent folder and file setup (file management)\nData import into R, preserving unadulterated data\nData tidying (if necessary)\nData wrangling (filter, select, arrange, transform, split/apply/combine, etc.)\n\nClear, intelligent data storage format to support QA and analysis (one large data.frame, perhaps with list-columns, or a nested list structure?)\n\nDataset merging/alignment (if applicable), including fidelity checks (e.g., unmatched IDs, unexpected duplicates, count checks). Consider using the tidylog package to help with your checks.\nData QA, including checks for invalid values, missingness, artifacts (if relevant), and statistical outliers\n\nIf relevant, one or more text-based documents (e.g., .csv spreadsheet) documenting data problems to be addressed.\n\nClear documentation of manual or programmatic edits to data to produce consistent data (ready for visualization and analysis)\nImplementation of custom functions for QA and/or use of existing R packages to support validation and reporting"
   },
   {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Week 1: Data Tidying (due 1/21 at 8am) — Download QMD\nWeek 2: Workflowr Project Setup (due 2/4 at 8am) — Download QMD\nWeek 3: Data Wrangling — Download QMD — Download data\nData quality assurance and processing project proposal (due 1/29/2026)\nData quality assurance and processing project assignment (due 2/12/2026)\nConceptual figure/infographic project assignment (draft critique: 2/26/2026; final due 3/5/2026)"
-  },
-  {
     "objectID": "assignments/conceptual_figure_infographic_project_assignment_2026.html",
     "href": "assignments/conceptual_figure_infographic_project_assignment_2026.html",
     "title": "Conceptual Figure / Infographic Project",
@@ -460,6 +453,69 @@
     "title": "Conceptual Figure / Infographic Project",
     "section": "Draft checkpoint (Week 8)",
     "text": "Draft checkpoint (Week 8)\nBring or submit a draft figure for brief peer/in-class critique. The goal is to test whether:\n\nyour audience and intended takeaway are immediately clear,\nannotation and organization support rapid understanding, and\nrevisions needed for final submission are identified early."
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Week 1: Data Tidying (due 1/21 at 8am) — Download QMD\nWeek 2: Workflowr Project Setup (due 2/4 at 8am) — Download QMD\nWeek 3: Data Wrangling — Download QMD — Download data\nData quality assurance and processing project proposal (due 1/29/2026)\nData quality assurance and processing project assignment (due 2/12/2026)\nConceptual figure/infographic project assignment (draft critique: 2/26/2026; final due 3/5/2026)\nConceptual figure peer critique guide (in-class: 2/26/2026) — Download QMD"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "",
+    "text": "PSYC 859 Spring 2026"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#goal",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#goal",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Goal",
+    "text": "Goal\nUse a structured peer review to identify concrete revisions that make your figure:\n\nself-standing (readable without you narrating it),\naligned with your audience and takeaway message, and\ncleanly designed (layout, typography, color, annotation, emphasis).\n\nThis guide builds on:\n\nthe evaluation criteria in the Conceptual Figure / Infographic Project assignment, and\nWeek 7 and 8 slides covering layout, design, and color principles"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#starting-point",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#starting-point",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Starting point",
+    "text": "Starting point\nEach person should provide:\n\nA draft of your figure, shown at its intended size (print or 100% zoom).\nOne key sentence summarizing the intended audience and main takeaway message.\nYour current title/caption and any key annotations (even if rough)."
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#minute-schedule-pairs",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#minute-schedule-pairs",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "30-Minute Schedule (Pairs)",
+    "text": "30-Minute Schedule (Pairs)\n\n\n\n\n\n\n\nMinutes\nActivity\n\n\n\n\n0-2\nSetup and swap figures\n\n\n2-8\nSilent review and notes (both people)\n\n\n8-15\nPartner 1 feedback (Reviewer 2 shares suggestions)\n\n\n15-22\nPartner 2 feedback (Reviewer 1 shares suggestions)\n\n\n22-30\nWrap up discussion and record a revision plan (Both partners)"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#setup-0-2-min",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#setup-0-2-min",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Setup (0-2 min)",
+    "text": "Setup (0-2 min)\n\nSwap figures.\nEach author tells their partner their one-sentence audience + takeaway statement (no extra explanation).\nOpen the figure at intended size (print or 100% zoom)."
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-1-silent-review-notes-2-8-min",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-1-silent-review-notes-2-8-min",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Stage 1: Silent Review + Notes (2-8 min)",
+    "text": "Stage 1: Silent Review + Notes (2-8 min)\nWrite notes directly on paper or in a doc. Focus on evidence-based critique (what a viewer will likely perceive and conclude).\nWork through Bertin’s three stages and three objectives.\n\nStages\n\nStage 1 (External): From the title/caption/labels alone, what do you think the figure is about and what is shown?\nStage 2 (Internal): What marks and visual channels are used (position, size, shape, color, line type)? Do they appear consistent and interpretable?\nStage 3 (Relationships): What relationships or inferences does the figure invite you to make? What is the overall point you will remember?\n\n\n\nObjectives\n\nObjective 1 (Elementary): Can you answer a specific lookup question quickly (about one element) without hunting?\nObjective 2 (Intermediate): Can you answer a small pattern/trend question (about a subset of elements) accurately?\nObjective 3 (Overall): Can you state the figure’s overall message in one sentence, and is that message supported by title/caption/annotation?\n\n\n\nA. Message Comprehension\n\nIn one sentence: what do you think the figure’s main takeaway is?\nWhat do you notice first (salience)? Does that match the intended takeaway?\nWhat is confusing, ambiguous, or easy to misread?\n\n\n\nB. Assignment Objectives (Does It Achieve The Goals?)\n\nSelf-standing: Do the title/caption/annotations make the message understandable without narration?\nAudience fit: Is the level of detail and terminology right for the stated audience?\nConceptual structure: Are constructs, mechanisms, and relationships visually explicit (not just implied)?\nQuantitative integrity (if applicable): Are any quantitative elements accurate, interpretable, and matched to the message?\n\n\n\nC. Design Coherence\nYou don’t need to go through all of these, but consider how well design principles are used in the figure to convey a clear message.\n\nData-ink / non-data-ink: What could be erased or simplified without losing information?\nChartjunk vs. useful embellishment: Any decorative elements competing with the message? Any embellishment that truly supports recall or interpretation?\nCleveland-style clarity checks:\nDoes the data/idea stand out (not the scaffolding)?\nAre there too many tick marks/grid lines/borders/boxes?\nAre labels/keys placed so they do not clutter the main data/diagram region?\nAre reference lines used only when they clarify an important value?\n\nSix fundamental design principles: - Contrast: are related items visually similar, unrelated items different? - Repetition: are styles reused consistently (fonts, shapes, line weights, colors)? - Alignment: do elements snap to an intentional grid/structure? - Proximity: are related items closer than unrelated ones? - Movement: does the layout guide the eye in a deliberate sequence? - Balance: does the figure feel visually stable (not top-heavy/left-heavy)?\n\n\nD. Color And Accessibility\n\nDoes the use of color as a visual channel add to the message and aesthetics?\nAre palette types matched to the task (e.g., categorical for discrete types)?\nAre ordered colormaps perceptually reasonable (avoid rainbow defaults for ordered data)?\nAre color distinctions conservative enough to be discriminable (especially for luminance/saturation)?\n\n\n\nE. Annotations And Text\n\nWhat text is essential to interpretation (and where should it live: labels, callouts, caption)?\nAre annotations placed where the eye needs them (near the relevant visual element)?\nIs typography legible at intended size (font size, weight, line spacing)?\n\n\n\nF. Your Top 3 Recommendations (Actionable)\nWrite your top three suggestions for concrete changes. Each should name what to change and why."
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-2-discussion-minutes-8-22",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-2-discussion-minutes-8-22",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Stage 2: Discussion (minutes 8-22)",
+    "text": "Stage 2: Discussion (minutes 8-22)"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#wrap-up-revision-plan-minutes-22-30",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#wrap-up-revision-plan-minutes-22-30",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Wrap-Up: Revision Plan (minutes 22-30)",
+    "text": "Wrap-Up: Revision Plan (minutes 22-30)\nEach author writes a short plan (bullet points are fine):\n\nThe single sentence your figure should communicate.\nThe top 3 changes you will make before final submission.\nOne design principle from Week 7 you will deliberately use (e.g., contrast, proximity, reducing chartjunk, improved color channel choice).\nOne question you still have (to ask in class or of peers outside of class)."
   },
   {
     "objectID": "assignments/week1_tidyData.html",
@@ -788,7 +844,7 @@
     "href": "syllabus.html#week-8",
     "title": "PSYC 859 Syllabus",
     "section": "Week 8 (2/26): A tour of quantitative visualization",
-    "text": "Week 8 (2/26): A tour of quantitative visualization\n\nConceptual readings\n\nTufte, The visual display of quantitative information, Chs. 6-8.\nHeer, J., Bostock, M., & Ogievetsky, V. (2010). A Tour through the Visualization Zoo. Communications of the ACM, 53(6), 59-67.\n\n\n\nPractical readings\n\nWickham, ggplot2 (3rd edition; online draft).\n\n(Remapped from 2nd edition Chs. 2 and 3)\nCh. 2: First steps. https://ggplot2-book.org/getting-started.html\nLayers (overview). https://ggplot2-book.org/toolbox.html\nCh. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html\nCh. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html\nCh. 5: Statistical summaries. https://ggplot2-book.org/statistical-summaries.html"
+    "text": "Week 8 (2/26): A tour of quantitative visualization\n\nConceptual readings\n\nTufte, The visual display of quantitative information, Chs. 6-8.\nHeer, J., Bostock, M., & Ogievetsky, V. (2010). A Tour through the Visualization Zoo. Communications of the ACM, 53(6), 59-67.\n\n\n\nPractical readings\n\nWickham, ggplot2 (3rd edition; online draft).\n\nRemapped from ggplot2 (2nd edition) Chs. 2 and 3:\n\n2e Ch. 2 (Getting started with ggplot2):\n\nCh. 2: First steps. https://ggplot2-book.org/getting-started.html\nBuilding a plot layer by layer. https://ggplot2-book.org/layers.html\n\n2e Ch. 3 (Toolbox):\n\nLayers (overview). https://ggplot2-book.org/toolbox.html\nCh. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html\nCh. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html\nCh. 5: Statistical summaries (incl. distributions + overplotting). https://ggplot2-book.org/statistical-summaries.html\nCh. 6: Maps. https://ggplot2-book.org/maps.html\nCh. 8: Annotations. https://ggplot2-book.org/annotations.html"
   },
   {
     "objectID": "syllabus.html#week-9",

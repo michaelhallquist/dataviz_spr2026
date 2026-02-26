@@ -1,0 +1,123 @@
+---
+title: "Conceptual Figure Peer Critique Guide"
+subtitle: "In-class paired review (Week 8, 2/26/2026)"
+date: today
+---
+
+PSYC 859 Spring 2026
+
+## Goal
+
+Use a structured peer review to identify concrete revisions that make your figure:
+
+- self-standing (readable without you narrating it),
+- aligned with your audience and takeaway message, and
+- cleanly designed (layout, typography, color, annotation, emphasis).
+
+This guide builds on:
+
+- the evaluation criteria in the [Conceptual Figure / Infographic Project assignment](conceptual_figure_infographic_project_assignment_2026.html), and
+- Week 7 and 8 slides covering layout, design, and color principles
+
+## Starting point
+
+Each person should provide:
+
+- A draft of your figure, shown at its intended size (print or 100% zoom).
+- One key sentence summarizing the intended audience and main takeaway message.
+- Your current title/caption and any key annotations (even if rough).
+
+## 30-Minute Schedule (Pairs)
+
+| Minutes | Activity |
+|---:|-------------|
+| 0-2 | Setup and swap figures |
+| 2-8 | Silent review and notes (both people) |
+| 8-15 | Partner 1 feedback (Reviewer 2 shares suggestions) |
+| 15-22 | Partner 2 feedback (Reviewer 1 shares suggestions) |
+| 22-30 | Wrap up discussion and record a revision plan (Both partners) |
+
+## Setup (0-2 min)
+
+1. Swap figures.
+2. Each author tells their partner their one-sentence audience + takeaway statement (no extra explanation).
+3. Open the figure at intended size (print or 100% zoom).
+
+## Stage 1: Silent Review + Notes (2-8 min)
+
+Write notes directly on paper or in a doc. Focus on evidence-based critique (what a viewer will likely perceive and conclude).
+
+Work through Bertin's three stages and three objectives.
+
+
+### Stages 
+1. **Stage 1 (External)**: From the title/caption/labels alone, what do you think the figure is about and what is shown?
+2. **Stage 2 (Internal)**: What marks and visual channels are used (position, size, shape, color, line type)? Do they appear consistent and interpretable?
+3. **Stage 3 (Relationships)**: What relationships or inferences does the figure invite you to make? What is the overall point you will remember?
+
+### Objectives
+4. **Objective 1 (Elementary)**: Can you answer a specific lookup question quickly (about one element) without hunting?
+5. **Objective 2 (Intermediate)**: Can you answer a small pattern/trend question (about a subset of elements) accurately?
+6. **Objective 3 (Overall)**: Can you state the figure's overall message in one sentence, and is that message supported by title/caption/annotation?
+
+### A. Message Comprehension
+
+- In one sentence: what do you think the figure’s main takeaway is?
+- What do you notice first (salience)? Does that match the intended takeaway?
+- What is confusing, ambiguous, or easy to misread?
+
+### B. Assignment Objectives (Does It Achieve The Goals?)
+
+- **Self-standing**: Do the title/caption/annotations make the message understandable without narration?
+- **Audience fit**: Is the level of detail and terminology right for the stated audience?
+- **Conceptual structure**: Are constructs, mechanisms, and relationships visually explicit (not just implied)?
+- **Quantitative integrity (if applicable)**: Are any quantitative elements accurate, interpretable, and matched to the message?
+
+### C. Design Coherence
+
+You don't need to go through all of these, but consider how well design principles are used in the figure to convey a clear message.
+
+- **Data-ink / non-data-ink**: What could be erased or simplified without losing information?
+- **Chartjunk vs. useful embellishment**: Any decorative elements competing with the message? Any embellishment that truly supports recall or interpretation?
+- **Cleveland-style clarity checks**:
+- Does the data/idea stand out (not the scaffolding)?
+- Are there too many tick marks/grid lines/borders/boxes?
+- Are labels/keys placed so they do not clutter the main data/diagram region?
+- Are reference lines used only when they clarify an important value?
+
+
+**Six fundamental design principles**:
+- Contrast: are related items visually similar, unrelated items different?
+- Repetition: are styles reused consistently (fonts, shapes, line weights, colors)?
+- Alignment: do elements snap to an intentional grid/structure?
+- Proximity: are related items closer than unrelated ones?
+- Movement: does the layout guide the eye in a deliberate sequence?
+- Balance: does the figure feel visually stable (not top-heavy/left-heavy)?
+
+### D. Color And Accessibility
+
+- Does the use of color as a **visual channel** add to the message and aesthetics?
+- Are palette types matched to the task (e.g., categorical for discrete types)?
+- Are ordered colormaps perceptually reasonable (avoid rainbow defaults for ordered data)?
+- Are color distinctions conservative enough to be discriminable (especially for luminance/saturation)?
+
+### E. Annotations And Text
+
+- What text is essential to interpretation (and where should it live: labels, callouts, caption)?
+- Are annotations placed where the eye needs them (near the relevant visual element)?
+- Is typography legible at intended size (font size, weight, line spacing)?
+
+### F. Your Top 3 Recommendations (Actionable)
+
+Write your top three suggestions for concrete changes. Each should name what to change and why.
+
+## Stage 2: Discussion (minutes 8-22)
+
+## Wrap-Up: Revision Plan (minutes 22-30)
+
+Each author writes a short plan (bullet points are fine):
+
+- The single sentence your figure should communicate.
+- The top 3 changes you will make before final submission.
+- One design principle from Week 7 you will deliberately use (e.g., contrast, proximity, reducing chartjunk, improved color channel choice).
+- One question you still have (to ask in class or of peers outside of class).

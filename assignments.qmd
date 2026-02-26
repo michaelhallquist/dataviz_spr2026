@@ -9,3 +9,4 @@ date: today
 - [Data quality assurance and processing project proposal](assignments/data_quality_assurance_processing_project_proposal_2026.html) (due 1/29/2026)
 - [Data quality assurance and processing project assignment](assignments/data_quality_assurance_processing_project_assignment_2026.html) (due 2/12/2026)
 - [Conceptual figure/infographic project assignment](assignments/conceptual_figure_infographic_project_assignment_2026.html) (draft critique: 2/26/2026; final due 3/5/2026)
+- [Conceptual figure peer critique guide](assignments/conceptual_figure_peer_critique_guide_2026.html) (in-class: 2/26/2026) — [Download QMD](assignments/downloads/conceptual_figure_peer_critique_guide_2026.qmd)

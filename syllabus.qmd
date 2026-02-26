@@ -195,12 +195,17 @@ All projects are to be completed individually. Although you are encouraged to di
 ### Practical readings
 
 - Wickham, *ggplot2* (3rd edition; online draft).
-  - (Remapped from 2nd edition Chs. 2 and 3)
-  - Ch. 2: First steps. https://ggplot2-book.org/getting-started.html
-  - Layers (overview). https://ggplot2-book.org/toolbox.html
-  - Ch. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html
-  - Ch. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html
-  - Ch. 5: Statistical summaries. https://ggplot2-book.org/statistical-summaries.html
+  - Remapped from *ggplot2* (2nd edition) Chs. 2 and 3:
+    - 2e Ch. 2 (Getting started with ggplot2):
+      - Ch. 2: First steps. https://ggplot2-book.org/getting-started.html
+      - Building a plot layer by layer. https://ggplot2-book.org/layers.html
+    - 2e Ch. 3 (Toolbox):
+      - Layers (overview). https://ggplot2-book.org/toolbox.html
+      - Ch. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html
+      - Ch. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html
+      - Ch. 5: Statistical summaries (incl. distributions + overplotting). https://ggplot2-book.org/statistical-summaries.html
+      - Ch. 6: Maps. https://ggplot2-book.org/maps.html
+      - Ch. 8: Annotations. https://ggplot2-book.org/annotations.html
 
 ## Week 9 (3/5): Visualizing continuous data (in ggplot2) {#week-9}
 
