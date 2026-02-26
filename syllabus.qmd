@@ -190,22 +190,20 @@ All projects are to be completed individually. Although you are encouraged to di
 ### Conceptual readings
 
 - Tufte, *The visual display of quantitative information*, Chs. 6-8.
-- Heer, J., Bostock, M., & Ogievetsky, V. (2010). [A Tour through the Visualization Zoo.](https://idl.uw.edu/papers/visualization-zoo) *Communications of the ACM*, *53*(6), 59-67.
+- Heer, J., Bostock, M., & Ogievetsky, V. (2010). [A Tour through the Visualization Zoo.](https://idl.cs.washington.edu/files/2012-VisualizationZoo-CACM.pdf) *Communications of the ACM*, *53*(6), 59-67.
 
 ### Practical readings
 
 - Wickham, *ggplot2* (3rd edition; online draft).
-  - Remapped from *ggplot2* (2nd edition) Chs. 2 and 3:
-    - 2e Ch. 2 (Getting started with ggplot2):
-      - Ch. 2: First steps. https://ggplot2-book.org/getting-started.html
-      - Building a plot layer by layer. https://ggplot2-book.org/layers.html
-    - 2e Ch. 3 (Toolbox):
-      - Layers (overview). https://ggplot2-book.org/toolbox.html
-      - Ch. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html
-      - Ch. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html
-      - Ch. 5: Statistical summaries (incl. distributions + overplotting). https://ggplot2-book.org/statistical-summaries.html
-      - Ch. 6: Maps. https://ggplot2-book.org/maps.html
-      - Ch. 8: Annotations. https://ggplot2-book.org/annotations.html
+  - Ch. 2: First steps. https://ggplot2-book.org/getting-started.html
+  - Building a plot layer by layer. https://ggplot2-book.org/layers.html
+  
+  - Layers (overview). https://ggplot2-book.org/toolbox.html
+  - Ch. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html
+  - Ch. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html
+  - Ch. 5: Statistical summaries (incl. distributions + overplotting). https://ggplot2-book.org/statistical-summaries.html
+  - Ch. 6: Maps. https://ggplot2-book.org/maps.html
+  - Ch. 8: Annotations. https://ggplot2-book.org/annotations.html
 
 ## Week 9 (3/5): Visualizing continuous data (in ggplot2) {#week-9}
 
