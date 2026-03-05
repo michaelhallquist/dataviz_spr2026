@@ -150,8 +150,8 @@ All projects are to be completed individually. Although you are encouraged to di
 
 ### Practical readings
 - Wickham, *ggplot2* (3rd edition).
-  - The grammar: <https://ggplot2-book.org/mastery.html>
-  - Building a plot layer by layer: <https://ggplot2-book.org/layers.html>
+  - The grammar. <https://ggplot2-book.org/mastery.html>
+  - Ch. 13: Building a plot layer by layer. <https://ggplot2-book.org/layers.html>
 
 ## Week 6 (2/12): Visual and graphical perception {#week-6}
 
@@ -196,8 +196,6 @@ All projects are to be completed individually. Although you are encouraged to di
 
 - Wickham, *ggplot2* (3rd edition; online draft).
   - Ch. 2: First steps. https://ggplot2-book.org/getting-started.html
-  - Building a plot layer by layer. https://ggplot2-book.org/layers.html
-  
   - Layers (overview). https://ggplot2-book.org/toolbox.html
   - Ch. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html
   - Ch. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html
@@ -207,6 +205,20 @@ All projects are to be completed individually. Although you are encouraged to di
 
 ## Week 9 (3/5): Visualizing continuous data (in ggplot2) {#week-9}
 
+### Conceptual readings
+
+- Tufte, *The visual display of quantitative information*, Ch. 9.
+- Cleveland, W. S. (1993). *Visualizing Data*, Chs. 1-2. https://jwmason.org/wp-content/uploads/2021/08/Cleveland-1993-Visualizing-Data.pdf
+
+### Practical readings
+
+- Wickham, *ggplot2* (3rd edition; online draft).
+  - Ch. 10: Position scales and axes. https://ggplot2-book.org/scales-position.html
+  - Ch. 11: Color scales and legends. https://ggplot2-book.org/scales-colour.html
+  - Ch. 12: Other aesthetics. https://ggplot2-book.org/scales-other.html
+  
+  
+  
 ## Week 10 (3/12): Visualizing count and categorical data (in ggplot2) {#week-10}
 
 ## 3/19: No class (Spring break)

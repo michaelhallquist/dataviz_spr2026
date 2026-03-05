@@ -364,39 +364,102 @@
     "text": "Troubleshooting\n\nAuthentication setup (default: PAT over HTTPS)\nGitHub no longer accepts account passwords for Git pushes over HTTPS. You must use either:\n\nA Personal Access Token (PAT) over HTTPS (default for this assignment)\nAn SSH key (alternative; great if you plan to use GitHub often)\n\nBoth options are secure. Unless you already use SSH for GitHub, use the PAT option below.\n\nOption A (default): Personal Access Token (PAT) over HTTPS\nStep 1: Create a PAT in GitHub\n\nLog into GitHub in your browser.\nGo to Settings → Developer settings → Personal access tokens.\nChoose Tokens (classic) (recommended). If you prefer Fine-grained tokens, choose that instead.\nClassic token settings: check repo and workflow, and set an Expiration (e.g., 90 days).\nFine-grained token settings: give it a name and set an Expiration (e.g., 30–90 days). Repository access: choose Only select repositories and pick your workflowr repo. Repository permissions: add Actions, Contents, and Pages; for each one, set Access to Read and write in the right-hand dropdown.\nClick Generate token and copy it. You will not see it again.\n\nStep 2: Push from R with workflowr (preferred)\nRun this from your R session:\n\n\nCode\nwflow_git_push(set_upstream = TRUE)\n\n\nWhen prompted: - Username: your GitHub username - Password: paste your PAT\nIf wflow_git_push() isn’t working (or gives confusing errors), try the command line instead:\n\n\nCode\ngit push -u origin main\n\n\nIf your default branch is master, replace main with master. If asked whether to save the credential, say Yes (recommended).\n\n\nOption B (alternative): SSH key\nStep 1: Generate an SSH key\n\n\nCode\nssh-keygen -t ed25519 -C \"youremail@unc.edu\"\n\n\nPress Enter to accept the default file location. Add a passphrase if you want extra security.\nStep 2: Add your key to the SSH agent\n\n\nCode\neval \"$(ssh-agent -s)\"\nssh-add ~/.ssh/id_ed25519\n\n\nStep 3: Add the public key to GitHub\n\n\nCode\ncat ~/.ssh/id_ed25519.pub\n\n\nCopy the output. Then in GitHub: Settings → SSH and GPG keys → New SSH key → paste the key → Add.\nStep 4: Switch your repo remote to SSH\n\n\nCode\ngit remote set-url origin git@github.com:&lt;username&gt;/&lt;reponame&gt;.git\n\n\nStep 5: Test and push\n\n\nCode\nssh -T git@github.com\n\n\nThen push from R (preferred):\n\n\nCode\nwflow_git_push(set_upstream = TRUE)\n\n\nIf that fails, push from the command line:\n\n\nCode\ngit push -u origin main\n\n\nIf your default branch is master, replace main with master.\n\n\nUsing PAT or SSH without the command line (workflowr only)\nIf you want to work entirely in R with workflowr (no terminal commands), you can still authenticate:\nPAT (HTTPS): Run wflow_git_push() from R. When it asks for a password, paste your PAT.\nIf you want to avoid re-typing it each time, you can store the PAT in your .Renviron file as GITHUB_PAT, restart R, then push like this:\n\n\nCode\nwflow_git_push(username = \"&lt;github-username&gt;\",\n               password = Sys.getenv(\"GITHUB_PAT\"))\n\n\nSSH: Switch the remote to SSH using workflowr, then push:\n\n\nCode\nwflow_git_remote(remote = \"origin\", user = \"&lt;username&gt;\", repo = \"&lt;reponame&gt;\",\n                 protocol = \"ssh\", action = \"set_url\")\nwflow_git_push()\n\n\nIf SSH fails with a message about SSH support, use HTTPS + PAT or the command line (git push) instead.\n\n\n\nwflow_git_push() fails with a git2r::push() error\nSome students see errors like:\nError in 'git2r_push': unexpected http status code: 400\nThis is usually an authentication problem (HTTPS + no password support). Two fixes:\n\nUse GitHub’s Personal Access Token (PAT) when prompted for a password.\nOr, bypass git2r entirely and push with the Git CLI (still using a PAT if you are on HTTPS):\n\n\n\nCode\ngit push -u origin master\n\n\nIf your default branch is main, replace master with main. If you don’t have Git installed, install it first (https://happygitwithr.com). If you want advice on the git2r error, search the git2r GitHub issues for “unexpected http status code 400”.\n\n\ngit2r::push() fails with HTTP 403 (but git push works)\nIf you are using a PAT and see:\nError in 'git2r_push': unexpected http status code: 403\nIt usually means the token you provided doesn’t have permission to push or git2r is not using the same stored credential that your Git command line is using.\nTry these in order:\n\nDouble-check your PAT settings (it must have access to the repo and Contents: Read and write; if you used a fine-grained token, also include Actions and Pages).\nCreate a new PAT and try again (copy/paste carefully; no spaces).\nUse the Git CLI for the first push and set the upstream branch once:\n\n\n\nCode\ngit push -u origin HEAD\n\n\nAfter that, git push should work without needing -u again for that repo/branch.\n\n\nMy analysis file isn’t showing up on GitHub Pages\nIf the file exists in analysis/ but doesn’t appear on your GitHub Pages site, run this checklist:\n\nBuild it: Run wflow_build() (or wflow_publish() which builds + commits).\nPublish it: If you only built it, run wflow_publish(\"analysis/your-file.Rmd\").\nCheck status: Run wflow_status() and confirm the new HTML is tracked.\nPush it: Push the latest commit to GitHub.\nPages source: In GitHub → Settings → Pages, confirm main + /docs.\nWait + refresh: Give it a few minutes, then hard refresh your browser.\n\n\n\nRecommended workflow to avoid push problems\nThis workflow keeps you in R for the main steps (default: HTTPS + PAT):\n\nCreate your project with wflow_start().\nPublish changes with wflow_publish().\nPush with workflowr:\n\n\n\nCode\nwflow_git_push(set_upstream = TRUE)\n\n\nIf wflow_git_push() isn’t working, use the Git CLI instead (still using your PAT or SSH):\n\n\nCode\ngit status\ngit push -u origin master\n\n\nIf you prefer SSH, set up an SSH key on GitHub first, then ensure your remote is SSH:\n\n\nCode\ngit remote -v\ngit remote set-url origin git@github.com:&lt;username&gt;/&lt;reponame&gt;.git"
   },
   {
-    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html",
-    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html",
-    "title": "Data Quality Assurance and Processing Project",
+    "objectID": "assignments/final_project_proposal_2026.html",
+    "href": "assignments/final_project_proposal_2026.html",
+    "title": "Final Project Proposal",
     "section": "",
     "text": "PSYC 859 Spring 2026"
   },
   {
-    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#due-dates",
-    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#due-dates",
-    "title": "Data Quality Assurance and Processing Project",
+    "objectID": "assignments/final_project_proposal_2026.html#due-dates",
+    "href": "assignments/final_project_proposal_2026.html#due-dates",
+    "title": "Final Project Proposal",
     "section": "Due dates",
-    "text": "Due dates\n\nProposal (separate submission): 1/29/2026\nProject submission: 2/12/2026"
+    "text": "Due dates\n\nProposal: 3/26/2026\nFinal product: 4/27/2026"
   },
   {
-    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-guidelines",
-    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-guidelines",
-    "title": "Data Quality Assurance and Processing Project",
-    "section": "Project guidelines",
-    "text": "Project guidelines\nBuilding on your submitted project proposal, implement your data import, quality assurance, tidying, and processing plan. Your submission should be understandable and runnable by someone else (here, me), and it should produce documented evidence about data quality and the cleaning decisions you made.\nIf your implementation differs from your proposal in any meaningful way (e.g., different variables, different merge strategy, extra cleaning steps, dropped datasets), include a short addendum explaining what changed and why.\nIf you include any data with your submission, it should be deidentified and otherwise appropriate to share in the course context."
+    "objectID": "assignments/final_project_proposal_2026.html#proposal-guidelines",
+    "href": "assignments/final_project_proposal_2026.html#proposal-guidelines",
+    "title": "Final Project Proposal",
+    "section": "Proposal guidelines",
+    "text": "Proposal guidelines\nPlease submit a brief proposal (4–6 pages) describing a final data quality assurance (QA) and visualization project. Ideally, this project should extend from the data QA project earlier in the semester and focus especially on visualization and substantive insights into the data.\nThe project should showcase what you have learned about the principles of effective visualization, such as Tufte’s principles of analytical design, Cleveland’s elements of effective graphics, and Bertin’s three stages of reading and three objectives of graphs.\nFinally, the project is an opportunity to highlight your critical thinking about figure design by providing a written rationale for why you chose to approach a visualization in particular ways to maximize its communication to the intended audience (you, your lab, a conference, social media, etc.)."
   },
   {
-    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-materials-to-be-submitted",
-    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-materials-to-be-submitted",
-    "title": "Data Quality Assurance and Processing Project",
-    "section": "Project materials to be submitted",
-    "text": "Project materials to be submitted\nSubmit a single .zip containing your project folder (preferred). A Git repository snapshot or link is also fine if it contains the full structure and required outputs.\nMinimum contents:\n\nCode: All scripts and/or Quarto/R Markdown documents used to execute the QA + processing pipeline.\nFilesystem snapshot: A tree.txt (preferred) or screenshot showing the project folder structure. This could literally be a screenshot of your computer screen if all subfolders and files can easily be displayed, or a text file containing the contents of the filesystem for the project. On both Mac and Windows, a command called “tree” can be installed that provides a full description of the structure.\nQA outputs: The key tables/logs/reports used to identify problems and document data quality (e.g., missingness summaries, out-of-range listings, duplicate-ID checks, merge fidelity checks).\nDocumentation: A README (or equivalent) describing (a) what the data are, (b) how to run the pipeline, and (c) major cleaning/processing decisions.\n\nNotes:\n\nYou may organize your pipeline as modular scripts, but include a clear “entry point” (e.g., run_pipeline.R or a single Quarto document) and instructions for running it.\nKeep raw/original data unmodified; store derived products separately (e.g., data/raw vs data/processed), consistent with your proposal."
+    "objectID": "assignments/final_project_proposal_2026.html#key-ingredients-of-the-proposal",
+    "href": "assignments/final_project_proposal_2026.html#key-ingredients-of-the-proposal",
+    "title": "Final Project Proposal",
+    "section": "Key ingredients of the proposal",
+    "text": "Key ingredients of the proposal\n\nBackground and rationale for project (1–2 paragraphs).\n\nFeel free to adapt the data QA description, tilting toward the substantive questions that can be answered (or at least interrogated) through graphical and nongraphical EDA.\nFocus especially on the EDA pipeline discussed in class, including formulating research questions, validating your dataset, detecting anomalies, developing parsimonious models, and assessing relationships among variables.\nWhat are your hypotheses?\n\nDescription of data structure: only necessary if the final project departs substantially from the data QA project. See the data QA assignment for details if you wish to include this section.\nProposed file system structure for project: only necessary if the final project departs from the structure proposed in the data QA project. See the data QA assignment for details if you wish to include this section.\nData quality assurance plan: this should extend from the data QA project, incorporating the feedback on that project and now considering how EDA (especially graphical) techniques can help identify problems in the dataset (e.g., outliers, unexpected relationships that suggest incorrect coding of variables).\n\nWhat are the potential sources of artifacts or errors in the data?\nWhat checks can be conducted to mitigate these problems using algorithmic methods (i.e., automated code that walks through a dataset diagnosing and reporting problems)?\nHow will missing data be identified and resolved? Resolution of missing values includes:\n\nWhen possible, finding the missing data and entering it.\nDocumenting the missingness and, when possible, having a mechanism for quieting your QA script so that it doesn’t perpetually yell at you.\n\nAre there QA steps that can only be conducted by a trained human (e.g., ECG artifact correction)? If so, briefly document why these cannot be automated/codified.\nWhat graphical methods can you employ that would help identify artifacts or problematic data points?\n\nData QA + visualization pipeline proposal: Building on the above, describe key aspects of the data processing and visualization pipeline for the project. What graphical idioms do you anticipate employing for each substantive question? Document key anticipated steps in your pipeline, including:\n\nImport of original data\nBasic tidying of data, if necessary\nBasic QA checks on each dataset. What are the expected outputs that will document data quality?\nDataset merging, including fidelity checks on merge\nData manipulation of merged data for analysis and visualization\nVisualization of data quality, such as missingness by variable, univariate densities, bivariate scatterplots, or time series/index plots that would provide information about accuracy of the data\nExploratory visualization to develop an understanding of relationships among key variables in the dataset\nGraphical exploration of your hypotheses about the data. What sorts of plots would allow you to identify the evidence in favor of your hypotheses?\n\nWhat functions or specialized visualization tools do you anticipate developing or using to accomplish this pipeline? Document any crucial project objectives that will require a custom analysis, visualization, algorithm, or function."
   },
   {
-    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#key-concepts-to-be-demonstrated",
-    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#key-concepts-to-be-demonstrated",
-    "title": "Data Quality Assurance and Processing Project",
-    "section": "Key concepts to be demonstrated",
-    "text": "Key concepts to be demonstrated\nSuccessful projects should demonstrate:\n\nIntelligent folder and file setup (file management)\nData import into R, preserving unadulterated data\nData tidying (if necessary)\nData wrangling (filter, select, arrange, transform, split/apply/combine, etc.)\n\nClear, intelligent data storage format to support QA and analysis (one large data.frame, perhaps with list-columns, or a nested list structure?)\n\nDataset merging/alignment (if applicable), including fidelity checks (e.g., unmatched IDs, unexpected duplicates, count checks). Consider using the tidylog package to help with your checks.\nData QA, including checks for invalid values, missingness, artifacts (if relevant), and statistical outliers\n\nIf relevant, one or more text-based documents (e.g., .csv spreadsheet) documenting data problems to be addressed.\n\nClear documentation of manual or programmatic edits to data to produce consistent data (ready for visualization and analysis)\nImplementation of custom functions for QA and/or use of existing R packages to support validation and reporting"
+    "objectID": "assignments/final_project_proposal_2026.html#preview-of-final-project-expectations",
+    "href": "assignments/final_project_proposal_2026.html#preview-of-final-project-expectations",
+    "title": "Final Project Proposal",
+    "section": "Preview of final project expectations",
+    "text": "Preview of final project expectations\nAs a preview of the final project, anticipate that you will need to:\n\nVisualize the same data in at least three (somewhat) different ways.\nCreate 10+ EDA graphics.\nDemonstrate the use of an exploratory analysis, such as principal component analysis, multidimensional scaling, or clustering.\nCreate at least 2 graphics for others (publication quality).\nCreate at least one plot with multiple layers that result either from distinct datasets, or from different levels of aggregation (e.g., basic geoms versus stat marks).\nCreate and interpret at least one generalized pairs plot."
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "",
+    "text": "PSYC 859 Spring 2026"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#goal",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#goal",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Goal",
+    "text": "Goal\nUse a structured peer review to identify concrete revisions that make your figure:\n\nself-standing (readable without you narrating it),\naligned with your audience and takeaway message, and\ncleanly designed (layout, typography, color, annotation, emphasis).\n\nThis guide builds on:\n\nthe evaluation criteria in the Conceptual Figure / Infographic Project assignment, and\nWeek 7 and 8 slides covering layout, design, and color principles"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#starting-point",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#starting-point",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Starting point",
+    "text": "Starting point\nEach person should provide:\n\nA draft of your figure, shown at its intended size (print or 100% zoom).\nOne key sentence summarizing the intended audience and main takeaway message.\nYour current title/caption and any key annotations (even if rough)."
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#minute-schedule-pairs",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#minute-schedule-pairs",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "30-Minute Schedule (Pairs)",
+    "text": "30-Minute Schedule (Pairs)\n\n\n\n\n\n\n\nMinutes\nActivity\n\n\n\n\n0-2\nSetup and swap figures\n\n\n2-8\nSilent review and notes (both people)\n\n\n8-15\nPartner 1 feedback (Reviewer 2 shares suggestions)\n\n\n15-22\nPartner 2 feedback (Reviewer 1 shares suggestions)\n\n\n22-30\nWrap up discussion and record a revision plan (Both partners)"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#setup-0-2-min",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#setup-0-2-min",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Setup (0-2 min)",
+    "text": "Setup (0-2 min)\n\nSwap figures.\nEach author tells their partner their one-sentence audience + takeaway statement (no extra explanation).\nOpen the figure at intended size (print or 100% zoom)."
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-1-silent-review-notes-2-8-min",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-1-silent-review-notes-2-8-min",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Stage 1: Silent Review + Notes (2-8 min)",
+    "text": "Stage 1: Silent Review + Notes (2-8 min)\nWrite notes directly on paper or in a doc. Focus on evidence-based critique (what a viewer will likely perceive and conclude).\nWork through Bertin’s three stages and three objectives.\n\nStages\n\nStage 1 (External): From the title/caption/labels alone, what do you think the figure is about and what is shown?\nStage 2 (Internal): What marks and visual channels are used (position, size, shape, color, line type)? Do they appear consistent and interpretable?\nStage 3 (Relationships): What relationships or inferences does the figure invite you to make? What is the overall point you will remember?\n\n\n\nObjectives\n\nObjective 1 (Elementary): Can you answer a specific lookup question quickly (about one element) without hunting?\nObjective 2 (Intermediate): Can you answer a small pattern/trend question (about a subset of elements) accurately?\nObjective 3 (Overall): Can you state the figure’s overall message in one sentence, and is that message supported by title/caption/annotation?\n\n\n\nA. Message Comprehension\n\nIn one sentence: what do you think the figure’s main takeaway is?\nWhat do you notice first (salience)? Does that match the intended takeaway?\nWhat is confusing, ambiguous, or easy to misread?\n\n\n\nB. Assignment Objectives (Does It Achieve The Goals?)\n\nSelf-standing: Do the title/caption/annotations make the message understandable without narration?\nAudience fit: Is the level of detail and terminology right for the stated audience?\nConceptual structure: Are constructs, mechanisms, and relationships visually explicit (not just implied)?\nQuantitative integrity (if applicable): Are any quantitative elements accurate, interpretable, and matched to the message?\n\n\n\nC. Design Coherence\nYou don’t need to go through all of these, but consider how well design principles are used in the figure to convey a clear message.\n\nData-ink / non-data-ink: What could be erased or simplified without losing information?\nChartjunk vs. useful embellishment: Any decorative elements competing with the message? Any embellishment that truly supports recall or interpretation?\nCleveland-style clarity checks:\nDoes the data/idea stand out (not the scaffolding)?\nAre there too many tick marks/grid lines/borders/boxes?\nAre labels/keys placed so they do not clutter the main data/diagram region?\nAre reference lines used only when they clarify an important value?\n\nSix fundamental design principles: - Contrast: are related items visually similar, unrelated items different? - Repetition: are styles reused consistently (fonts, shapes, line weights, colors)? - Alignment: do elements snap to an intentional grid/structure? - Proximity: are related items closer than unrelated ones? - Movement: does the layout guide the eye in a deliberate sequence? - Balance: does the figure feel visually stable (not top-heavy/left-heavy)?\n\n\nD. Color And Accessibility\n\nDoes the use of color as a visual channel add to the message and aesthetics?\nAre palette types matched to the task (e.g., categorical for discrete types)?\nAre ordered colormaps perceptually reasonable (avoid rainbow defaults for ordered data)?\nAre color distinctions conservative enough to be discriminable (especially for luminance/saturation)?\n\n\n\nE. Annotations And Text\n\nWhat text is essential to interpretation (and where should it live: labels, callouts, caption)?\nAre annotations placed where the eye needs them (near the relevant visual element)?\nIs typography legible at intended size (font size, weight, line spacing)?\n\n\n\nF. Your Top 3 Recommendations (Actionable)\nWrite your top three suggestions for concrete changes. Each should name what to change and why."
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-2-discussion-minutes-8-22",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-2-discussion-minutes-8-22",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Stage 2: Discussion (minutes 8-22)",
+    "text": "Stage 2: Discussion (minutes 8-22)"
+  },
+  {
+    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#wrap-up-revision-plan-minutes-22-30",
+    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#wrap-up-revision-plan-minutes-22-30",
+    "title": "Conceptual Figure Peer Critique Guide",
+    "section": "Wrap-Up: Revision Plan (minutes 22-30)",
+    "text": "Wrap-Up: Revision Plan (minutes 22-30)\nEach author writes a short plan (bullet points are fine):\n\nThe single sentence your figure should communicate.\nThe top 3 changes you will make before final submission.\nOne design principle from Week 7 you will deliberately use (e.g., contrast, proximity, reducing chartjunk, improved color channel choice).\nOne question you still have (to ask in class or of peers outside of class)."
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Week 1: Data Tidying (due 1/21 at 8am) — Download QMD\nWeek 2: Workflowr Project Setup (due 2/4 at 8am) — Download QMD\nWeek 3: Data Wrangling — Download QMD — Download data\nData quality assurance and processing project proposal (due 1/29/2026)\nData quality assurance and processing project assignment (due 2/12/2026)\nConceptual figure/infographic project assignment (draft critique: 2/26/2026; final due 3/5/2026)\nConceptual figure peer critique guide (in-class: 2/26/2026) — Download QMD"
   },
   {
     "objectID": "assignments/conceptual_figure_infographic_project_assignment_2026.html",
@@ -455,67 +518,39 @@
     "text": "Draft checkpoint (Week 8)\nBring or submit a draft figure for brief peer/in-class critique. The goal is to test whether:\n\nyour audience and intended takeaway are immediately clear,\nannotation and organization support rapid understanding, and\nrevisions needed for final submission are identified early."
   },
   {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Week 1: Data Tidying (due 1/21 at 8am) — Download QMD\nWeek 2: Workflowr Project Setup (due 2/4 at 8am) — Download QMD\nWeek 3: Data Wrangling — Download QMD — Download data\nData quality assurance and processing project proposal (due 1/29/2026)\nData quality assurance and processing project assignment (due 2/12/2026)\nConceptual figure/infographic project assignment (draft critique: 2/26/2026; final due 3/5/2026)\nConceptual figure peer critique guide (in-class: 2/26/2026) — Download QMD"
-  },
-  {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html",
-    "title": "Conceptual Figure Peer Critique Guide",
+    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html",
+    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html",
+    "title": "Data Quality Assurance and Processing Project",
     "section": "",
     "text": "PSYC 859 Spring 2026"
   },
   {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#goal",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#goal",
-    "title": "Conceptual Figure Peer Critique Guide",
-    "section": "Goal",
-    "text": "Goal\nUse a structured peer review to identify concrete revisions that make your figure:\n\nself-standing (readable without you narrating it),\naligned with your audience and takeaway message, and\ncleanly designed (layout, typography, color, annotation, emphasis).\n\nThis guide builds on:\n\nthe evaluation criteria in the Conceptual Figure / Infographic Project assignment, and\nWeek 7 and 8 slides covering layout, design, and color principles"
+    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#due-dates",
+    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#due-dates",
+    "title": "Data Quality Assurance and Processing Project",
+    "section": "Due dates",
+    "text": "Due dates\n\nProposal (separate submission): 1/29/2026\nProject submission: 2/12/2026"
   },
   {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#starting-point",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#starting-point",
-    "title": "Conceptual Figure Peer Critique Guide",
-    "section": "Starting point",
-    "text": "Starting point\nEach person should provide:\n\nA draft of your figure, shown at its intended size (print or 100% zoom).\nOne key sentence summarizing the intended audience and main takeaway message.\nYour current title/caption and any key annotations (even if rough)."
+    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-guidelines",
+    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-guidelines",
+    "title": "Data Quality Assurance and Processing Project",
+    "section": "Project guidelines",
+    "text": "Project guidelines\nBuilding on your submitted project proposal, implement your data import, quality assurance, tidying, and processing plan. Your submission should be understandable and runnable by someone else (here, me), and it should produce documented evidence about data quality and the cleaning decisions you made.\nIf your implementation differs from your proposal in any meaningful way (e.g., different variables, different merge strategy, extra cleaning steps, dropped datasets), include a short addendum explaining what changed and why.\nIf you include any data with your submission, it should be deidentified and otherwise appropriate to share in the course context."
   },
   {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#minute-schedule-pairs",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#minute-schedule-pairs",
-    "title": "Conceptual Figure Peer Critique Guide",
-    "section": "30-Minute Schedule (Pairs)",
-    "text": "30-Minute Schedule (Pairs)\n\n\n\n\n\n\n\nMinutes\nActivity\n\n\n\n\n0-2\nSetup and swap figures\n\n\n2-8\nSilent review and notes (both people)\n\n\n8-15\nPartner 1 feedback (Reviewer 2 shares suggestions)\n\n\n15-22\nPartner 2 feedback (Reviewer 1 shares suggestions)\n\n\n22-30\nWrap up discussion and record a revision plan (Both partners)"
+    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-materials-to-be-submitted",
+    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#project-materials-to-be-submitted",
+    "title": "Data Quality Assurance and Processing Project",
+    "section": "Project materials to be submitted",
+    "text": "Project materials to be submitted\nSubmit a single .zip containing your project folder (preferred). A Git repository snapshot or link is also fine if it contains the full structure and required outputs.\nMinimum contents:\n\nCode: All scripts and/or Quarto/R Markdown documents used to execute the QA + processing pipeline.\nFilesystem snapshot: A tree.txt (preferred) or screenshot showing the project folder structure. This could literally be a screenshot of your computer screen if all subfolders and files can easily be displayed, or a text file containing the contents of the filesystem for the project. On both Mac and Windows, a command called “tree” can be installed that provides a full description of the structure.\nQA outputs: The key tables/logs/reports used to identify problems and document data quality (e.g., missingness summaries, out-of-range listings, duplicate-ID checks, merge fidelity checks).\nDocumentation: A README (or equivalent) describing (a) what the data are, (b) how to run the pipeline, and (c) major cleaning/processing decisions.\n\nNotes:\n\nYou may organize your pipeline as modular scripts, but include a clear “entry point” (e.g., run_pipeline.R or a single Quarto document) and instructions for running it.\nKeep raw/original data unmodified; store derived products separately (e.g., data/raw vs data/processed), consistent with your proposal."
   },
   {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#setup-0-2-min",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#setup-0-2-min",
-    "title": "Conceptual Figure Peer Critique Guide",
-    "section": "Setup (0-2 min)",
-    "text": "Setup (0-2 min)\n\nSwap figures.\nEach author tells their partner their one-sentence audience + takeaway statement (no extra explanation).\nOpen the figure at intended size (print or 100% zoom)."
-  },
-  {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-1-silent-review-notes-2-8-min",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-1-silent-review-notes-2-8-min",
-    "title": "Conceptual Figure Peer Critique Guide",
-    "section": "Stage 1: Silent Review + Notes (2-8 min)",
-    "text": "Stage 1: Silent Review + Notes (2-8 min)\nWrite notes directly on paper or in a doc. Focus on evidence-based critique (what a viewer will likely perceive and conclude).\nWork through Bertin’s three stages and three objectives.\n\nStages\n\nStage 1 (External): From the title/caption/labels alone, what do you think the figure is about and what is shown?\nStage 2 (Internal): What marks and visual channels are used (position, size, shape, color, line type)? Do they appear consistent and interpretable?\nStage 3 (Relationships): What relationships or inferences does the figure invite you to make? What is the overall point you will remember?\n\n\n\nObjectives\n\nObjective 1 (Elementary): Can you answer a specific lookup question quickly (about one element) without hunting?\nObjective 2 (Intermediate): Can you answer a small pattern/trend question (about a subset of elements) accurately?\nObjective 3 (Overall): Can you state the figure’s overall message in one sentence, and is that message supported by title/caption/annotation?\n\n\n\nA. Message Comprehension\n\nIn one sentence: what do you think the figure’s main takeaway is?\nWhat do you notice first (salience)? Does that match the intended takeaway?\nWhat is confusing, ambiguous, or easy to misread?\n\n\n\nB. Assignment Objectives (Does It Achieve The Goals?)\n\nSelf-standing: Do the title/caption/annotations make the message understandable without narration?\nAudience fit: Is the level of detail and terminology right for the stated audience?\nConceptual structure: Are constructs, mechanisms, and relationships visually explicit (not just implied)?\nQuantitative integrity (if applicable): Are any quantitative elements accurate, interpretable, and matched to the message?\n\n\n\nC. Design Coherence\nYou don’t need to go through all of these, but consider how well design principles are used in the figure to convey a clear message.\n\nData-ink / non-data-ink: What could be erased or simplified without losing information?\nChartjunk vs. useful embellishment: Any decorative elements competing with the message? Any embellishment that truly supports recall or interpretation?\nCleveland-style clarity checks:\nDoes the data/idea stand out (not the scaffolding)?\nAre there too many tick marks/grid lines/borders/boxes?\nAre labels/keys placed so they do not clutter the main data/diagram region?\nAre reference lines used only when they clarify an important value?\n\nSix fundamental design principles: - Contrast: are related items visually similar, unrelated items different? - Repetition: are styles reused consistently (fonts, shapes, line weights, colors)? - Alignment: do elements snap to an intentional grid/structure? - Proximity: are related items closer than unrelated ones? - Movement: does the layout guide the eye in a deliberate sequence? - Balance: does the figure feel visually stable (not top-heavy/left-heavy)?\n\n\nD. Color And Accessibility\n\nDoes the use of color as a visual channel add to the message and aesthetics?\nAre palette types matched to the task (e.g., categorical for discrete types)?\nAre ordered colormaps perceptually reasonable (avoid rainbow defaults for ordered data)?\nAre color distinctions conservative enough to be discriminable (especially for luminance/saturation)?\n\n\n\nE. Annotations And Text\n\nWhat text is essential to interpretation (and where should it live: labels, callouts, caption)?\nAre annotations placed where the eye needs them (near the relevant visual element)?\nIs typography legible at intended size (font size, weight, line spacing)?\n\n\n\nF. Your Top 3 Recommendations (Actionable)\nWrite your top three suggestions for concrete changes. Each should name what to change and why."
-  },
-  {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-2-discussion-minutes-8-22",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#stage-2-discussion-minutes-8-22",
-    "title": "Conceptual Figure Peer Critique Guide",
-    "section": "Stage 2: Discussion (minutes 8-22)",
-    "text": "Stage 2: Discussion (minutes 8-22)"
-  },
-  {
-    "objectID": "assignments/conceptual_figure_peer_critique_guide_2026.html#wrap-up-revision-plan-minutes-22-30",
-    "href": "assignments/conceptual_figure_peer_critique_guide_2026.html#wrap-up-revision-plan-minutes-22-30",
-    "title": "Conceptual Figure Peer Critique Guide",
-    "section": "Wrap-Up: Revision Plan (minutes 22-30)",
-    "text": "Wrap-Up: Revision Plan (minutes 22-30)\nEach author writes a short plan (bullet points are fine):\n\nThe single sentence your figure should communicate.\nThe top 3 changes you will make before final submission.\nOne design principle from Week 7 you will deliberately use (e.g., contrast, proximity, reducing chartjunk, improved color channel choice).\nOne question you still have (to ask in class or of peers outside of class)."
+    "objectID": "assignments/data_quality_assurance_processing_project_assignment_2026.html#key-concepts-to-be-demonstrated",
+    "href": "assignments/data_quality_assurance_processing_project_assignment_2026.html#key-concepts-to-be-demonstrated",
+    "title": "Data Quality Assurance and Processing Project",
+    "section": "Key concepts to be demonstrated",
+    "text": "Key concepts to be demonstrated\nSuccessful projects should demonstrate:\n\nIntelligent folder and file setup (file management)\nData import into R, preserving unadulterated data\nData tidying (if necessary)\nData wrangling (filter, select, arrange, transform, split/apply/combine, etc.)\n\nClear, intelligent data storage format to support QA and analysis (one large data.frame, perhaps with list-columns, or a nested list structure?)\n\nDataset merging/alignment (if applicable), including fidelity checks (e.g., unmatched IDs, unexpected duplicates, count checks). Consider using the tidylog package to help with your checks.\nData QA, including checks for invalid values, missingness, artifacts (if relevant), and statistical outliers\n\nIf relevant, one or more text-based documents (e.g., .csv spreadsheet) documenting data problems to be addressed.\n\nClear documentation of manual or programmatic edits to data to produce consistent data (ready for visualization and analysis)\nImplementation of custom functions for QA and/or use of existing R packages to support validation and reporting"
   },
   {
     "objectID": "assignments/week1_tidyData.html",
@@ -823,7 +858,7 @@
     "href": "syllabus.html#week-5",
     "title": "PSYC 859 Syllabus",
     "section": "Week 5 (2/5): Principles of data visualization and graphical grammar",
-    "text": "Week 5 (2/5): Principles of data visualization and graphical grammar\n\nConceptual readings\n\nTufte, The visual display of quantitative information, Chs. 1-3.\nCairo, The functional art, Ch. 1.\n\n\n\nPractical readings\n\nWickham, ggplot2 (3rd edition).\n\nThe grammar: https://ggplot2-book.org/mastery.html\nBuilding a plot layer by layer: https://ggplot2-book.org/layers.html"
+    "text": "Week 5 (2/5): Principles of data visualization and graphical grammar\n\nConceptual readings\n\nTufte, The visual display of quantitative information, Chs. 1-3.\nCairo, The functional art, Ch. 1.\n\n\n\nPractical readings\n\nWickham, ggplot2 (3rd edition).\n\nThe grammar. https://ggplot2-book.org/mastery.html\nCh. 13: Building a plot layer by layer. https://ggplot2-book.org/layers.html"
   },
   {
     "objectID": "syllabus.html#week-6",
@@ -844,14 +879,14 @@
     "href": "syllabus.html#week-8",
     "title": "PSYC 859 Syllabus",
     "section": "Week 8 (2/26): A tour of quantitative visualization",
-    "text": "Week 8 (2/26): A tour of quantitative visualization\n\nConceptual readings\n\nTufte, The visual display of quantitative information, Chs. 6-8.\nHeer, J., Bostock, M., & Ogievetsky, V. (2010). A Tour through the Visualization Zoo. Communications of the ACM, 53(6), 59-67.\n\n\n\nPractical readings\n\nWickham, ggplot2 (3rd edition; online draft).\n\nCh. 2: First steps. https://ggplot2-book.org/getting-started.html\nBuilding a plot layer by layer. https://ggplot2-book.org/layers.html\nLayers (overview). https://ggplot2-book.org/toolbox.html\nCh. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html\nCh. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html\nCh. 5: Statistical summaries (incl. distributions + overplotting). https://ggplot2-book.org/statistical-summaries.html\nCh. 6: Maps. https://ggplot2-book.org/maps.html\nCh. 8: Annotations. https://ggplot2-book.org/annotations.html"
+    "text": "Week 8 (2/26): A tour of quantitative visualization\n\nConceptual readings\n\nTufte, The visual display of quantitative information, Chs. 6-8.\nHeer, J., Bostock, M., & Ogievetsky, V. (2010). A Tour through the Visualization Zoo. Communications of the ACM, 53(6), 59-67.\n\n\n\nPractical readings\n\nWickham, ggplot2 (3rd edition; online draft).\n\nCh. 2: First steps. https://ggplot2-book.org/getting-started.html\nLayers (overview). https://ggplot2-book.org/toolbox.html\nCh. 3: Individual geoms. https://ggplot2-book.org/individual-geoms.html\nCh. 4: Collective geoms. https://ggplot2-book.org/collective-geoms.html\nCh. 5: Statistical summaries (incl. distributions + overplotting). https://ggplot2-book.org/statistical-summaries.html\nCh. 6: Maps. https://ggplot2-book.org/maps.html\nCh. 8: Annotations. https://ggplot2-book.org/annotations.html"
   },
   {
     "objectID": "syllabus.html#week-9",
     "href": "syllabus.html#week-9",
     "title": "PSYC 859 Syllabus",
     "section": "Week 9 (3/5): Visualizing continuous data (in ggplot2)",
-    "text": "Week 9 (3/5): Visualizing continuous data (in ggplot2)"
+    "text": "Week 9 (3/5): Visualizing continuous data (in ggplot2)\n\nConceptual readings\n\nTufte, The visual display of quantitative information, Ch. 9.\nCleveland, W. S. (1993). Visualizing Data, Chs. 1-2. https://jwmason.org/wp-content/uploads/2021/08/Cleveland-1993-Visualizing-Data.pdf\n\n\n\nPractical readings\n\nWickham, ggplot2 (3rd edition; online draft).\n\nCh. 10: Position scales and axes. https://ggplot2-book.org/scales-position.html\nCh. 11: Color scales and legends. https://ggplot2-book.org/scales-colour.html\nCh. 12: Other aesthetics. https://ggplot2-book.org/scales-other.html"
   },
   {
     "objectID": "syllabus.html#week-10",

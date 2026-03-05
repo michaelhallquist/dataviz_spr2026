@@ -1,0 +1,110 @@
+---
+title: "Final Project Proposal"
+subtitle: "Data Quality Assurance + Visualization"
+date: today
+---
+
+PSYC 859 Spring 2026
+
+## Due dates
+
+- Proposal: 3/26/2026
+- Final product: 4/27/2026
+
+## Proposal guidelines
+
+Please submit a brief proposal (4–6 pages) describing a final data quality assurance (QA) and
+visualization project. Ideally, this project should extend from the data QA project earlier in the
+semester and focus especially on visualization and substantive insights into the data.
+
+The project should showcase what you have learned about the principles of effective visualization,
+such as Tufte's principles of analytical design, Cleveland's elements of effective graphics, and
+Bertin's three stages of reading and three objectives of graphs.
+
+Finally, the project is an opportunity to highlight your critical thinking about figure design by
+providing a written rationale for why you chose to approach a visualization in particular ways to
+maximize its communication to the intended audience (you, your lab, a conference, social media,
+etc.).
+
+## Key ingredients of the proposal
+
+1. Background and rationale for project (1–2 paragraphs).
+   - Feel free to adapt the data QA description, tilting toward the substantive questions that can be
+     answered (or at least interrogated) through graphical and nongraphical EDA.
+   - Focus especially on the EDA pipeline discussed in class, including formulating research
+     questions, validating your dataset, detecting anomalies, developing parsimonious models, and
+     assessing relationships among variables.
+   - What are your hypotheses?
+
+2. Description of data structure: only necessary if the final project departs substantially from the
+   data QA project. See the data QA assignment for details if you wish to include this section.
+
+3. Proposed file system structure for project: only necessary if the final project departs from the
+   structure proposed in the data QA project. See the data QA assignment for details if you wish to
+   include this section.
+
+4. Data quality assurance plan: this should extend from the data QA project, incorporating the
+   feedback on that project and now considering how EDA (especially graphical) techniques can help
+   identify problems in the dataset (e.g., outliers, unexpected relationships that suggest incorrect
+   coding of variables).
+
+   a. What are the potential sources of artifacts or errors in the data?
+
+   b. What checks can be conducted to mitigate these problems using algorithmic methods (i.e.,
+      automated code that walks through a dataset diagnosing and reporting problems)?
+
+   c. How will missing data be identified and resolved? Resolution of missing values includes:
+
+      i. When possible, finding the missing data and entering it.
+
+      ii. Documenting the missingness and, when possible, having a mechanism for quieting your QA
+          script so that it doesn't perpetually yell at you.
+
+   d. Are there QA steps that can only be conducted by a trained human (e.g., ECG artifact
+      correction)? If so, briefly document why these cannot be automated/codified.
+
+   e. What graphical methods can you employ that would help identify artifacts or problematic data
+      points?
+
+5. Data QA + visualization pipeline proposal: Building on the above, describe key aspects of the
+   data processing and visualization pipeline for the project. What graphical idioms do you
+   anticipate employing for each substantive question? Document key anticipated steps in your
+   pipeline, including:
+
+   a. Import of original data
+
+   b. Basic tidying of data, if necessary
+
+   c. Basic QA checks on each dataset. What are the expected outputs that will document data quality?
+
+   d. Dataset merging, including fidelity checks on merge
+
+   e. Data manipulation of merged data for analysis and visualization
+
+   f. Visualization of data quality, such as missingness by variable, univariate densities, bivariate
+      scatterplots, or time series/index plots that would provide information about accuracy of the
+      data
+
+   g. Exploratory visualization to develop an understanding of relationships among key variables in
+      the dataset
+
+   h. Graphical exploration of your hypotheses about the data. What sorts of plots would allow you
+      to identify the evidence in favor of your hypotheses?
+
+6. What functions or specialized visualization tools do you anticipate developing or using to
+   accomplish this pipeline? Document any crucial project objectives that will require a custom
+   analysis, visualization, algorithm, or function.
+
+## Preview of final project expectations
+
+As a preview of the final project, anticipate that you will need to:
+
+1. Visualize the same data in at least three (somewhat) different ways.
+2. Create 10+ EDA graphics.
+3. Demonstrate the use of an exploratory analysis, such as principal component analysis,
+   multidimensional scaling, or clustering.
+4. Create at least 2 graphics for others (publication quality).
+5. Create at least one plot with multiple layers that result either from distinct datasets, or from
+   different levels of aggregation (e.g., basic geoms versus stat marks).
+6. Create and interpret at least one generalized pairs plot.
+
