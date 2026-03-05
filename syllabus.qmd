@@ -208,7 +208,7 @@ All projects are to be completed individually. Although you are encouraged to di
 ### Conceptual readings
 
 - Tufte, *The visual display of quantitative information*, Ch. 9.
-- Cleveland, W. S. (1993). *Visualizing Data*, Chs. 1-2. https://jwmason.org/wp-content/uploads/2021/08/Cleveland-1993-Visualizing-Data.pdf
+- Cleveland, W. S. (1993). [*Visualizing Data*](https://jwmason.org/wp-content/uploads/2021/08/Cleveland-1993-Visualizing-Data.pdf), Chs. 1-2.
 
 ### Practical readings
 
