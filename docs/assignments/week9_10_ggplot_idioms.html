@@ -214,15 +214,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
 <p>For each question:</p>
 <ol type="1">
-<li>Build the plot in layers rather than writing one giant line of code from scratch.</li>
+<li>Build the plot using <code>ggplot2</code> layers. You may either write the plot in one expression or create and modify an object in multiple steps.</li>
 <li>Include the code you used and the resulting plot.</li>
 <li>When a question asks for interpretation, write 1-3 sentences.</li>
 </ol>
-<p>Unless a prompt tells you otherwise, use this workflow:</p>
+<p>Unless a prompt tells you otherwise, this is a good default workflow:</p>
 <ol type="1">
-<li>Start with <code>p &lt;- ggplot(...)</code>.</li>
-<li>Add or revise layers one step at a time.</li>
-<li>End with readable labels and a clean theme.</li>
+<li>Start with <code>ggplot(...)</code> and map the core variables.</li>
+<li>Add the necessary geoms, stats, labels, and theme elements.</li>
+<li>Use intermediate objects only if they help you think more clearly.</li>
 </ol>
 </section>
 <section id="datasets-for-this-assignment" class="level2">
@@ -313,7 +313,7 @@ $ category             &lt;chr&gt; "AAR", "LHR", "AAR", "ALU", "AAR", "AAR", "LA
 <p>The week 10 slides describe bar charts as an idiom for one key variable with a count or other summary. Start with a simple frequency display.</p>
 <ol type="1">
 <li>Using <code>gss_cat</code>, create a bar plot showing the number of respondents in each level of <code>marital</code>.</li>
-<li>Build the plot object in layers.</li>
+<li>Write the plot in whatever style is most natural to you.</li>
 <li>Add a title and axis labels.</li>
 <li>Apply a non-default theme such as <code>theme_bw()</code> or <code>theme_classic()</code>.</li>
 </ol>

@@ -31,15 +31,15 @@ This assignment is designed as guided practice for building `ggplot` objects fro
 
 For each question:
 
-1. Build the plot in layers rather than writing one giant line of code from scratch.
+1. Build the plot using `ggplot2` layers. You may either write the plot in one expression or create and modify an object in multiple steps.
 2. Include the code you used and the resulting plot.
 3. When a question asks for interpretation, write 1-3 sentences.
 
-Unless a prompt tells you otherwise, use this workflow:
+Unless a prompt tells you otherwise, this is a good default workflow:
 
-1. Start with `p <- ggplot(...)`.
-2. Add or revise layers one step at a time.
-3. End with readable labels and a clean theme.
+1. Start with `ggplot(...)` and map the core variables.
+2. Add the necessary geoms, stats, labels, and theme elements.
+3. Use intermediate objects only if they help you think more clearly.
 
 ## Datasets for this assignment
 
@@ -68,7 +68,7 @@ glimpse(midwest)
 The week 10 slides describe bar charts as an idiom for one key variable with a count or other summary. Start with a simple frequency display.
 
 1. Using `gss_cat`, create a bar plot showing the number of respondents in each level of `marital`.
-2. Build the plot object in layers.
+2. Write the plot in whatever style is most natural to you.
 3. Add a title and axis labels.
 4. Apply a non-default theme such as `theme_bw()` or `theme_classic()`.
 
