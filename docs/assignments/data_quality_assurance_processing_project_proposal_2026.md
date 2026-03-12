@@ -1,6 +1,6 @@
 ---
 title: "Data Quality Assurance and Processing Project Proposal"
-date: today
+date: last-modified
 ---
 
 PSYC 859 Spring 2026

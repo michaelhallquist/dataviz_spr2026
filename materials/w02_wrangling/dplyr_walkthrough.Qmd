@@ -1,7 +1,7 @@
 ---
 title: "Data wrangling in dplyr"
 author: "Michael Hallquist, PSYC 859"
-date: today
+date: last-modified
 week: 2
 download: "materials/downloads/w02_wrangling/dplyr_walkthrough.qmd"
 format:

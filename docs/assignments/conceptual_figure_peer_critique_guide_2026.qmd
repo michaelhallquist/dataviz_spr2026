@@ -1,7 +1,7 @@
 ---
 title: "Conceptual Figure Peer Critique Guide"
 subtitle: "In-class paired review (Week 8, 2/26/2026)"
-date: today
+date: last-modified
 ---
 
 PSYC 859 Spring 2026

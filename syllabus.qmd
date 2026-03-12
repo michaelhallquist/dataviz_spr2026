@@ -1,6 +1,6 @@
 ---
 title: "PSYC 859 Syllabus"
-date: today
+date: last-modified
 ---
 
 # Course Description
@@ -220,6 +220,11 @@ All projects are to be completed individually. Although you are encouraged to di
   
   
 ## Week 10 (3/12): Visualizing count and categorical data (in ggplot2) {#week-10}
+
+### Practical readings
+
+- Friendly, M. [*Working with Categorical Data in R*](readings/Friendly%20Working%20with%20Categorical%20Data%20in%20R.pdf).
+- Emerson, J. W., Green, W. A., Schloerke, B., Crowley, J., Cook, D., Hofmann, H., & Wickham, H. (2012). [*The Generalized Pairs Plot*](readings/Emerson%20Generalized%20Pairs%20Plot%20%282012%29.pdf).
 
 ## 3/19: No class (Spring break)
 

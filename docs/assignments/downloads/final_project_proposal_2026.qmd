@@ -1,7 +1,7 @@
 ---
 title: "Final Project Proposal"
 subtitle: "Data Quality Assurance + Visualization"
-date: today
+date: last-modified
 ---
 
 PSYC 859 Spring 2026
@@ -107,4 +107,3 @@ As a preview of the final project, anticipate that you will need to:
 5. Create at least one plot with multiple layers that result either from distinct datasets, or from
    different levels of aggregation (e.g., basic geoms versus stat marks).
 6. Create and interpret at least one generalized pairs plot.
-

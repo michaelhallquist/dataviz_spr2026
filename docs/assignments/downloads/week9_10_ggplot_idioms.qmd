@@ -1,0 +1,222 @@
+---
+title: "Week 9/10: Graphical Idioms in ggplot2"
+author: "PSYC 859 Data Management and Visualization"
+date: "March 12, 2026"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    code-fold: show
+execute:
+  echo: true
+  message: false
+  error: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+data("gss_cat", package = "forcats")
+data("economics", package = "ggplot2")
+data("midwest", package = "ggplot2")
+```
+
+This assignment is designed as guided practice for building `ggplot` objects from layers. The week 9 and week 10 materials emphasize that plots are not single opaque commands. Instead, they are built from data, mappings, geoms, stats, positions, scales, coordinates, and themes.
+
+## Instructions
+
+For each question:
+
+1. Build the plot in layers rather than writing one giant line of code from scratch.
+2. Include the code you used and the resulting plot.
+3. When a question asks for interpretation, write 1-3 sentences.
+
+Unless a prompt tells you otherwise, use this workflow:
+
+1. Start with `p <- ggplot(...)`.
+2. Add or revise layers one step at a time.
+3. End with readable labels and a clean theme.
+
+## Datasets for this assignment
+
+We will use three datasets that are relevant to social and behavioral science questions:
+
+- `gss_cat` from `forcats`: responses from the General Social Survey.
+- `economics` from `ggplot2`: U.S. macroeconomic indicators measured over time.
+- `midwest` from `ggplot2`: county-level demographic and socioeconomic data from the U.S. Midwest.
+
+Use the chunks below to inspect the data before you begin.
+
+```{r}
+glimpse(gss_cat)
+```
+
+```{r}
+glimpse(economics)
+```
+
+```{r}
+glimpse(midwest)
+```
+
+# Part 1: Simple bar plot
+
+The week 10 slides describe bar charts as an idiom for one key variable with a count or other summary. Start with a simple frequency display.
+
+1. Using `gss_cat`, create a bar plot showing the number of respondents in each level of `marital`.
+2. Build the plot object in layers.
+3. Add a title and axis labels.
+4. Apply a non-default theme such as `theme_bw()` or `theme_classic()`.
+
+```{r}
+```
+
+5. Rebuild the same bar plot so that the bars are ordered from most common to least common.
+6. Briefly explain why reordering may improve interpretation.
+
+```{r}
+```
+
+# Part 2: Stacked bar chart
+
+Stacked bars are useful when one categorical variable defines position and a second defines composition within each bar.
+
+1. Using `gss_cat`, create a stacked bar chart with `x = race` and `fill = marital`.
+2. Use the raw data so that `geom_bar()` counts cases automatically.
+3. Add readable labels and a legend title.
+
+```{r}
+```
+
+4. Create a second version using `position = "fill"` so that all bars have equal height.
+5. In 1-2 sentences, explain what comparison becomes easier in the normalized version and what comparison becomes harder.
+
+```{r}
+```
+
+# Part 3: Dodged bar chart
+
+The week 10 slides note that dodged bars support easier comparison of aligned heights within each group than stacked bars do.
+
+1. Using the same variables as above (`race` and `marital`), create a dodged bar chart.
+2. Make sure the bars are side-by-side rather than stacked.
+3. Add labels and a theme.
+
+```{r}
+```
+
+4. Write 1-2 sentences comparing the dodged version to the stacked version. Which comparisons are easier in each plot?
+
+```{r}
+```
+
+# Part 4: Histogram
+
+Histograms are idioms for one continuous variable. In the General Social Survey, `age` is a natural candidate.
+
+1. Create a histogram of respondent `age` from `gss_cat`.
+2. Choose a reasonable number of bins or a reasonable `binwidth`.
+3. Add a vertical reference line at the median age using `geom_vline()`.
+4. Label the plot clearly.
+
+```{r}
+```
+
+5. Create a second histogram of `age` faceted by `race`.
+6. Briefly comment on whether the age distributions appear similar or different across groups.
+
+```{r}
+```
+
+# Part 5: Boxplot
+
+Boxplots combine a categorical x variable with a continuous y variable. They are useful for comparing medians, spread, and outliers across groups.
+
+1. Filter `gss_cat` to remove missing values on `tvhours` and `marital`.
+2. Create a boxplot of `tvhours` by `marital`.
+3. Consider using `coord_flip()` if the labels are crowded.
+4. Add a title and informative axis labels.
+
+```{r}
+```
+
+5. Create a second version that overlays jittered points or uses partial transparency to reveal individual observations.
+6. In 1-2 sentences, explain what the points add beyond the boxplot summary.
+
+```{r}
+```
+
+# Part 6: Scatterplot
+
+Scatterplots are idioms for two continuous variables. The `midwest` dataset contains many social-demographic variables that work well here.
+
+1. Use `midwest` to create a scatterplot with `x = percollege` and `y = percbelowpoverty`.
+2. Add point transparency to deal with overplotting.
+3. Map `state` to color.
+4. Add a smooth trend line using `stat_smooth(se = FALSE)`.
+
+```{r}
+```
+
+5. Add a rug plot to show marginal densities along the axes.
+6. Write 1-2 sentences describing the direction of association between college education and poverty across counties.
+
+```{r}
+```
+
+# Part 7: Line plot
+
+Line plots are idioms for ordered x variables, especially time. Use the `economics` dataset to show change over time.
+
+1. Create a line plot of `unemploy` across `date`.
+2. Add a descriptive title and axis labels.
+3. Format the y-axis so the labels are easy to read.
+
+```{r}
+```
+
+4. Create a second line plot showing `uempmed` across `date`.
+5. Use `coord_cartesian()` to zoom in on dates from January 1, 1970 through December 31, 2010.
+6. Add an annotation using `annotate()` that draws attention to a notable peak or sustained increase.
+
+```{r}
+```
+
+# Part 8: Dot plot
+
+Dot plots are often a strong alternative to bars when the goal is to compare summarized values across categories. They rely on aligned position, which is perceptually efficient.
+
+1. Create a summary dataset from `gss_cat` that contains the mean `tvhours` for each level of `relig`.
+2. Remove missing `tvhours` values before summarizing.
+3. Arrange the summary from lowest mean to highest mean.
+
+```{r}
+```
+
+4. Use that summary dataset to build a dot plot of mean TV hours by religion.
+5. Use `geom_point()` and optionally `geom_segment()` to create a lollipop-style display.
+6. Flip the coordinates if that improves readability.
+7. Add clear labels.
+
+```{r}
+```
+
+8. In 1-2 sentences, explain why a dot plot may be preferable to a bar chart for this kind of summarized comparison.
+
+```{r}
+```
+
+# Part 9: Reflection on idiom choice
+
+Answer the following briefly.
+
+1. Which of the eight idioms felt most natural to build in `ggplot2`?
+2. Which idiom required the most data wrangling before plotting?
+3. Give one example from this assignment where changing the `position`, `facet`, or `coordinate` system substantially changed the interpretation of the plot.
+
+```{r}
+```

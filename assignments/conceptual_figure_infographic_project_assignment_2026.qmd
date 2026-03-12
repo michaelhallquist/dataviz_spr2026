@@ -1,7 +1,7 @@
 ---
 title: "Conceptual Figure / Infographic Project"
 subtitle: "Project Assignment"
-date: today
+date: last-modified
 ---
 
 PSYC 859 Spring 2026

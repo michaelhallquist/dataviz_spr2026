@@ -1,7 +1,7 @@
 ---
 title: "Tidy data overview"
 author: "Michael Hallquist, PSYC 859"
-date: today
+date: last-modified
 week: 1
 download: "materials/downloads/w01_tidy_management/tidy_data_conceptual.qmd"
 format:

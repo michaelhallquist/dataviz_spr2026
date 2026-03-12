@@ -1,7 +1,7 @@
 ---
 title: "Data Quality Assurance and Processing Project"
 subtitle: "Project Assignment"
-date: today
+date: last-modified
 ---
 
 PSYC 859 Spring 2026
@@ -49,4 +49,3 @@ Successful projects should demonstrate:
    - If relevant, one or more text-based documents (e.g., .csv spreadsheet) documenting data problems to be addressed.
 7. Clear documentation of manual or programmatic edits to data to produce consistent data (ready for visualization and analysis)
 8. Implementation of custom functions for QA and/or use of existing R packages to support validation and reporting
-
