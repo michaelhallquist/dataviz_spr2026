@@ -230,6 +230,24 @@ All projects are to be completed individually. Although you are encouraged to di
 
 ## Week 11 (3/26): Maximizing clarity: preparing graphics for presentation and publication {#week-11}
 
+### Conceptual readings
+
+- Tufte, E. R. *Beautiful evidence*, Ch. 5: [The Cognitive Style of PowerPoint](https://ares.lib.unc.edu/ares/ares.dll/plink?14E3513A)
+
+### Practical readings
+
+- Wickham, *ggplot2* (3rd edition; online draft).
+  - Ch. 9: Arranging plots. https://ggplot2-book.org/arranging-plots.html
+- Chang, W. *R Graphics Cookbook* (2nd ed.).
+  - Annotations. https://r-graphics.org/CHAPTER-ANNOTATE.html
+  - Appearance of plots. https://r-graphics.org/CHAPTER-APPEARANCE.html
+- Video: [Hans Rosling: The best stats you've ever seen](https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen)
+- Review: [Six Simple Techniques for Presenting Data: Hans Rosling's TED 2006](http://sixminutes.dlugan.com/six-simple-techniques-for-presenting-data-hans-rosling-ted-2006)
+
+### Optional readings
+
+- Patchwork site: https://patchwork.data-imaginist.com/articles/patchwork.html
+
 ## 4/2: No class (Well-being day)
 
 ## Week 12 (4/9): Visualizing and understanding fit (and misfit) of statistical models {#week-12}
