@@ -11,6 +11,7 @@ project:
     - "!assignments/downloads/**"
     - "!assignments/**/*[Aa]nswer*"
   resources:
+    - .nojekyll
     - materials/wrangling_files/**
     - materials/downloads/**
     - assignments/**
