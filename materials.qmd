@@ -27,4 +27,4 @@ This page contains course materials used during the demonstration and practical 
 
 # Week 9
 
-- [Building a ggplot object layer by layer](materials/w09_ggplot2/04_ggplot_grammar_plots.html) ([QMD](materials/downloads/w09_ggplot2/04_ggplot_grammar_plots.qmd))
+- [Building a ggplot object layer by layer](materials/w09_ggplot2/ggplot_grammar_plots.html) ([QMD](materials/downloads/w09_ggplot2/ggplot_grammar_plots.qmd))
