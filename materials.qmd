@@ -25,6 +25,10 @@ This page contains course materials used during the demonstration and practical 
 - [Functional programming and reproducibility](materials/w04_advanced/reproducibility_good_programming.html) ([QMD](materials/downloads/w04_advanced/reproducibility_good_programming.qmd))
 - [QA for Antisaccade Data Using List-Columns](materials/w04_advanced/qa_eye_data.html) ([QMD](materials/downloads/w04_advanced/qa_eye_data.qmd); [Data](materials/files/eyeDataList_14Jul2014.Rdata), [Run-level subject info](materials/files/subj_info_run_level.csv.gz), [Subject info](materials/files/subj_info.csv.gz))
 
+## Data QA Project Feedback
+
+- [Improving Your Data Pipelines: Tidyverse Best Practices for QA](materials/tidyverse_best_practices_qa.html) ([QMD](materials/tidyverse_best_practices_qa.qmd))
+
 # Week 9
 
 - [Building a ggplot object layer by layer](materials/w09_ggplot2/ggplot_grammar_plots.html) ([QMD](materials/downloads/w09_ggplot2/ggplot_grammar_plots.qmd))

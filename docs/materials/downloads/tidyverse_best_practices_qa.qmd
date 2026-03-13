@@ -1,0 +1,216 @@
+---
+title: "Improving Your Data Pipelines: Tidyverse Best Practices for QA"
+author: "Michael Hallquist"
+date: "`r Sys.Date()`"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    code-fold: show
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+# Load necessary libraries
+pacman::p_load(tidyverse, tidylog, palmerpenguins) # For dataset examples
+```
+
+## Introduction
+
+You’ve all made excellent progress in learning how to wrangle, join, and QA data in R! After reviewing your QA projects, I want to highlight a few common patterns that can make data pipelines brittle, hard to read, or prone to silent errors. These challenges came up in several QA projects, so thought I would prepare this document for everyone.
+
+In this document, we will cover four next-level `tidyverse` practices that will make your code more robust and professional:
+
+1. **Wide, repetitive columns vs. `pivot_longer()`**
+2. **Treating RMarkdown as a reproducible pipeline, not a scratchpad**
+3. **Join fidelity and the `tidylog` package**
+4. **Using crosswalks (lookup tables) instead of longer `case_when()` and `ifelse()`**
+
+---
+
+## 1. Wide, Repetitive Columns vs. `pivot_longer()`
+
+When working with longitudinal data or data from multiple sites (e.g., Wave 1 vs Wave 2, or Site A vs Site B), a common instinct is to create "wide" datasets where every combination of measure and timepoint gets its own dedicated column (e.g., `wave1_anxiety`, `wave2_anxiety`). 
+
+For example, imagine a dataset where we measure penguin flipper length and body mass at two different time points (baseline and follow-up).
+
+```{r wide-data-example, echo=FALSE}
+# Create a toy wide dataset
+wide_penguins <- penguins %>%
+  filter(!is.na(flipper_length_mm)) %>%
+  slice_sample(n = 5) %>%
+  select(species, island, sex) %>%
+  mutate(
+    id = 1:n(),
+    baseline_flipper_len = runif(n(), 180, 220),
+    baseline_body_mass = runif(n(), 3000, 5000),
+    followup_flipper_len = baseline_flipper_len + runif(n(), 0, 10),
+    followup_body_mass = baseline_body_mass + runif(n(), 50, 200)
+  ) %>%
+  select(id, everything())
+```
+
+```{r print-wide}
+head(wide_penguins)
+```
+
+**The simpler, but less scalable, approach (repetitive columns):**
+Some projects attempted to write separate lines of code to check for outliers or compute means for `baseline_flipper_len` and then *also* for `followup_flipper_len`. This requires copying and pasting code, which violates the DRY (Don't Repeat Yourself) principle.
+
+**The tidyverse way (`pivot_longer`):**
+Instead, pivot the data so that the metadata (the timepoint and the measure) become values in columns. 
+
+```{r pivot-longer}
+# We use names_sep or names_pattern to pull apart the column names
+tidy_penguins <- wide_penguins %>%
+  pivot_longer(
+    cols = c(contains("baseline"), contains("followup")),
+    names_to = c("timepoint", "measure"),
+    names_sep = "_", 
+    values_to = "value"
+  )
+
+head(tidy_penguins, 10)
+```
+
+Now, if you want to check for outliers or missingness across all flipper measurements regardless of timepoint, you can simply do:
+
+```{r pivot-advantage}
+tidy_penguins %>%
+  filter(measure == "flipper") %>%
+  group_by(timepoint) %>%
+  summarize(
+    mean_len = mean(value),
+    min_len = min(value)
+  )
+```
+
+---
+
+## 2. RMarkdown is a Pipeline, Not a Scratchpad
+
+RMarkdown is fantastic for interactive data exploration. However, a common mistake is leaving interim tweaks and fixes in your final compiled document.
+
+For example, imagine you accidentally code an outlier and then "fix" it rows later:
+
+```{r bad-workflow, eval=FALSE}
+# Chunk 1: Reading data
+df <- read_csv("data.csv")
+
+# Chunk 2: Accidental mistake (changing an ID instead of a value)
+df[299, "id"] <- 999 
+
+# ... 50 lines of other code
+
+# Chunk 10: The "Fix"
+# Oh wait, row 299 was supposed to have ID 105, not 999
+df[299, "id"] <- 105 
+```
+
+**The Tidyverse Way:**
+A final processing script should reliably produce the same results when you run it from top to bottom. That is, every time you run the script in its entirety, the same things should happen (software developers call this 'idempotent'). 
+
+- Never use raw row indices (`df[299, ]`) to change data. If the data is sorted differently tomorrow, row 299 will be a completely different person!
+- If you make a mistake in Chunk 2, **delete or edit Chunk 2**. Do not append a fix in Chunk 10.
+- Use conditional logic to fix specific targeted values, like this (999 -> 105 if date matches):
+
+```{r good-workflow, eval=FALSE}
+df <- df %>%
+  mutate(
+    id = if_else(id == 999 & original_date == "2026-08-14", 105, id)
+  )
+```
+
+---
+
+## 3. Join Fidelity and the `tidylog` Package
+
+The most dangerous errors in R are the ones that *don't* produce an explicit error message that stops your script in its tracks. When joining datasets, a `left_join` or `full_join` might silently drop rows or explosively duplicate rows.
+
+**The Pre-Join Check:**
+Always check if your join keys are unique in the dataset when you expect them to be!
+
+```{r pre-join-check, eval=FALSE}
+# Are there duplicate IDs in my demographic table before I join?
+demo_data %>%
+  count(subject_id) %>%
+  filter(n > 1) 
+# If this returns rows, STOP! Your join will duplicate data.
+```
+
+**The Post-Join Check (`tidylog`):**
+Several projects had silent join failures (e.g., merging 100 participants but getting datasets that only had 90 without logging who disappeared or why).
+
+The easiest fix is to load the `tidylog` package at the top of your script. It automatically intercepts `dplyr` verbs and prints a summary of its operations.
+
+```{r tidylog-demo, message=TRUE}
+# Example with tidylog active
+df1 <- tibble(id = 1:5, var_a = letters[1:5])
+df2 <- tibble(id = c(1, 2, 4, 6), var_b = LETTERS[1:4])
+
+# Watch the console output below!
+merged_df <- df1 %>% left_join(df2, by = "id")
+```
+Notice how `tidylog` explicitly tells us that 2 rows were missing a match from `df2` (`var_b` will be NA)! This is invaluable for QA.
+
+If you specifically want to see *who* didn't match, use `anti_join`:
+
+```{r anti-join-demo}
+# Who is in df1 but absent in df2?
+missing_from_df2 <- anti_join(df1, df2, by = "id")
+missing_from_df2
+```
+
+---
+
+## 4. Crosswalks Instead of Nested `ifelse()`
+
+When harmonizing demographic categories across sites or waves, it’s tempting to write massive, nested `case_when()` or `ifelse()` statements. This works, but it starts to be cumbersome as you have more cases.
+
+```{r case-when-bad, eval=FALSE}
+# The simple way
+data <- data %>%
+  mutate(
+    clean_site = case_when(
+      site_id == 1 ~ "Site A",
+      site_id == "A" ~ "Site A",
+      site_id == "site_a" ~ "Site A",
+      site_id == 2 ~ "Site B",
+      site_id == "B" ~ "Site B",
+      TRUE ~ "Unknown"
+    )
+  )
+```
+This is hard to read and prone to typos.
+
+**The Tidyverse Way (Lookup Tables / Crosswalks):**
+Create a tiny, separate dataframe (a "crosswalk") that maps the raw values to the clean values, and then simply `left_join` it. The tibble package has a handy "tribble" function that lets you type out a dataset in the code.
+
+```{r crosswalk-demo, message=TRUE}
+# Create the raw data
+messy_sites <- tibble(patient = 1:5, raw_site = c(1, "A", "site_a", 2, "B"))
+
+# 1. Define the crosswalk (this can even be a CSV you load in!)
+site_crosswalk <- tribble(
+  ~raw_site, ~clean_site,
+  "1",       "Site A",
+  "A",       "Site A",
+  "site_a",  "Site A",
+  "2",       "Site B",
+  "B",       "Site B"
+)
+
+# 2. Harmonize dataset types (e.g. force to character)
+messy_sites <- messy_sites %>% mutate(raw_site = as.character(raw_site))
+
+# 3. Join! (tidylog will tell us if it worked)
+clean_data <- messy_sites %>%
+  left_join(site_crosswalk, by = "raw_site")
+
+clean_data
+```
+
+This can significantly simplify your main data script. If a new messy site code appears (like `"site_B_new"`), you just add one row to your crosswalk table; you don't have to hunt down and edit a massive `case_when()` block deep in your code. Note that you can also save your crosswalk table to a file (e.g., CSV) and read that in for the join.
+
