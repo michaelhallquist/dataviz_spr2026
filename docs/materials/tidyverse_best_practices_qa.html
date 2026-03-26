@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael Hallquist">
-<meta name="dcterms.date" content="2026-03-13">
+<meta name="dcterms.date" content="2026-03-26">
 
 <title>Improving Your Data Pipelines: Tidyverse Best Practices for QA – Data Management and Visualization</title>
 <style>
@@ -3970,7 +3970,7 @@ pre { font-size: 0.9em; }
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 13, 2026</p>
+      <p class="date">March 26, 2026</p>
     </div>
   </div>
   
@@ -4008,7 +4008,7 @@ pre { font-size: 0.9em; }
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 2%">
-<col style="width: 9%">
+<col style="width: 7%">
 <col style="width: 9%">
 <col style="width: 6%">
 <col style="width: 19%">
@@ -4033,51 +4033,51 @@ pre { font-size: 0.9em; }
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: left;">female</td>
-<td style="text-align: right;">190.6274</td>
-<td style="text-align: right;">3040.536</td>
-<td style="text-align: right;">194.6628</td>
-<td style="text-align: right;">3115.586</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">183.0969</td>
+<td style="text-align: right;">4841.971</td>
+<td style="text-align: right;">190.6365</td>
+<td style="text-align: right;">4951.351</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Torgersen</td>
-<td style="text-align: left;">male</td>
-<td style="text-align: right;">208.7629</td>
-<td style="text-align: right;">4842.721</td>
-<td style="text-align: right;">211.9161</td>
-<td style="text-align: right;">4936.849</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">181.5801</td>
+<td style="text-align: right;">3630.028</td>
+<td style="text-align: right;">185.7007</td>
+<td style="text-align: right;">3760.244</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: left;">female</td>
-<td style="text-align: right;">192.7956</td>
-<td style="text-align: right;">4050.963</td>
-<td style="text-align: right;">198.9133</td>
-<td style="text-align: right;">4105.341</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">181.8525</td>
+<td style="text-align: right;">3923.493</td>
+<td style="text-align: right;">188.2415</td>
+<td style="text-align: right;">4024.760</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
-<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Biscoe</td>
 <td style="text-align: left;">female</td>
-<td style="text-align: right;">217.3563</td>
-<td style="text-align: right;">4393.235</td>
-<td style="text-align: right;">222.3970</td>
-<td style="text-align: right;">4498.601</td>
+<td style="text-align: right;">202.4338</td>
+<td style="text-align: right;">3427.072</td>
+<td style="text-align: right;">209.2545</td>
+<td style="text-align: right;">3574.852</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
-<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Dream</td>
 <td style="text-align: left;">male</td>
-<td style="text-align: right;">184.6076</td>
-<td style="text-align: right;">3769.694</td>
-<td style="text-align: right;">185.1677</td>
-<td style="text-align: right;">3893.670</td>
+<td style="text-align: right;">202.8692</td>
+<td style="text-align: right;">4241.572</td>
+<td style="text-align: right;">208.8249</td>
+<td style="text-align: right;">4429.329</td>
 </tr>
 </tbody>
 </table>
@@ -4119,91 +4119,91 @@ pre { font-size: 0.9em; }
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: left;">male</td>
 <td style="text-align: left;">baseline</td>
 <td style="text-align: left;">flipper</td>
-<td style="text-align: right;">190.6274</td>
+<td style="text-align: right;">183.0969</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: left;">male</td>
 <td style="text-align: left;">baseline</td>
 <td style="text-align: left;">body</td>
-<td style="text-align: right;">3040.5358</td>
+<td style="text-align: right;">4841.9708</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: left;">male</td>
 <td style="text-align: left;">followup</td>
 <td style="text-align: left;">flipper</td>
-<td style="text-align: right;">194.6628</td>
+<td style="text-align: right;">190.6365</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: left;">followup</td>
+<td style="text-align: left;">body</td>
+<td style="text-align: right;">4951.3514</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Torgersen</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: left;">baseline</td>
+<td style="text-align: left;">flipper</td>
+<td style="text-align: right;">181.5801</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Torgersen</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: left;">baseline</td>
+<td style="text-align: left;">body</td>
+<td style="text-align: right;">3630.0277</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Torgersen</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: left;">followup</td>
+<td style="text-align: left;">flipper</td>
+<td style="text-align: right;">185.7007</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Torgersen</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">followup</td>
 <td style="text-align: left;">body</td>
-<td style="text-align: right;">3115.5860</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: left;">male</td>
-<td style="text-align: left;">baseline</td>
-<td style="text-align: left;">flipper</td>
-<td style="text-align: right;">208.7629</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: left;">male</td>
-<td style="text-align: left;">baseline</td>
-<td style="text-align: left;">body</td>
-<td style="text-align: right;">4842.7211</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: left;">male</td>
-<td style="text-align: left;">followup</td>
-<td style="text-align: left;">flipper</td>
-<td style="text-align: right;">211.9161</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: left;">male</td>
-<td style="text-align: left;">followup</td>
-<td style="text-align: left;">body</td>
-<td style="text-align: right;">4936.8490</td>
+<td style="text-align: right;">3760.2445</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: left;">male</td>
 <td style="text-align: left;">baseline</td>
 <td style="text-align: left;">flipper</td>
-<td style="text-align: right;">192.7956</td>
+<td style="text-align: right;">181.8525</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: left;">male</td>
 <td style="text-align: left;">baseline</td>
 <td style="text-align: left;">body</td>
-<td style="text-align: right;">4050.9627</td>
+<td style="text-align: right;">3923.4930</td>
 </tr>
 </tbody>
 </table>
@@ -4235,13 +4235,13 @@ pre { font-size: 0.9em; }
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">baseline</td>
-<td style="text-align: right;">198.8300</td>
-<td style="text-align: right;">184.6076</td>
+<td style="text-align: right;">190.3665</td>
+<td style="text-align: right;">181.5801</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">followup</td>
-<td style="text-align: right;">202.6114</td>
-<td style="text-align: right;">185.1677</td>
+<td style="text-align: right;">196.5316</td>
+<td style="text-align: right;">185.7007</td>
 </tr>
 </tbody>
 </table>

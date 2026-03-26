@@ -32,3 +32,9 @@ This page contains course materials used during the demonstration and practical 
 # Week 9
 
 - [Building a ggplot object layer by layer](materials/w09_ggplot2/ggplot_grammar_plots.html) ([QMD](materials/downloads/w09_ggplot2/ggplot_grammar_plots.qmd))
+
+# Week 11
+
+<!-- - [From exploratory plots to publication-ready figures](materials/w11_publication/bfi_publication_example.html) ([QMD](materials/downloads/w11_publication/bfi_publication_example.qmd)) -->
+
+- [Recreating an Economist graphic in ggplot2](materials/w11_publication/economist_recreation.html) ([QMD](materials/downloads/w11_publication/economist_recreation.qmd); [Data](materials/files/EconomistData.csv), [Original image](materials/files/Economist1.png))
