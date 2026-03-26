@@ -294,9 +294,9 @@ And here it is, our final version!
 ```{r}
 final_plot <- ggdraw(pc6) +
   draw_label(
-    substitute(paste(italic(R)^2, " = ", r2, "%"), list(r2 = as.integer(mR2 * 100))),
-    .9,
-    .97
+    bquote(italic(R)^2 == .(round(100 * mR2)) * "%"),
+    # substitute(paste(italic(R)^2, " = ", r2, "%"), list(r2 = as.integer(mR2 * 100))), #alternative
+    x = .9, y = .97
   ) +
   draw_line(x = c(.79, .835), y = c(.965, .965), color = "red", linewidth = 1.1)
 
