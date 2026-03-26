@@ -217,6 +217,19 @@ Two things to notice:
 
 The next step is to add the title and format the axes. We do that using the `scales` system in ggplot2.
 
+Here is the color palette the Economist seems to be using:
+
+```{r}
+economist_palette <- c(
+  "OECD" = "#24576D",
+  "Americas" = "#099DD7",
+  "Asia &\nOceania" = "#28AADC",
+  "Central &\nEastern Europe" = "#248E84",
+  "Middle East &\nNorth Africa" = "#F2583F",
+  "Sub-Saharan\nAfrica" = "#96503F"
+)
+```
+
 ```{r}
 pc5 <- pc4 +
   scale_x_continuous(
@@ -229,17 +242,7 @@ pc5 <- pc4 +
     limits = c(0.2, 1.0),
     breaks = seq(0.2, 1.0, by = 0.1)
   ) +
-  scale_color_manual(
-    name = "",
-    values = c(
-      "#24576D",
-      "#099DD7",
-      "#28AADC",
-      "#248E84",
-      "#F2583F",
-      "#96503F"
-    )
-  ) +
+  scale_color_manual(name = "", values = economist_palette) +
   ggtitle("Corruption and human development")
 
 plot(pc5)
@@ -260,13 +263,15 @@ pc6 <- pc5 +
     legend.direction = "horizontal",
     legend.justification = 0.1,
     legend.text = element_text(size = 10, color = "gray10", margin = margin(t = 4, b = 4)),
-    axis.title.x = element_text(margin = margin(t = 10)),
+    axis.title.x = element_text(margin = margin(t = 10), face = "italic"),
     axis.title.y = element_text(margin = margin(r = 10), face = "italic"),
     axis.ticks.y = element_blank(),
     axis.line = element_line(color = "gray40", linewidth = 0.5),
     axis.line.y = element_blank(),
-    panel.grid.major.y = element_line(color = "gray50", linewidth = 0.5),
+    panel.grid.major.y = element_line(color = "gray60", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
     panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
     plot.caption = element_text(hjust = 0),
     plot.title = element_text(face = "bold")
   )
